@@ -303,7 +303,8 @@ h1 {
   background: var(--navy);
 }
 
-.tools-promo {
+.tools-promo,
+.mcp-promo {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -311,10 +312,15 @@ h1 {
   background: #07101d;
 }
 
-.tools-promo p {
+.tools-promo p,
+.mcp-promo p {
   max-width: 680px;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.mcp-promo {
+  background: #0d1726;
 }
 
 .tool-hero {
@@ -414,6 +420,80 @@ h1 {
   font-weight: 850;
 }
 
+.mcp-hero {
+  min-height: 64vh;
+  display: grid;
+  align-items: center;
+  padding: clamp(52px, 8vw, 96px) clamp(20px, 7vw, 96px);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(31, 111, 235, 0.22), transparent 28%),
+    linear-gradient(130deg, #07101d, #0d1726);
+}
+
+.mcp-hero p {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.mcp-grid-section {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  background: #081323;
+}
+
+.mcp-card {
+  min-height: 330px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.mcp-card h2 {
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.mcp-card p,
+.mcp-card li {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.mcp-card code {
+  color: var(--cyan);
+}
+
+.mcp-status {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 212, 255, 0.28);
+  border-radius: 999px;
+  color: var(--cyan);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mcp-principles {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 460px);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: center;
+  background: #0d0d14;
+}
+
+.mcp-principles p,
+.mcp-principles li {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 @media (max-width: 980px) {
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -447,8 +527,14 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .tools-promo {
+  .tools-promo,
+  .mcp-promo {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .mcp-grid-section,
+  .mcp-principles {
+    grid-template-columns: 1fr;
   }
 }

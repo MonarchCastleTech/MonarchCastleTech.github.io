@@ -1,0 +1,35 @@
+{
+  "name": "Monarch Castle Technologies MCP Catalog",
+  "publisher": "Monarch Castle Technologies",
+  "site": "https://monarchcastletech.github.io/",
+  "status": "static-catalog",
+  "contact": "monarchcastleholdings@gmail.com",
+  "packs": [
+    {
+      "id": "mct.risk_calculators",
+      "title": "Risk Calculator MCP",
+      "stage": "static-spec",
+      "source_page": "https://monarchcastletech.github.io/tools.html",
+      "tools": [
+        "country_risk_score",
+        "supply_chain_exposure",
+        "esg_incident_severity",
+        "market_weather_checklist",
+        "osint_source_reliability"
+      ]
+    },
+    {
+      "id": "mct.sdcofa_almanac_bridge",
+      "title": "SDCofA Almanac MCP",
+      "stage": "static-spec",
+      "source_page": "https://sdcofa.github.io/almanac.html",
+      "data": "https://sdcofa.github.io/data/countries.json"
+    },
+    {
+      "id": "mct.static_publisher",
+      "title": "Static Publisher MCP",
+      "stage": "starter-pack",
+      "download": "https://monarchcastletech.github.io/downloads/mcp-server-starter.md"
+    }
+  ]
+}

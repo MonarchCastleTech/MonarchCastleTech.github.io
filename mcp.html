@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MCP Packs - Monarch Castle Technologies</title>
+    <meta name="description" content="MCP-ready tool server packs and static agent catalogs from Monarch Castle Technologies.">
+    <link rel="icon" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Monarch Castle Technologies home">
+        <img src="assets/icon.png" alt="" class="brand-icon">
+        <span>Monarch Castle Technologies</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html#products">Products</a>
+        <a href="tools.html">Tools</a>
+        <a href="mcp.html">MCP</a>
+        <a href="index.html#sdcofa">SDCofA</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="mcp-hero">
+        <div>
+          <img src="assets/logo.png" alt="Monarch Castle Technologies" class="tool-mark">
+          <p class="eyebrow">MCP-ready distribution</p>
+          <h1>Tool packs that agents can discover before servers exist.</h1>
+          <p>
+            These are static catalog records and starter server specifications for Monarch Castle tools.
+            They make the product line readable to agent workflows without hosting costs, secrets, or AI-authored outputs.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="mcp-catalog.json">Open catalog JSON</a>
+            <a class="button" href="downloads/mcp-server-starter.md" download>Download starter</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section mcp-grid-section">
+        <article class="mcp-card">
+          <span class="mcp-status">static spec</span>
+          <h2>Risk Calculator MCP</h2>
+          <p>Expose the country, ESG, supply chain, market weather, and source reliability calculators as deterministic tools.</p>
+          <p><code>mct.risk_calculators</code></p>
+        </article>
+        <article class="mcp-card">
+          <span class="mcp-status">static spec</span>
+          <h2>SDCofA Almanac MCP</h2>
+          <p>Read country metadata, almanac pages, and future index files from SDCofA's public static data surfaces.</p>
+          <p><code>mct.sdcofa_almanac_bridge</code></p>
+        </article>
+        <article class="mcp-card">
+          <span class="mcp-status">starter pack</span>
+          <h2>Static Publisher MCP</h2>
+          <p>Package GitHub Pages dashboards, CSV templates, and markdown briefs as agent-readable asset libraries.</p>
+          <p><code>mct.static_publisher</code></p>
+        </article>
+      </section>
+
+      <section class="section mcp-principles">
+        <div>
+          <p class="eyebrow">Implementation doctrine</p>
+          <h2>Useful now, server-ready later.</h2>
+          <p>
+            The first commercial surface is a catalog and downloadable starter pack. A hosted MCP server can come later
+            only after there is traffic or revenue signal.
+          </p>
+        </div>
+        <ul>
+          <li>No credentials in public files.</li>
+          <li>No AI-written analyst conclusions.</li>
+          <li>Deterministic inputs and outputs first.</li>
+          <li>Static catalog today; hosted runtime later.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

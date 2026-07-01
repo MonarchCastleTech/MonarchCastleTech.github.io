@@ -1,0 +1,15 @@
+# Monarch Castle Technologies
+
+Monarch Castle Technologies builds operational intelligence products and browser-only deterministic tools.
+
+Important pages:
+- Home: https://monarchcastletech.github.io/
+- Free tools: https://monarchcastletech.github.io/tools.html
+- MCP packs: https://monarchcastletech.github.io/mcp.html
+- MCP catalog JSON: https://monarchcastletech.github.io/mcp-catalog.json
+
+Related:
+- Monarch Castle Holdings: https://monarchcastleholdings.github.io/
+- Strategic Data Company of Ankara: https://sdcofa.github.io/
+
+Contact: monarchcastleholdings@gmail.com
