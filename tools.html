@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Free Intelligence Tools — Monarch Castle Technologies</title>
+    <meta name="description" content="Free browser-based risk and intelligence calculators from Monarch Castle Technologies.">
+    <link rel="icon" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="tools.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Monarch Castle Technologies home">
+        <img src="assets/icon.png" alt="" class="brand-icon">
+        <span>Monarch Castle Technologies</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html#products">Products</a>
+        <a href="tools.html">Tools</a>
+        <a href="index.html#sdcofa">SDCofA</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="tool-hero">
+        <div>
+          <img src="assets/logo.png" alt="Monarch Castle Technologies" class="tool-mark">
+          <p class="eyebrow">Free intelligence tool bench</p>
+          <h1>Calculators for repeatable risk thinking.</h1>
+          <p>
+            These tools run entirely in your browser. They do not call an AI model, send your inputs to a server,
+            or generate analyst conclusions. They turn your own inputs into deterministic scores and checklists.
+          </p>
+        </div>
+      </section>
+
+      <section class="section tool-grid-section">
+        <article class="tool-card" id="country-risk">
+          <div class="tool-card-head">
+            <img src="assets/macrointel-icon.png" alt="">
+            <div>
+              <h2>Country Risk Score Calculator</h2>
+              <p>Convert simple country-risk inputs into a transparent 0-100 score.</p>
+            </div>
+          </div>
+          <div class="tool-inputs">
+            <label>Political stability <input data-tool="country" data-key="political" type="range" min="0" max="10" value="5"></label>
+            <label>Security pressure <input data-tool="country" data-key="security" type="range" min="0" max="10" value="5"></label>
+            <label>Economic stress <input data-tool="country" data-key="economic" type="range" min="0" max="10" value="5"></label>
+            <label>Source confidence <input data-tool="country" data-key="confidence" type="range" min="0" max="10" value="6"></label>
+          </div>
+          <output class="tool-output" id="country-output">Score: 50 / 100</output>
+        </article>
+
+        <article class="tool-card" id="supply-chain">
+          <div class="tool-card-head">
+            <img src="assets/supplychain-icon.png" alt="">
+            <div>
+              <h2>Supply Chain Exposure Calculator</h2>
+              <p>Estimate exposure from geography, supplier concentration, route fragility, and buffer depth.</p>
+            </div>
+          </div>
+          <div class="tool-inputs">
+            <label>Critical suppliers <input data-tool="supply" data-key="suppliers" type="number" min="1" max="50" value="4"></label>
+            <label>Single-country dependency <input data-tool="supply" data-key="dependency" type="range" min="0" max="100" value="35"></label>
+            <label>Route fragility <input data-tool="supply" data-key="routes" type="range" min="0" max="10" value="4"></label>
+            <label>Inventory buffer days <input data-tool="supply" data-key="buffer" type="number" min="0" max="180" value="21"></label>
+          </div>
+          <output class="tool-output" id="supply-output">Exposure: moderate</output>
+        </article>
+
+        <article class="tool-card" id="esg-severity">
+          <div class="tool-card-head">
+            <img src="assets/esgmap-icon.png" alt="">
+            <div>
+              <h2>ESG Incident Severity Calculator</h2>
+              <p>Score incident materiality from scale, reversibility, stakeholder intensity, and recurrence.</p>
+            </div>
+          </div>
+          <div class="tool-inputs">
+            <label>Operational scale <input data-tool="esg" data-key="scale" type="range" min="0" max="10" value="4"></label>
+            <label>Reversibility concern <input data-tool="esg" data-key="reversibility" type="range" min="0" max="10" value="5"></label>
+            <label>Stakeholder intensity <input data-tool="esg" data-key="stakeholder" type="range" min="0" max="10" value="5"></label>
+            <label>Recurrence risk <input data-tool="esg" data-key="recurrence" type="range" min="0" max="10" value="3"></label>
+          </div>
+          <output class="tool-output" id="esg-output">Severity: 43 / 100</output>
+        </article>
+
+        <article class="tool-card" id="market-weather">
+          <div class="tool-card-head">
+            <img src="assets/cloudy-shiny-icon.png" alt="">
+            <div>
+              <h2>Market Weather Checklist</h2>
+              <p>A deterministic checklist for market regime notes.</p>
+            </div>
+          </div>
+          <div class="check-list">
+            <label><input data-tool="market" type="checkbox"> Credit spreads widening</label>
+            <label><input data-tool="market" type="checkbox"> Volatility above 30-day average</label>
+            <label><input data-tool="market" type="checkbox"> Breadth deteriorating</label>
+            <label><input data-tool="market" type="checkbox"> Policy uncertainty elevated</label>
+            <label><input data-tool="market" type="checkbox"> Safe-haven assets bid</label>
+          </div>
+          <output class="tool-output" id="market-output">Weather: clear</output>
+        </article>
+
+        <article class="tool-card" id="source-reliability">
+          <div class="tool-card-head">
+            <img src="assets/prepturk-icon.png" alt="">
+            <div>
+              <h2>OSINT Source Reliability Scorer</h2>
+              <p>Score a source using provenance, independence, timeliness, and correction history.</p>
+            </div>
+          </div>
+          <div class="tool-inputs">
+            <label>Primary-source proximity <input data-tool="source" data-key="proximity" type="range" min="0" max="10" value="6"></label>
+            <label>Independent corroboration <input data-tool="source" data-key="corroboration" type="range" min="0" max="10" value="5"></label>
+            <label>Timeliness <input data-tool="source" data-key="timeliness" type="range" min="0" max="10" value="7"></label>
+            <label>Correction record <input data-tool="source" data-key="corrections" type="range" min="0" max="10" value="6"></label>
+          </div>
+          <output class="tool-output" id="source-output">Reliability: B</output>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
