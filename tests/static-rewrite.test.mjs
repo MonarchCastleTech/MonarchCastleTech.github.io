@@ -13,9 +13,19 @@ test("keeps external URLs and already-mounted paths unchanged", () => {
   assert.equal(rewriteStaticContent(html, "/bnti/"), html);
 });
 
+test("preserves a bare mount-root path", () => {
+  const html = '<a href="/bnti">Dashboard</a>';
+  assert.equal(rewriteStaticContent(html, "/bnti/"), html);
+});
+
 test("rewrites CSS url references that start at site root", () => {
   const css = 'body{background:url("/assets/bg.png")} .seal{background:url(/icon.png)}';
   assert.equal(rewriteStaticContent(css, "/wti/"), 'body{background:url("/wti/assets/bg.png")} .seal{background:url(/wti/icon.png)}');
+});
+
+test("rewrites single-quoted CSS url references that start at site root", () => {
+  const css = "body{background:url('/assets/bg.png')}.seal{background:url('/icon.png')}";
+  assert.equal(rewriteStaticContent(css, "/wti/"), "body{background:url('/wti/assets/bg.png')}.seal{background:url('/wti/icon.png')}");
 });
 
 test("copies web assets and dashboard data, skips source-control and Python pipeline files", () => {

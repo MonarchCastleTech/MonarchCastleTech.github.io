@@ -33,12 +33,12 @@ export function rewriteStaticContent(content, mountPath) {
   const cleanMount = mountPath.endsWith("/") ? mountPath.slice(0, -1) : mountPath;
   const rewritePath = (rawPath) => {
     if (!rawPath.startsWith("/")) return rawPath;
-    if (rawPath.startsWith(`${cleanMount}/`)) return rawPath;
+    if (rawPath === cleanMount || rawPath.startsWith(`${cleanMount}/`)) return rawPath;
     if (/^\/\//.test(rawPath)) return rawPath;
     return `${cleanMount}${rawPath}`;
   };
 
   return content
     .replace(/(href|src)=("|')\/(?!\/)([^"']+)/g, (_match, attr, quote, rest) => `${attr}=${quote}${rewritePath(`/${rest}`)}`)
-    .replace(/url\(("?)\/(?!\/)([^)"']+)\1\)/g, (_match, quote, rest) => `url(${quote}${rewritePath(`/${rest}`)}${quote})`);
+    .replace(/url\((["']?)\/(?!\/)([^)"']+)\1\)/g, (_match, quote, rest) => `url(${quote}${rewritePath(`/${rest}`)}${quote})`);
 }
