@@ -28,3 +28,14 @@ test("root homepage links to canonical dashboard paths", () => {
   assert.match(html, /href="\/mena\/"/);
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
 });
+
+test("dashboard entrypoints do not leak root-relative paths or redirect shims", () => {
+  const redirectPattern = /<meta[^>]+http-equiv=["']refresh["']|window\.location|location\.href/i;
+  const rootRelativeLeakPattern = /(?:href|src)=["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|fetch\(\s*["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|url\(\s*["']?\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))/i;
+
+  for (const slug of ["bnti", "wti", "mena"]) {
+    const html = fs.readFileSync(path.join(dist, slug, "index.html"), "utf8");
+    assert.doesNotMatch(html, redirectPattern, `${slug}/index.html has no redirect shim`);
+    assert.doesNotMatch(html, rootRelativeLeakPattern, `${slug}/index.html has no root-relative leak`);
+  }
+});

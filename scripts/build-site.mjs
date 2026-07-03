@@ -57,9 +57,11 @@ for (const asset of routes.assets) {
   const source = path.join(cacheRoot, asset.fromRepo, asset.from);
   const target = path.join(dist, asset.to);
 
-  if (fs.existsSync(source)) {
-    fs.cpSync(source, target, { recursive: true });
+  if (!fs.existsSync(source)) {
+    throw new Error(`Missing declared asset source: ${asset.fromRepo}/${asset.from}. Run npm run sync or fix site.routes.json.`);
   }
+
+  fs.cpSync(source, target, { recursive: true });
 }
 
 for (const mount of routes.dashboardMounts) {

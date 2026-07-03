@@ -63,3 +63,37 @@ node scripts/verify-dist.mjs
 ## Concerns
 
 None.
+
+## Task 3 Fix Follow-Up (2026-07-03)
+
+### Review Fix Scope
+
+- Tightened `scripts/build-site.mjs` so every asset declared in `routes.assets` is now mandatory; the build throws `Missing declared asset source...` instead of silently skipping missing upstream content.
+- Strengthened `scripts/verify-dist.mjs` so each mounted dashboard entrypoint asserts file existence before reading, rejects redirect shims (`meta refresh`, `location.href`, `window.location`), and rejects root-relative leaks outside its own mount path across `href`, `src`, `fetch(...)`, and CSS `url(...)`.
+- Extended built-dist coverage so `/bnti/`, `/wti/`, and `/mena/` entrypoints are all checked for redirect markers and path leaks.
+
+### TDD Follow-Up
+
+1. Added `tests/build-site.test.mjs` to prove a declared-but-missing upstream asset fails the build.
+2. Added `tests/verify-dist.test.mjs` to prove verifier failures for missing dashboard entrypoints, redirect markers, and root-relative leaks.
+3. Ran the focused red phase with `node --test tests/build-site.test.mjs tests/verify-dist.test.mjs` and confirmed all four tests failed for the expected pre-fix reasons.
+4. Implemented the minimal script changes required, then reran the focused suite to green.
+
+### Final Verification
+
+```text
+npm run sync
+-> exit 0
+
+npm run build
+-> exit 0
+
+npm test
+-> 17 tests, 17 passed, 0 failed
+
+npm run test:dist
+-> 4 tests, 4 passed, 0 failed
+
+node scripts/verify-dist.mjs
+-> dist verification passed
+```
