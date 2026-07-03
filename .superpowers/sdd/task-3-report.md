@@ -97,3 +97,40 @@ npm run test:dist
 node scripts/verify-dist.mjs
 -> dist verification passed
 ```
+
+## Task 3 Re-Review Fix (2026-07-03)
+
+### Scope
+
+- Extended `scripts/verify-dist.mjs` redirect detection to reject `location.assign(...)`, `location.replace(...)`, `window.location.assign(...)`, `window.location.replace(...)`, `location = ...`, `window.location = ...`, `location.href = ...`, and `window.location.href = ...`.
+- Normalized root-relative URLs before mount-boundary checks so dot-segment escapes like `/mena/../../wti/` and `/mena/../shared.css` are treated as leaks.
+- Kept the change inside Task 3 verifier coverage by updating only `scripts/verify-dist.mjs` and `tests/verify-dist.test.mjs`.
+
+### TDD Evidence
+
+1. Added focused verifier tests first for the redirect forms above and for normalized-path escapes.
+2. Ran `node --test tests/verify-dist.test.mjs` before implementation and got the expected red failures for `location.assign`, `location.replace`, `location =`, `/mena/../../wti/`, and `/mena/../shared.css`.
+3. Implemented the minimal verifier changes, then reran the same focused suite to green.
+
+### Final Verification
+
+```text
+npm test
+-> 29 tests, 29 passed, 0 failed
+
+npm run sync
+-> exit 0; all upstream repositories already up to date
+
+npm run build
+-> exit 0
+
+npm run test:dist
+-> 4 tests, 4 passed, 0 failed
+
+node scripts/verify-dist.mjs
+-> dist verification passed
+```
+
+### Concerns
+
+None.

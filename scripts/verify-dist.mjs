@@ -9,8 +9,10 @@ const dist = path.join(root, "dist");
 function assertNoRedirectMarkers(html, mount) {
   const redirectChecks = [
     { label: "meta refresh", pattern: /<meta[^>]+http-equiv=["']refresh["']/i },
-    { label: "location.href", pattern: /location\.href\b/i },
-    { label: "window.location", pattern: /window\.location\b/i }
+    { label: "location.assign(...)", pattern: /\blocation\s*\.\s*assign\s*\(/i },
+    { label: "location.replace(...)", pattern: /\blocation\s*\.\s*replace\s*\(/i },
+    { label: "location = ...", pattern: /\b(?:window\s*\.\s*)?location\s*=\s*(?!=)/i },
+    { label: "location.href = ...", pattern: /\b(?:window\s*\.\s*)?location\s*\.\s*href\s*=\s*(?!=)/i }
   ];
 
   for (const check of redirectChecks) {
@@ -40,17 +42,31 @@ function collectRootRelativeReferences(html) {
   return references;
 }
 
+function normalizeRootRelativePath(value) {
+  return new URL(value, "https://dist.local").pathname;
+}
+
+function normalizeMountBase(mountPath) {
+  const normalizedPath = normalizeRootRelativePath(mountPath);
+  return normalizedPath !== "/" && normalizedPath.endsWith("/")
+    ? normalizedPath.slice(0, -1)
+    : normalizedPath;
+}
+
 function assertMountedRootRelativePaths(html, mount) {
-  const mountRoot = mount.path.endsWith("/") ? mount.path.slice(0, -1) : mount.path;
-  const leaks = collectRootRelativeReferences(html).filter(({ value }) => {
+  const mountBase = normalizeMountBase(mount.path);
+  const mountPrefix = mountBase === "/" ? "/" : `${mountBase}/`;
+  const leaks = collectRootRelativeReferences(html).flatMap(({ kind, value }) => {
     if (value.startsWith("//")) return false;
-    return value !== mountRoot && !value.startsWith(mount.path);
+    const normalizedValue = normalizeRootRelativePath(value);
+    const isInsideMount = normalizedValue === mountBase || normalizedValue.startsWith(mountPrefix);
+    return isInsideMount ? [] : [{ kind, value, normalizedValue }];
   });
 
   assert.equal(
     leaks.length,
     0,
-    `${mount.slug}/index.html has root-relative references outside ${mount.path}: ${leaks.map(({ kind, value }) => `${kind}=${value}`).join(", ")}`
+    `${mount.slug}/index.html has root-relative references outside ${mount.path}: ${leaks.map(({ kind, value, normalizedValue }) => `${kind}=${value} -> ${normalizedValue}`).join(", ")}`
   );
 }
 
