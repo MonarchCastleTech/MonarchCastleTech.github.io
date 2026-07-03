@@ -1,0 +1,43 @@
+{
+  "canonicalDomain": "monarchcastle.tech",
+  "upstreams": {
+    "theme": "https://github.com/akgularda/monarch-castle-technologies.git",
+    "products": "https://github.com/monarchcastletech/monarchcastletech.github.io.git",
+    "bnti": "https://github.com/SDCofA/border-neighbor-threat-index.git",
+    "wti": "https://github.com/SDCofA/world-threat-index.git",
+    "mena": "https://github.com/SDCofA/mena-threat-index.git"
+  },
+  "localPages": [
+    { "slug": "home", "path": "/", "source": "src/pages/index.html", "output": "index.html" },
+    { "slug": "tools", "path": "/tools/", "source": "src/pages/tools.html", "output": "tools/index.html" },
+    { "slug": "mcp", "path": "/mcp/", "source": "src/pages/mcp.html", "output": "mcp/index.html" },
+    { "slug": "sdcofa", "path": "/sdcofa/", "source": "src/pages/sdcofa.html", "output": "sdcofa/index.html" }
+  ],
+  "dashboardMounts": [
+    {
+      "slug": "bnti",
+      "label": "Border Neighbor Threat Index",
+      "path": "/bnti/",
+      "repoKey": "bnti",
+      "dataFile": "bnti_data.json"
+    },
+    {
+      "slug": "wti",
+      "label": "World Threat Index",
+      "path": "/wti/",
+      "repoKey": "wti",
+      "dataFile": "wti_data.json"
+    },
+    {
+      "slug": "mena",
+      "label": "MENA Threat Index",
+      "path": "/mena/",
+      "repoKey": "mena",
+      "dataFile": "mena_data.json"
+    }
+  ],
+  "assets": [
+    { "fromRepo": "products", "from": "assets", "to": "assets/products" },
+    { "fromRepo": "theme", "from": "assets", "to": "assets/theme" }
+  ]
+}

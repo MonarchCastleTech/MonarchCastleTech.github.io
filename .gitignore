@@ -1,2 +1,6 @@
-.worktrees/
-.superpowers/sdd/
+dist/
+.cache/
+node_modules/
+playwright-report/
+test-results/
+npm-debug.log*
