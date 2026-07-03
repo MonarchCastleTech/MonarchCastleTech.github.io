@@ -1,0 +1,40 @@
+{
+  "brand": "Monarch Castle Technologies",
+  "domain": "monarchcastle.tech",
+  "thesis": "Sovereign decision intelligence for institutions that cannot afford to be surprised.",
+  "engine": "The Keep",
+  "instruments": [
+    {
+      "label": "BNTI",
+      "name": "Border Neighbor Threat Index",
+      "division": "Defense Intelligence",
+      "path": "/bnti/",
+      "data": "/bnti/bnti_data.json",
+      "description": "Türkiye border-neighbor threat posture across seven land neighbors."
+    },
+    {
+      "label": "WTI",
+      "name": "World Threat Index",
+      "division": "Defense Intelligence",
+      "path": "/wti/",
+      "data": "/wti/wti_data.json",
+      "description": "Global geopolitical pressure readings across countries and blocs."
+    },
+    {
+      "label": "MENA",
+      "name": "MENA Threat Index",
+      "division": "Defense Intelligence",
+      "path": "/mena/",
+      "data": "/mena/mena_data.json",
+      "description": "Regional risk assessment for the Middle East and North Africa."
+    }
+  ],
+  "productLines": [
+    "Defense Intelligence",
+    "Financial Intelligence",
+    "Supply Chain Intelligence",
+    "Sustainability Intelligence",
+    "Energy Intelligence",
+    "Agent Distribution"
+  ]
+}
