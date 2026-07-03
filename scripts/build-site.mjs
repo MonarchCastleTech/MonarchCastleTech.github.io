@@ -40,6 +40,24 @@ function copyDirectory(sourceRoot, targetRoot, transformText, baseRoot = sourceR
   }
 }
 
+function resolveAssetSource(asset) {
+  if (asset.fromLocal) {
+    return {
+      source: path.join(root, asset.fromLocal),
+      label: asset.fromLocal
+    };
+  }
+
+  if (asset.fromRepo && asset.from) {
+    return {
+      source: path.join(cacheRoot, asset.fromRepo, asset.from),
+      label: `${asset.fromRepo}/${asset.from}`
+    };
+  }
+
+  throw new Error(`Invalid declared asset source for ${asset.to}`);
+}
+
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
 
@@ -54,11 +72,11 @@ fs.cpSync(path.join(root, "src", "styles"), path.join(dist, "styles"), { recursi
 fs.cpSync(path.join(root, "src", "scripts"), path.join(dist, "scripts"), { recursive: true });
 
 for (const asset of routes.assets) {
-  const source = path.join(cacheRoot, asset.fromRepo, asset.from);
+  const { source, label } = resolveAssetSource(asset);
   const target = path.join(dist, asset.to);
 
   if (!fs.existsSync(source)) {
-    throw new Error(`Missing declared asset source: ${asset.fromRepo}/${asset.from}. Run npm run sync or fix site.routes.json.`);
+    throw new Error(`Missing declared asset source: ${label}. Run npm run sync or fix site.routes.json.`);
   }
 
   fs.cpSync(source, target, { recursive: true });

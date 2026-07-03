@@ -27,3 +27,8 @@ test("supporting local pages use canonical paths", () => {
   assert.equal(pages.mcp.path, "/mcp/");
   assert.equal(pages.sdcofa.path, "/sdcofa/");
 });
+
+test("product assets are vendored locally instead of sourced from the canonical repo", () => {
+  assert.equal(routes.upstreams.products, undefined);
+  assert.ok(routes.assets.some((asset) => asset.fromLocal === "src/assets/products" && asset.to === "assets/products"));
+});

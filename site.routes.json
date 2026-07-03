@@ -2,7 +2,6 @@
   "canonicalDomain": "monarchcastle.tech",
   "upstreams": {
     "theme": "https://github.com/akgularda/monarch-castle-technologies.git",
-    "products": "https://github.com/monarchcastletech/monarchcastletech.github.io.git",
     "bnti": "https://github.com/SDCofA/border-neighbor-threat-index.git",
     "wti": "https://github.com/SDCofA/world-threat-index.git",
     "mena": "https://github.com/SDCofA/mena-threat-index.git"
@@ -37,7 +36,7 @@
     }
   ],
   "assets": [
-    { "fromRepo": "products", "from": "assets", "to": "assets/products" },
+    { "fromLocal": "src/assets/products", "to": "assets/products" },
     { "fromRepo": "theme", "from": "assets", "to": "assets/theme" }
   ]
 }

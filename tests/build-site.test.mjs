@@ -52,3 +52,26 @@ test("build fails when a declared upstream asset source is missing", () => {
   assert.match(result.stderr, /Missing declared asset source/i);
   fs.rmSync(root, { recursive: true, force: true });
 });
+
+test("build copies declared local assets without requiring an upstream cache", () => {
+  const root = makeTempRoot("build-site-local-asset-test-");
+
+  copyBuildScripts(root);
+  writeFile(root, "site.routes.json", JSON.stringify({
+    canonicalDomain: "example.com",
+    localPages: [{ slug: "home", path: "/", source: "src/pages/index.html", output: "index.html" }],
+    dashboardMounts: [],
+    assets: [{ fromLocal: "src/assets/products", to: "assets/products" }]
+  }, null, 2));
+  writeFile(root, "public/CNAME", "example.com\n");
+  writeFile(root, "src/pages/index.html", "<!doctype html><title>Home</title>");
+  writeFile(root, "src/styles/site.css", "body{}");
+  writeFile(root, "src/scripts/live-panels.js", "console.log('ok');");
+  writeFile(root, "src/assets/products/logo.png", "fake image bytes");
+
+  const result = runBuild(root);
+
+  assert.equal(result.status, 0, `build failed\nstdout:\n${result.stdout}\nstderr:\n${result.stderr}`);
+  assert.equal(fs.readFileSync(path.join(root, "dist", "assets", "products", "logo.png"), "utf8"), "fake image bytes");
+  fs.rmSync(root, { recursive: true, force: true });
+});
