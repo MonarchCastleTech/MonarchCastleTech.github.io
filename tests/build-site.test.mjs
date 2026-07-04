@@ -24,6 +24,13 @@ function copyBuildScripts(root) {
   fs.copyFileSync(path.join(repoRoot, "scripts", "lib", "static-rewrite.mjs"), path.join(root, "scripts", "lib", "static-rewrite.mjs"));
 }
 
+function writeThemeUpstream(root) {
+  writeFile(root, ".cache/upstreams/theme/index.html", '<!doctype html><link rel="stylesheet" href="mct-styles.css"><a href="https://sdcofa.github.io/world-threat-index/">WTI</a><script src="mct-app.js"></script>');
+  writeFile(root, ".cache/upstreams/theme/mct-styles.css", "body{}");
+  writeFile(root, ".cache/upstreams/theme/mct-app.js", 'var BNTI_URL = "https://example.test/bnti.json";\nvar MENA_URL = "https://example.test/mena.json";');
+  writeFile(root, ".cache/upstreams/theme/assets/mc-mark.png", "fake mark");
+}
+
 function runBuild(root) {
   return spawnSync(process.execPath, ["scripts/build-site.mjs"], {
     cwd: root,
@@ -37,12 +44,13 @@ test("build fails when a declared upstream asset source is missing", () => {
   copyBuildScripts(root);
   writeFile(root, "site.routes.json", JSON.stringify({
     canonicalDomain: "example.com",
-    localPages: [{ slug: "home", path: "/", source: "src/pages/index.html", output: "index.html" }],
+    themeHomepage: { repoKey: "theme", index: "index.html", stylesheet: "mct-styles.css", script: "mct-app.js", assets: "assets" },
+    localPages: [],
     dashboardMounts: [],
     assets: [{ fromRepo: "products", from: "assets", to: "assets/products" }]
   }, null, 2));
   writeFile(root, "public/CNAME", "example.com\n");
-  writeFile(root, "src/pages/index.html", "<!doctype html><title>Home</title>");
+  writeThemeUpstream(root);
   writeFile(root, "src/styles/site.css", "body{}");
   writeFile(root, "src/scripts/live-panels.js", "console.log('ok');");
 
@@ -59,12 +67,13 @@ test("build copies declared local assets without requiring an upstream cache", (
   copyBuildScripts(root);
   writeFile(root, "site.routes.json", JSON.stringify({
     canonicalDomain: "example.com",
-    localPages: [{ slug: "home", path: "/", source: "src/pages/index.html", output: "index.html" }],
+    themeHomepage: { repoKey: "theme", index: "index.html", stylesheet: "mct-styles.css", script: "mct-app.js", assets: "assets" },
+    localPages: [],
     dashboardMounts: [],
     assets: [{ fromLocal: "src/assets/products", to: "assets/products" }]
   }, null, 2));
   writeFile(root, "public/CNAME", "example.com\n");
-  writeFile(root, "src/pages/index.html", "<!doctype html><title>Home</title>");
+  writeThemeUpstream(root);
   writeFile(root, "src/styles/site.css", "body{}");
   writeFile(root, "src/scripts/live-panels.js", "console.log('ok');");
   writeFile(root, "src/assets/products/logo.png", "fake image bytes");

@@ -3,6 +3,8 @@ name: Deploy Monarch Castle site
 on:
   push:
     branches: [main, master]
+  schedule:
+    - cron: "7 * * * *"
   workflow_dispatch:
 
 permissions:

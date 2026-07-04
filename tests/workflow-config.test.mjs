@@ -14,3 +14,9 @@ test("GitHub Pages workflow builds and deploys dist artifact", () => {
   assert.match(workflow, /actions\/deploy-pages@/);
   assert.match(workflow, /path: dist/);
 });
+
+test("GitHub Pages workflow refreshes upstream dashboard snapshots on a schedule", () => {
+  const workflow = fs.readFileSync(workflowPath, "utf8");
+  assert.match(workflow, /schedule:/);
+  assert.match(workflow, /cron:\s+["']7 \* \* \* \*["']/);
+});

@@ -58,11 +58,71 @@ function resolveAssetSource(asset) {
   throw new Error(`Invalid declared asset source for ${asset.to}`);
 }
 
+function requireThemeSource(theme, fileName) {
+  const source = path.join(cacheRoot, theme.repoKey, fileName);
+
+  if (!fs.existsSync(source)) {
+    throw new Error(`Missing theme homepage source: ${theme.repoKey}/${fileName}. Run npm run sync.`);
+  }
+
+  return source;
+}
+
+function rewriteThemeHomepage(content) {
+  let html = content
+    .replaceAll("https://akgularda.github.io/border-neighbor-threat-index/", "/bnti/")
+    .replaceAll("https://akgularda.github.io/mena-threat-index/", "/mena/")
+    .replaceAll("https://sdcofa.github.io/border-neighbor-threat-index/", "/bnti/")
+    .replaceAll("https://sdcofa.github.io/world-threat-index/", "/wti/")
+    .replaceAll("https://sdcofa.github.io/mena-threat-index/", "/mena/")
+    .replace(/href="(\/(?:bnti|wti|mena)\/)"\s+target="_blank"\s+rel="noopener"/g, 'href="$1"');
+
+  if (!html.includes('href="/wti/"')) {
+    html = html.replace(
+      '      <a href="#open">Open</a>',
+      '      <a href="#open">Open</a>\n      <a href="/wti/">WTI</a>'
+    );
+  }
+
+  return html;
+}
+
+function rewriteThemeScript(content) {
+  return content
+    .replace(
+      /var BNTI_URL = "[^"]+";/,
+      'var BNTI_URL = "/bnti/bnti_data.json";'
+    )
+    .replace(
+      /var MENA_URL = "[^"]+";/,
+      'var MENA_URL = "/mena/mena_data.json";'
+    );
+}
+
+function copyThemeHomepage() {
+  const theme = routes.themeHomepage;
+  if (!theme) {
+    throw new Error("Missing themeHomepage in site.routes.json");
+  }
+
+  const indexSource = requireThemeSource(theme, theme.index);
+  const stylesheetSource = requireThemeSource(theme, theme.stylesheet);
+  const scriptSource = requireThemeSource(theme, theme.script);
+  const assetSource = requireThemeSource(theme, theme.assets);
+
+  fs.writeFileSync(path.join(dist, "index.html"), rewriteThemeHomepage(fs.readFileSync(indexSource, "utf8")));
+  copyFile(stylesheetSource, path.join(dist, theme.stylesheet));
+  fs.writeFileSync(path.join(dist, theme.script), rewriteThemeScript(fs.readFileSync(scriptSource, "utf8")));
+  fs.cpSync(assetSource, path.join(dist, theme.assets), { recursive: true });
+}
+
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
 
 copyFile(path.join(root, "public", "CNAME"), path.join(dist, "CNAME"));
 fs.writeFileSync(path.join(dist, ".nojekyll"), "");
+
+copyThemeHomepage();
 
 for (const page of routes.localPages) {
   copyFile(path.join(root, page.source), path.join(dist, page.output));

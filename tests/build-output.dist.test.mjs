@@ -29,6 +29,23 @@ test("root homepage links to canonical dashboard paths", () => {
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
 });
 
+test("root homepage is built from the original MCTech theme", () => {
+  const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+
+  assert.match(html, /mct-styles\.css/);
+  assert.match(html, /mct-app\.js/);
+  assert.match(html, /BNTI . Border Neighbor Threat Index/);
+  assert.match(html, /The same instrument, carried to the region: the MENA Threat Index/);
+  assert.match(html, /MONARCH&nbsp;<b>CASTLE<\/b>/);
+  assert.doesNotMatch(html, /\/styles\/site\.css/);
+  assert.doesNotMatch(html, /\/scripts\/live-panels\.js/);
+  assert.doesNotMatch(html, /class="live-card"/);
+
+  assert.equal(fs.existsSync(path.join(dist, "mct-styles.css")), true);
+  assert.equal(fs.existsSync(path.join(dist, "mct-app.js")), true);
+  assert.equal(fs.existsSync(path.join(dist, "assets", "mc-mark.png")), true);
+});
+
 test("dashboard entrypoints do not leak root-relative paths or redirect shims", () => {
   const redirectPattern = /<meta[^>]+http-equiv=["']refresh["']|window\.location|location\.href/i;
   const rootRelativeLeakPattern = /(?:href|src)=["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|fetch\(\s*["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|url\(\s*["']?\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))/i;

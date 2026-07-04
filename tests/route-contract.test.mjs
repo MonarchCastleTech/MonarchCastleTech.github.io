@@ -22,10 +22,19 @@ test("full dashboards are mounted at canonical subpaths", () => {
 
 test("supporting local pages use canonical paths", () => {
   const pages = Object.fromEntries(routes.localPages.map((page) => [page.slug, page]));
-  assert.equal(pages.home.path, "/");
   assert.equal(pages.tools.path, "/tools/");
   assert.equal(pages.mcp.path, "/mcp/");
   assert.equal(pages.sdcofa.path, "/sdcofa/");
+});
+
+test("root homepage is sourced from the original MCTech theme upstream", () => {
+  assert.deepEqual(routes.themeHomepage, {
+    repoKey: "theme",
+    index: "index.html",
+    stylesheet: "mct-styles.css",
+    script: "mct-app.js",
+    assets: "assets"
+  });
 });
 
 test("product assets are vendored locally instead of sourced from the canonical repo", () => {

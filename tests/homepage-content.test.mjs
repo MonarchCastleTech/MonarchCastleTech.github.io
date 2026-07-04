@@ -1,8 +1,11 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
-const indexHtml = fs.readFileSync(new URL("../src/pages/index.html", import.meta.url), "utf8");
+const root = fileURLToPath(new URL("..", import.meta.url));
+const indexHtml = fs.readFileSync(path.join(root, "dist", "index.html"), "utf8");
 const toolsHtml = fs.readFileSync(new URL("../src/pages/tools.html", import.meta.url), "utf8");
 const mcpHtml = fs.readFileSync(new URL("../src/pages/mcp.html", import.meta.url), "utf8");
 const sdcofaHtml = fs.readFileSync(new URL("../src/pages/sdcofa.html", import.meta.url), "utf8");
@@ -40,7 +43,9 @@ test("structured site content captures the approved brand thesis and instruments
 test("homepage keeps sovereign decision intelligence theme", () => {
   assert.match(indexHtml, /Sovereign decision intelligence/);
   assert.match(indexHtml, /The Keep/);
-  assert.match(indexHtml, /defensible operating surfaces/);
+  assert.match(indexHtml, /Intelligence for institutions that cannot afford to be/);
+  assert.match(indexHtml, /mct-styles\.css/);
+  assert.doesNotMatch(indexHtml, /\/styles\/site\.css/);
 });
 
 test("homepage exposes products and live instruments at canonical paths", () => {

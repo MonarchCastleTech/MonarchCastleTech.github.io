@@ -6,8 +6,14 @@
     "wti": "https://github.com/SDCofA/world-threat-index.git",
     "mena": "https://github.com/SDCofA/mena-threat-index.git"
   },
+  "themeHomepage": {
+    "repoKey": "theme",
+    "index": "index.html",
+    "stylesheet": "mct-styles.css",
+    "script": "mct-app.js",
+    "assets": "assets"
+  },
   "localPages": [
-    { "slug": "home", "path": "/", "source": "src/pages/index.html", "output": "index.html" },
     { "slug": "tools", "path": "/tools/", "source": "src/pages/tools.html", "output": "tools/index.html" },
     { "slug": "mcp", "path": "/mcp/", "source": "src/pages/mcp.html", "output": "mcp/index.html" },
     { "slug": "sdcofa", "path": "/sdcofa/", "source": "src/pages/sdcofa.html", "output": "sdcofa/index.html" }
