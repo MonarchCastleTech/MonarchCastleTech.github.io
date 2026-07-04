@@ -9,6 +9,7 @@
     "build": "node scripts/build-site.mjs",
     "verify": "npm run sync && npm run build && npm test && npm run test:dist && node scripts/verify-dist.mjs",
     "check:live": "node scripts/check-live-site.mjs",
+    "enforce:https": "node scripts/enforce-pages-https.mjs",
     "preview": "npx serve dist -l 4173",
     "browser:test": "playwright test tests/browser/site-smoke.spec.mjs"
   },

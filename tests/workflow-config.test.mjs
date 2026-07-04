@@ -4,7 +4,9 @@ import test from "node:test";
 
 const workflowPath = new URL("../.github/workflows/pages.yml", import.meta.url);
 const healthWorkflowPath = new URL("../.github/workflows/site-health.yml", import.meta.url);
+const httpsWorkflowPath = new URL("../.github/workflows/https-enforce.yml", import.meta.url);
 const healthScriptPath = new URL("../scripts/check-live-site.mjs", import.meta.url);
+const httpsScriptPath = new URL("../scripts/enforce-pages-https.mjs", import.meta.url);
 
 test("GitHub Pages workflow builds and deploys dist artifact", () => {
   const workflow = fs.readFileSync(workflowPath, "utf8");
@@ -49,4 +51,26 @@ test("live site health script covers canonical routes and dashboard data freshne
 
   assert.match(script, /maxAgeHours/);
   assert.match(script, /SITE_BASE_URL/);
+});
+
+test("HTTPS enforcement workflow retries until GitHub Pages certificate exists", () => {
+  assert.equal(fs.existsSync(httpsWorkflowPath), true);
+  const workflow = fs.readFileSync(httpsWorkflowPath, "utf8");
+
+  assert.match(workflow, /schedule:/);
+  assert.match(workflow, /cron:\s+["']17 \* \* \* \*["']/);
+  assert.match(workflow, /workflow_dispatch:/);
+  assert.match(workflow, /node scripts\/enforce-pages-https\.mjs/);
+  assert.match(workflow, /GH_TOKEN/);
+});
+
+test("HTTPS enforcement script treats missing certificate as pending and enables HTTPS when available", () => {
+  assert.equal(fs.existsSync(httpsScriptPath), true);
+  const script = fs.readFileSync(httpsScriptPath, "utf8");
+
+  assert.match(script, /PAGES_REPO/);
+  assert.match(script, /https_enforced/);
+  assert.match(script, /certificate does not exist yet/i);
+  assert.match(script, /--method/);
+  assert.match(script, /PUT/);
 });
