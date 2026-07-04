@@ -71,6 +71,7 @@ test("HTTPS enforcement script treats missing certificate as pending and enables
   assert.match(script, /PAGES_REPO/);
   assert.match(script, /https_enforced/);
   assert.match(script, /certificate does not exist yet/i);
+  assert.match(script, /Resource not accessible by integration/i);
   assert.match(script, /--method/);
   assert.match(script, /PUT/);
 });

@@ -58,5 +58,12 @@ if (/certificate does not exist yet/i.test(combined)) {
   process.exit(0);
 }
 
+if (/Resource not accessible by integration/i.test(combined)) {
+  console.log(
+    "GitHub Actions token cannot update Pages settings; add a PAGES_ADMIN_TOKEN secret with Pages/Admin write access to enable automatic HTTPS enforcement."
+  );
+  process.exit(0);
+}
+
 console.error(combined || `Unable to enforce HTTPS for ${customDomain}`);
 process.exit(result.status || 1);
