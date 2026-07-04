@@ -49,10 +49,10 @@ test("homepage keeps sovereign decision intelligence theme", () => {
 });
 
 test("homepage exposes products and live instruments at canonical paths", () => {
-  for (const path of ["/bnti/", "/wti/", "/mena/"]) {
+  for (const path of ["/bnti/", "/wti/", "/mena/", "/sdcofa/"]) {
     assert.match(indexHtml, new RegExp(`href="${path}"`));
   }
-  for (const label of ["BNTI", "WTI", "MENA", "Defense Intelligence", "Financial Intelligence", "Sustainability Intelligence"]) {
+  for (const label of ["BNTI", "WTI", "MENA", "Defense Intelligence", "Financial Intelligence", "Sustainability Intelligence", "SDCofA", "Strategic Data Company of Ankara"]) {
     assert.match(indexHtml, new RegExp(label));
   }
 });

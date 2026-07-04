@@ -46,6 +46,18 @@ test("root homepage is built from the original MCTech theme", () => {
   assert.equal(fs.existsSync(path.join(dist, "assets", "mc-mark.png")), true);
 });
 
+test("root homepage adds MCT logo and SDCofA division without replacing theme shell", () => {
+  const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+
+  assert.match(html, /<img class="mark" src="assets\/products\/logo\.png" alt="" \/>/);
+  assert.match(html, /<section class="division reveal" aria-labelledby="div-sdcofa">/);
+  assert.match(html, /<h3 class="div-title" id="div-sdcofa">SDCofA<\/h3>/);
+  assert.match(html, /href="\/sdcofa\/"/);
+  assert.match(html, /src="assets\/products\/sdcofa-logo-dark\.png"/);
+  assert.equal(fs.existsSync(path.join(dist, "assets", "products", "logo.png")), true);
+  assert.equal(fs.existsSync(path.join(dist, "assets", "products", "sdcofa-logo-dark.png")), true);
+});
+
 test("dashboard entrypoints do not leak root-relative paths or redirect shims", () => {
   const redirectPattern = /<meta[^>]+http-equiv=["']refresh["']|window\.location|location\.href/i;
   const rootRelativeLeakPattern = /(?:href|src)=["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|fetch\(\s*["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|url\(\s*["']?\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))/i;

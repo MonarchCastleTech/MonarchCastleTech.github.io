@@ -68,6 +68,71 @@ function requireThemeSource(theme, fileName) {
   return source;
 }
 
+function withMctLogo(html) {
+  if (html.includes('src="assets/products/logo.png"')) {
+    return html;
+  }
+
+  return html.replace(
+    /<svg class="mark-svg"[\s\S]*?<\/svg>/,
+    '<img class="mark" src="assets/products/logo.png" alt="" />'
+  );
+}
+
+function sdcofaDivisionMarkup() {
+  return `
+    <!-- DIVISION 04 - SDCofA -->
+    <section class="division reveal" aria-labelledby="div-sdcofa">
+      <header class="div-head">
+        <div>
+          <p class="div-eyebrow"><span class="tick" aria-hidden="true">&#9670;</span> Division 04</p>
+          <p class="div-org">Strategic Data Company of Ankara</p>
+          <h3 class="div-title" id="div-sdcofa">SDCofA</h3>
+        </div>
+        <p class="div-mandate">Publish standing open-source threat indices with traceable inputs and fixed scoring doctrine.</p>
+      </header>
+      <div class="div-products">
+        <article class="module">
+          <span class="mnum">S.01</span>
+          <div class="mcopy">
+            <p class="mkind">Open-source threat indices</p>
+            <h3>Strategic Data Company of Ankara</h3>
+            <p class="mdecide">A public division for BNTI, WTI and MENA threat dashboards.</p>
+            <p class="mrigor">SDCofA publishes scheduled, inspectable snapshots from the same doctrine: canonical data files, fixed scoring logic, dashboard routes and provenance-preserving refresh cycles.</p>
+            <div class="mtags">
+              <a class="mlink" href="/sdcofa/">Open SDCofA <span class="ar" aria-hidden="true">&#8599;</span></a>
+              <a class="mlink" href="/bnti/">BNTI <span class="ar" aria-hidden="true">&#8599;</span></a>
+              <a class="mlink" href="/wti/">WTI <span class="ar" aria-hidden="true">&#8599;</span></a>
+              <a class="mlink" href="/mena/">MENA <span class="ar" aria-hidden="true">&#8599;</span></a>
+            </div>
+          </div>
+          <div class="mviz" aria-label="SDCofA - Strategic Data Company of Ankara division">
+            <div class="vlabel"><span>SDCofA</span><span>PUBLIC DIVISION</span></div>
+            <img src="assets/products/sdcofa-logo-dark.png" alt="Strategic Data Company of Ankara" style="display:block;max-width:100%;height:auto;margin:22px auto 18px;" />
+            <div class="sc-tests"><span class="t">Standing indices</span><span class="n">3</span></div>
+          </div>
+        </article>
+      </div>
+    </section>`;
+}
+
+function withSdcofaDivision(html) {
+  if (html.includes('id="div-sdcofa"')) {
+    return html;
+  }
+
+  const updated = html.replace(
+    "Seven instruments. Three divisions. One engine.",
+    "Eight instruments. Four divisions. One engine."
+  );
+  const inserted = updated.replace(
+    /(\r?\n  <\/div>\r?\n<\/section>\r?\n\r?\n<!-- ============================== WHY SOVEREIGN ============================== -->)/,
+    `${sdcofaDivisionMarkup()}\n$1`
+  );
+
+  return inserted;
+}
+
 function rewriteThemeHomepage(content) {
   let html = content
     .replaceAll("https://akgularda.github.io/border-neighbor-threat-index/", "/bnti/")
@@ -83,6 +148,9 @@ function rewriteThemeHomepage(content) {
       '      <a href="#open">Open</a>\n      <a href="/wti/">WTI</a>'
     );
   }
+
+  html = withMctLogo(html);
+  html = withSdcofaDivision(html);
 
   return html;
 }
