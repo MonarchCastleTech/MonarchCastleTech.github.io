@@ -6,12 +6,25 @@ import test from "node:test";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const dist = path.join(root, "dist");
+const routes = JSON.parse(fs.readFileSync(path.join(root, "site.routes.json"), "utf8"));
 
-test("build output includes canonical site files", () => {
+test("build output preserves the custom-domain files", () => {
   assert.equal(fs.existsSync(path.join(dist, "CNAME")), true);
   assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), "monarchcastle.tech");
   assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true);
-  assert.equal(fs.existsSync(path.join(dist, "index.html")), true);
+});
+
+test("build output includes every governed narrative route", () => {
+  for (const route of routes.sitePages) {
+    const target = path.join(dist, route.output);
+    assert.equal(fs.existsSync(target), true, `${route.path} exists`);
+    const html = fs.readFileSync(target, "utf8");
+    assert.equal((html.match(/<h1\b/g) ?? []).length, 1, `${route.path} has exactly one h1`);
+    assert.match(html, new RegExp(`<link rel="canonical" href="https://${routes.canonicalDomain}${route.path}"`));
+    assert.match(html, /<meta property="og:title"/);
+    assert.match(html, /<meta property="og:description"/);
+    assert.match(html, /<meta property="og:url"/);
+  }
 });
 
 test("build output includes full dashboard subpaths", () => {
@@ -21,41 +34,23 @@ test("build output includes full dashboard subpaths", () => {
   }
 });
 
-test("root homepage links to canonical dashboard paths", () => {
+test("root homepage follows the governed shell and links to canonical dashboard paths", () => {
   const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
   assert.match(html, /href="\/bnti\/"/);
   assert.match(html, /href="\/wti\/"/);
   assert.match(html, /href="\/mena\/"/);
+  assert.match(html, /href="\/styles\/site\.css"/);
+  assert.match(html, /Decision intelligence with its sources visible/);
+  assert.match(html, /Forecast evaluation not yet evidenced/i);
+  assert.doesNotMatch(html, /mct-styles\.css|mct-app\.js/);
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
 });
 
-test("root homepage is built from the original MCTech theme", () => {
-  const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
-
-  assert.match(html, /mct-styles\.css/);
-  assert.match(html, /mct-app\.js/);
-  assert.match(html, /BNTI . Border Neighbor Threat Index/);
-  assert.match(html, /The same instrument, carried to the region: the MENA Threat Index/);
-  assert.match(html, /MONARCH&nbsp;<b>CASTLE<\/b>/);
-  assert.doesNotMatch(html, /\/styles\/site\.css/);
-  assert.doesNotMatch(html, /\/scripts\/live-panels\.js/);
-  assert.doesNotMatch(html, /class="live-card"/);
-
-  assert.equal(fs.existsSync(path.join(dist, "mct-styles.css")), true);
-  assert.equal(fs.existsSync(path.join(dist, "mct-app.js")), true);
-  assert.equal(fs.existsSync(path.join(dist, "assets", "mc-mark.png")), true);
-});
-
-test("root homepage adds MCT logo and SDCofA division without replacing theme shell", () => {
-  const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
-
-  assert.match(html, /<img class="mark" src="assets\/products\/logo\.png" alt="" \/>/);
-  assert.match(html, /<section class="division reveal" aria-labelledby="div-sdcofa">/);
-  assert.match(html, /<h3 class="div-title" id="div-sdcofa">SDCofA<\/h3>/);
-  assert.match(html, /href="\/sdcofa\/"/);
-  assert.match(html, /src="assets\/products\/sdcofa-logo-dark\.png"/);
-  assert.equal(fs.existsSync(path.join(dist, "assets", "products", "logo.png")), true);
-  assert.equal(fs.existsSync(path.join(dist, "assets", "products", "sdcofa-logo-dark.png")), true);
+test("approved product assets are present and legacy theme assets are not required", () => {
+  assert.equal(fs.existsSync(path.join(dist, "assets", "approved", "mena-threat-index.png")), true);
+  assert.equal(fs.existsSync(path.join(dist, "assets", "approved", "world-threat-index.png")), true);
+  assert.equal(fs.existsSync(path.join(dist, "mct-styles.css")), false);
+  assert.equal(fs.existsSync(path.join(dist, "mct-app.js")), false);
 });
 
 test("dashboard entrypoints do not leak root-relative paths or redirect shims", () => {

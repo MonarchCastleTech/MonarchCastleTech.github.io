@@ -9,8 +9,8 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const governanceRoot = path.resolve(root, "..", "..", "company-governance");
 const site = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "site.json"), "utf8"));
 const indexHtml = fs.readFileSync(path.join(root, "dist", "index.html"), "utf8");
-const registry = JSON.parse(fs.readFileSync(path.join(governanceRoot, "portfolio", "products.json"), "utf8"));
-const logoInventory = JSON.parse(fs.readFileSync(path.join(governanceRoot, "portfolio", "logo-inventory.json"), "utf8"));
+const registryPath = path.join(governanceRoot, "portfolio", "products.json");
+const logoInventoryPath = path.join(governanceRoot, "portfolio", "logo-inventory.json");
 
 const projectedFields = [
   "id",
@@ -31,7 +31,9 @@ function sha256(filePath) {
   return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
 }
 
-test("site content is an exact governed projection of every public registry product", () => {
+test("site content is an exact governed projection of every public registry product", (t) => {
+  if (!fs.existsSync(registryPath)) return t.skip("cross-repository governance checkout is not available");
+  const registry = JSON.parse(fs.readFileSync(registryPath, "utf8"));
   const publicRegistryProducts = registry.products.filter(({ publicUrl, lifecycle }) => publicUrl && lifecycle !== "retired");
   assert.deepEqual(site.products.map(({ id }) => id), publicRegistryProducts.map(({ id }) => id));
   assert.equal(new Set(site.products.map(({ id }) => id)).size, site.products.length);
@@ -68,7 +70,9 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   }
 });
 
-test("only inventory-approved image marks are emitted; all other products fail closed to text", () => {
+test("only inventory-approved image marks are emitted; all other products fail closed to text", (t) => {
+  if (!fs.existsSync(logoInventoryPath)) return t.skip("cross-repository governance checkout is not available");
+  const logoInventory = JSON.parse(fs.readFileSync(logoInventoryPath, "utf8"));
   const approvedByProduct = new Map(logoInventory.logos.map((logo) => [logo.productId, logo]));
 
   for (const product of site.products) {

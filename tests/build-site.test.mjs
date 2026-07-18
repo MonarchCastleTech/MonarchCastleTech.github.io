@@ -54,7 +54,14 @@ function baseProject(root, assets = []) {
   writeFile(root, "src/content/editorial.json", JSON.stringify({
     contactUrl: "https://github.com/example",
     securityUrl: "https://github.com/example/security/policy",
-    licenseUrl: "https://github.com/example/blob/main/LICENSE"
+    licenseUrl: "https://github.com/example/blob/main/LICENSE",
+    citationUrl: "https://github.com/example/blob/main/CITATION.cff",
+    governanceUrl: "https://github.com/example/governance",
+    capabilities: ["Strategy", "Data", "Intelligence", "Forecasting"].map((name) => ({
+      name,
+      summary: `${name} capability summary.`
+    })),
+    insights: []
   }));
   writeFile(root, "src/styles/site.css", "body{}");
   writeFile(root, "src/scripts/site.js", "");

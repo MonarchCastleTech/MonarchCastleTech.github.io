@@ -34,6 +34,7 @@ function writeBaseProject(root, mounts) {
   copyVerifyScript(root);
   writeFile(root, "site.routes.json", JSON.stringify({
     canonicalDomain: "example.com",
+    sitePages: [],
     localPages: [],
     dashboardMounts: mounts,
     assets: []
@@ -41,6 +42,41 @@ function writeBaseProject(root, mounts) {
   writeFile(root, "dist/CNAME", "example.com\n");
   writeFile(root, "dist/.nojekyll", "");
 }
+
+test("verify-dist rejects broken local links in generated narrative routes", () => {
+  const root = makeTempRoot("verify-dist-broken-link-");
+  copyVerifyScript(root);
+  writeFile(root, "site.routes.json", JSON.stringify({
+    canonicalDomain: "example.com",
+    sitePages: [{
+      slug: "home",
+      path: "/",
+      output: "index.html",
+      title: "Home title",
+      description: "A unique and sufficiently useful homepage description."
+    }],
+    localPages: [],
+    dashboardMounts: [],
+    assets: []
+  }, null, 2));
+  writeFile(root, "dist/CNAME", "example.com\n");
+  writeFile(root, "dist/.nojekyll", "");
+  writeFile(root, "dist/index.html", [
+    "<!doctype html><html><head>",
+    "<title>Home title</title>",
+    "<meta name='description' content='A unique and sufficiently useful homepage description.'>",
+    "<link rel='canonical' href='https://example.com/'>",
+    "</head><body><header></header><nav aria-label='Primary'></nav>",
+    "<main id='main-content'><h1>Home</h1><a href='/missing/'>Missing</a></main>",
+    "<footer></footer></body></html>"
+  ].join(""));
+
+  const result = runVerify(root);
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /broken local reference/i);
+  fs.rmSync(root, { recursive: true, force: true });
+});
 
 test("verify-dist reports a missing dashboard index with an intentional assertion message", () => {
   const root = makeTempRoot("verify-dist-missing-index-");
