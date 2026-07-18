@@ -484,13 +484,16 @@ function renderPage(page) {
   <meta property="og:description" content="${escapeHtml(page.description)}" />
   <meta property="og:url" content="${canonical}" />
   <meta property="og:site_name" content="${escapeHtml(site.brand.masterbrand)}" />
+  <meta property="og:image" content="${canonicalOrigin}/assets/products/logo.png" />
+  <link rel="icon" type="image/png" href="/assets/products/logo.png" />
   <link rel="stylesheet" href="/styles/site.css" />
 </head>
 <body data-page="${escapeHtml(page.slug)}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="site-header">
     <a class="wordmark" href="/" aria-label="${escapeHtml(site.brand.masterbrand)} home">
-      <span>Monarch Castle</span><strong>Technologies</strong>
+      <img class="brand-logo" src="/assets/products/logo.png" alt="" />
+      <span class="wordmark-copy"><span>Monarch Castle</span><strong>Technologies</strong></span>
     </a>
     <nav aria-label="Primary"><ul>${renderNav(page.path)}</ul></nav>
     <a class="header-action" href="/products/">Explore products</a>

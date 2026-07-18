@@ -123,6 +123,8 @@ test("homepage follows the approved flagship narrative and keeps the four capabi
 });
 
 test("public shell uses the focused flagship navigation and product action", () => {
+  assert.match(indexHtml, /<img class="brand-logo" src="\/assets\/products\/logo\.png" alt="" \/>/);
+  assert.match(indexHtml, /<link rel="icon" type="image\/png" href="\/assets\/products\/logo\.png" \/>/);
   for (const label of ["Home", "Products", "Forecasting", "Methodology", "Company"]) {
     assert.match(indexHtml, new RegExp(`>${label}<`));
   }
