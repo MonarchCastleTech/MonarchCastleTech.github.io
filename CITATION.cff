@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use Monarch Castle Technologies Website, cite the exact repository commit and relevant data snapshot."
+title: "Monarch Castle Technologies Website"
+type: software
+authors:
+  - name: "Monarch Castle Technologies"
+repository-code: "https://github.com/MonarchCastleTech/MonarchCastleTech.github.io"
+license: "MIT"
