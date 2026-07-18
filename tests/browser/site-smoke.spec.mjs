@@ -27,7 +27,11 @@ for (const route of [...narrativeRoutes, ...Object.keys(dashboardExpectations), 
     if (narrativeRoutes.includes(route)) {
       await expect(page.locator("h1")).toHaveCount(1);
       await expect(page.locator("main#main-content")).toBeVisible();
-      await expect(page.locator(".next-action")).toBeVisible();
+      if (route === "/") {
+        await expect(page.locator(".company-close")).toBeVisible();
+      } else {
+        await expect(page.locator(".next-action")).toBeVisible();
+      }
       await expect(page.locator("nav[aria-label='Primary']")).toBeVisible();
     }
 
@@ -49,13 +53,65 @@ test("keyboard navigation exposes the skip link and visible focus", async ({ pag
   await expect(page.locator("#main-content")).toBeFocused();
 });
 
-test("desktop and mobile layouts do not overflow", async ({ page }) => {
-  for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
-    await page.setViewportSize(viewport);
-    await page.goto(`${baseURL}/products/`);
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
-    expect(overflow).toBeFalsy();
+for (const width of [375, 552, 768, 1440]) {
+  test(`homepage and products are composed at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    for (const route of ["/", "/products/"]) {
+      await page.goto(`${baseURL}${route}`);
+      const dimensions = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth
+      }));
+      expect(dimensions.scrollWidth, `${route} should not overflow at ${width}px`).toBe(dimensions.clientWidth);
+    }
+  });
+}
+
+test("every public product logo loads, stays contained, and remains visible", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(`${baseURL}/products/`);
+  const logos = page.locator(".product-mark img, .endorsed-links img");
+  expect(await logos.count()).toBe(11);
+
+  for (let index = 0; index < await logos.count(); index += 1) {
+    const state = await logos.nth(index).evaluate((image) => {
+      const box = image.getBoundingClientRect();
+      const parentBox = image.parentElement.getBoundingClientRect();
+      return {
+        complete: image.complete,
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight,
+        objectFit: getComputedStyle(image).objectFit,
+        width: box.width,
+        height: box.height,
+        insideParent:
+          box.left >= parentBox.left - 1 &&
+          box.right <= parentBox.right + 1 &&
+          box.top >= parentBox.top - 1 &&
+          box.bottom <= parentBox.bottom + 1
+      };
+    });
+    expect(state.complete).toBeTruthy();
+    expect(state.naturalWidth).toBeGreaterThan(0);
+    expect(state.naturalHeight).toBeGreaterThan(0);
+    expect(state.objectFit).toBe("contain");
+    expect(state.width).toBeGreaterThan(0);
+    expect(state.height).toBeGreaterThan(0);
+    expect(state.insideParent).toBeTruthy();
   }
+});
+
+test("flagship palette resolves to MCT navy, gold, and warm white", async ({ page }) => {
+  await page.goto(`${baseURL}/`);
+  const palette = await page.locator("html").evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      navy: style.getPropertyValue("--navy").trim(),
+      gold: style.getPropertyValue("--gold").trim(),
+      ink: style.getPropertyValue("--ink").trim()
+    };
+  });
+  expect(palette).toEqual({ navy: "#071522", gold: "#d7b46a", ink: "#f3efe4" });
 });
 
 for (const colorScheme of ["light", "dark"]) {
