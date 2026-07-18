@@ -1,0 +1,42 @@
+{
+  "contactUrl": "https://github.com/MonarchCastleTech",
+  "securityUrl": "https://github.com/MonarchCastleTech/.github/blob/main/SECURITY.md",
+  "licenseUrl": "https://github.com/MonarchCastleTech/MonarchCastleTech.github.io/blob/main/LICENSE",
+  "citationUrl": "https://github.com/MonarchCastleTech/MonarchCastleTech.github.io/blob/main/CITATION.cff",
+  "governanceUrl": "https://github.com/MonarchCastleTech/company-governance",
+  "capabilities": [
+    {
+      "name": "Strategy",
+      "summary": "Frame the decision, its alternatives, constraints, and accountable owner before selecting an instrument."
+    },
+    {
+      "name": "Data",
+      "summary": "Keep sources, observation dates, update cadence, and missing-data handling visible beside the output."
+    },
+    {
+      "name": "Intelligence",
+      "summary": "Turn sourced observations into bounded assessments with methodology and limitations available for inspection."
+    },
+    {
+      "name": "Forecasting",
+      "summary": "Publish probabilistic, time-bound, independently scoreable outlooks only under the governed evaluation standard."
+    }
+  ],
+  "insights": [
+    {
+      "title": "Forecast evaluation protocol",
+      "summary": "The public protocol defines preregistration, baselines, time-aware validation, scoring, and limitations before performance claims can be released.",
+      "url": "https://github.com/MonarchCastleTech/company-governance/blob/main/forecasting/evaluation-protocol.md"
+    },
+    {
+      "title": "Claims policy",
+      "summary": "Public comparative language requires an approved evidence record; unqualified superlatives are not released.",
+      "url": "https://github.com/MonarchCastleTech/company-governance/blob/main/claims/claims-policy.md"
+    },
+    {
+      "title": "Brand and endorsement architecture",
+      "summary": "The masterbrand, product relationships, approved marks, and SDCofA endorsement are governed as explicit public contracts.",
+      "url": "https://github.com/MonarchCastleTech/company-governance/blob/main/brand/brand-architecture.md"
+    }
+  ]
+}

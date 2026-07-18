@@ -16,7 +16,7 @@ Lifecycle: **Active**. The badge and this statement describe maintenance status,
 
 ## Public access
 
-This repository is **not publicly deployed**. Use the local quick-start instructions below.
+The canonical production route is [monarchcastle.tech](https://monarchcastle.tech/). A GitHub Pages certificate/HTTPS defect confirmed on 2026-07-18 is tracked in the company-governance infrastructure follow-up; the source-controlled `CNAME` remains unchanged.
 
 ## Screenshots
 
@@ -38,24 +38,35 @@ Release-driven; rebuilt when approved company or portfolio content changes.
 
 ```shell
 npm ci
-```
-
-```shell
+npm run sync
 npm run build
 ```
 
 Run only in a trusted development environment and review repository-specific prerequisites before using networked or hardware features.
 
+When the sibling `company-governance` checkout is available, regenerate and verify the public registry projection with:
+
+```shell
+npm run sync:content
+npm run check:content
+```
+
 ## Architecture
 
-- `src/` — repository-specific implementation, data, or configuration boundary.
-- `scripts/` — repository-specific implementation, data, or configuration boundary.
-- `site.routes.json` — repository-specific implementation, data, or configuration boundary.
+- `site.routes.json` — the single route manifest for the homepage, eight narrative routes, supporting pages, and mounted dashboards.
+- `src/content/site.json` — deterministic generated projection of the approved portfolio and brand registries.
+- `src/content/editorial.json` — non-inventory narrative, contact, trust, and capability copy.
+- `scripts/sync-content.mjs` — fail-closed governance projection and approved-mark synchronizer.
+- `scripts/build-site.mjs` — self-contained narrative renderer plus dashboard mount pipeline.
+- `scripts/verify-dist.mjs` — route, metadata, local-reference, claims, and dashboard boundary verifier.
 
 ## Tests
 
 ```shell
 npm test
+npm run build
+npm run test:dist
+npm run browser:test
 ```
 
 ## Provenance

@@ -1,18 +1,75 @@
 {
   "canonicalDomain": "monarchcastle.tech",
   "upstreams": {
-    "theme": "https://github.com/akgularda/monarch-castle-technologies.git",
     "bnti": "https://github.com/SDCofA/border-neighbor-threat-index.git",
     "wti": "https://github.com/SDCofA/world-threat-index.git",
     "mena": "https://github.com/SDCofA/mena-threat-index.git"
   },
-  "themeHomepage": {
-    "repoKey": "theme",
-    "index": "index.html",
-    "stylesheet": "mct-styles.css",
-    "script": "mct-app.js",
-    "assets": "assets"
-  },
+  "sitePages": [
+    {
+      "slug": "home",
+      "path": "/",
+      "output": "index.html",
+      "title": "Monarch Castle Technologies | Evidence-led Decision Intelligence",
+      "description": "Decision intelligence grounded in transparent data, explicit limitations, and calibrated forecasting standards."
+    },
+    {
+      "slug": "products",
+      "path": "/products/",
+      "output": "products/index.html",
+      "title": "Products | Monarch Castle Technologies",
+      "description": "Explore the governed Monarch Castle Technologies portfolio and the endorsed SDCofA analytical family."
+    },
+    {
+      "slug": "datasets",
+      "path": "/datasets/",
+      "output": "datasets/index.html",
+      "title": "Datasets and Sources | Monarch Castle Technologies",
+      "description": "Review public data products, source routes, update cadences, and methodology links across the portfolio."
+    },
+    {
+      "slug": "solutions",
+      "path": "/solutions/",
+      "output": "solutions/index.html",
+      "title": "Decision Intelligence Solutions | Monarch Castle Technologies",
+      "description": "See how strategy, data, intelligence, and forecasting standards support inspectable institutional decisions."
+    },
+    {
+      "slug": "insights",
+      "path": "/insights/",
+      "output": "insights/index.html",
+      "title": "Research and Insights | Monarch Castle Technologies",
+      "description": "Read governed research notes, methodology records, and evaluation standards without fabricated activity feeds."
+    },
+    {
+      "slug": "methodology",
+      "path": "/methodology/",
+      "output": "methodology/index.html",
+      "title": "Methodology | Monarch Castle Technologies",
+      "description": "Understand portfolio provenance, update cadence, evidence status, limitations, and forecast evaluation rules."
+    },
+    {
+      "slug": "developers",
+      "path": "/developers/",
+      "output": "developers/index.html",
+      "title": "Developers | Monarch Castle Technologies",
+      "description": "Find public repositories, machine-readable sources, developer tools, licensing, and reproducibility guidance."
+    },
+    {
+      "slug": "trust",
+      "path": "/trust/",
+      "output": "trust/index.html",
+      "title": "Trust Center | Monarch Castle Technologies",
+      "description": "Review the public commitments for provenance, claims, forecast evidence, security, licensing, and endorsement."
+    },
+    {
+      "slug": "company",
+      "path": "/company/",
+      "output": "company/index.html",
+      "title": "Company | Monarch Castle Technologies",
+      "description": "Learn about Monarch Castle Technologies, its endorsed analytical unit SDCofA, governance, and contact routes."
+    }
+  ],
   "localPages": [
     { "slug": "tools", "path": "/tools/", "source": "src/pages/tools.html", "output": "tools/index.html" },
     { "slug": "mcp", "path": "/mcp/", "source": "src/pages/mcp.html", "output": "mcp/index.html" },
@@ -43,6 +100,6 @@
   ],
   "assets": [
     { "fromLocal": "src/assets/products", "to": "assets/products" },
-    { "fromRepo": "theme", "from": "assets", "to": "assets/theme" }
+    { "fromLocal": "src/assets/approved", "to": "assets/approved" }
   ]
 }

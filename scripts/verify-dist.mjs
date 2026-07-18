@@ -6,6 +6,67 @@ const root = process.cwd();
 const routes = JSON.parse(fs.readFileSync(path.join(root, "site.routes.json"), "utf8"));
 const dist = path.join(root, "dist");
 
+function targetForLocalReference(value) {
+  const parsed = new URL(value, `https://${routes.canonicalDomain}`);
+  const decoded = decodeURIComponent(parsed.pathname);
+  if (decoded === "/") return path.join(dist, "index.html");
+  if (decoded.endsWith("/")) return path.join(dist, decoded, "index.html");
+  const direct = path.join(dist, decoded);
+  if (path.extname(decoded)) return direct;
+  return fs.existsSync(direct) ? direct : path.join(direct, "index.html");
+}
+
+function collectLocalReferences(html) {
+  const references = [];
+  for (const match of html.matchAll(/(?:href|src)=["']([^"']+)["']/gi)) {
+    const value = match[1];
+    if (!value.startsWith("/") || value.startsWith("//")) continue;
+    references.push(value);
+  }
+  return references;
+}
+
+function assertNarrativePages() {
+  const seenTitles = new Set();
+  const seenDescriptions = new Set();
+  const seenCanonicals = new Set();
+  const prohibitedClaim = /\b(?:best|leading|most accurate|ai-powered)\b/i;
+  const unsourcedCounter = /\b\d+[,.]?\d*\+?\s+(?:customers|countries|forecasts|signals|datasets)\b/i;
+
+  for (const page of routes.sitePages ?? []) {
+    const output = path.join(dist, page.output);
+    assert.equal(fs.existsSync(output), true, `${page.output} exists`);
+    const html = fs.readFileSync(output, "utf8");
+    const title = html.match(/<title>([^<]+)<\/title>/i)?.[1];
+    const description = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1];
+    const canonical = html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i)?.[1];
+
+    assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, `${page.path} has exactly one h1`);
+    assert.match(html, /<header\b/i, `${page.path} has a header landmark`);
+    assert.match(html, /<nav\b[^>]+aria-label=["']Primary["']/i, `${page.path} has primary navigation`);
+    assert.match(html, /<main\b[^>]+id=["']main-content["']/i, `${page.path} has a main landmark`);
+    assert.match(html, /<footer\b/i, `${page.path} has a footer landmark`);
+    assert.ok(title && !seenTitles.has(title), `${page.path} title is present and unique`);
+    assert.ok(description && !seenDescriptions.has(description), `${page.path} description is present and unique`);
+    assert.equal(canonical, `https://${routes.canonicalDomain}${page.path}`, `${page.path} canonical is correct`);
+    assert.ok(!seenCanonicals.has(canonical), `${page.path} canonical is unique`);
+    assert.doesNotMatch(html, prohibitedClaim, `${page.path} has no prohibited public claim`);
+    assert.doesNotMatch(html, unsourcedCounter, `${page.path} has no unsourced public counter`);
+
+    seenTitles.add(title);
+    seenDescriptions.add(description);
+    seenCanonicals.add(canonical);
+
+    for (const reference of collectLocalReferences(html)) {
+      assert.equal(
+        fs.existsSync(targetForLocalReference(reference)),
+        true,
+        `${page.path} has broken local reference: ${reference}`
+      );
+    }
+  }
+}
+
 function assertNoRedirectMarkers(html, mount) {
   const redirectChecks = [
     { label: "meta refresh", pattern: /<meta[^>]+http-equiv=["']refresh["']/i },
@@ -72,6 +133,7 @@ function assertMountedRootRelativePaths(html, mount) {
 
 assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), routes.canonicalDomain);
 assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true, ".nojekyll exists");
+assertNarrativePages();
 
 for (const page of routes.localPages) {
   assert.equal(fs.existsSync(path.join(dist, page.output)), true, `${page.output} exists`);

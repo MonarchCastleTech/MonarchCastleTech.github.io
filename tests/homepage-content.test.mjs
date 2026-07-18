@@ -1,93 +1,120 @@
 import assert from "node:assert/strict";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
+const governanceRoot = path.resolve(root, "..", "..", "company-governance");
+const site = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "site.json"), "utf8"));
 const indexHtml = fs.readFileSync(path.join(root, "dist", "index.html"), "utf8");
-const toolsHtml = fs.readFileSync(new URL("../src/pages/tools.html", import.meta.url), "utf8");
-const mcpHtml = fs.readFileSync(new URL("../src/pages/mcp.html", import.meta.url), "utf8");
-const sdcofaHtml = fs.readFileSync(new URL("../src/pages/sdcofa.html", import.meta.url), "utf8");
-const siteJsonUrl = new URL("../src/content/site.json", import.meta.url);
+const registryPath = path.join(governanceRoot, "portfolio", "products.json");
+const logoInventoryPath = path.join(governanceRoot, "portfolio", "logo-inventory.json");
 
-test("structured site content captures the approved brand thesis and instruments", () => {
-  assert.equal(fs.existsSync(siteJsonUrl), true);
-  const site = JSON.parse(fs.readFileSync(siteJsonUrl, "utf8"));
+const projectedFields = [
+  "id",
+  "name",
+  "family",
+  "lifecycle",
+  "regions",
+  "methodologyUrl",
+  "updateFrequency",
+  "logo",
+  "canonicalUrl",
+  "owner",
+  "forecastEvidenceStatus",
+  "endorsementLabel"
+];
 
-  assert.equal(site.brand, "Monarch Castle Technologies");
-  assert.equal(site.domain, "monarchcastle.tech");
-  assert.equal(site.thesis, "Sovereign decision intelligence for institutions that cannot afford to be surprised.");
-  assert.equal(site.engine, "The Keep");
-  assert.deepEqual(
-    site.productLines,
-    [
-      "Defense Intelligence",
-      "Financial Intelligence",
-      "Supply Chain Intelligence",
-      "Sustainability Intelligence",
-      "Energy Intelligence",
-      "Agent Distribution"
-    ]
-  );
-  assert.deepEqual(
-    site.instruments.map(({ label, path, data }) => ({ label, path, data })),
-    [
-      { label: "BNTI", path: "/bnti/", data: "/bnti/bnti_data.json" },
-      { label: "WTI", path: "/wti/", data: "/wti/wti_data.json" },
-      { label: "MENA", path: "/mena/", data: "/mena/mena_data.json" }
-    ]
-  );
+function sha256(filePath) {
+  return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+}
+
+test("site content is an exact governed projection of every public registry product", (t) => {
+  if (!fs.existsSync(registryPath)) return t.skip("cross-repository governance checkout is not available");
+  const registry = JSON.parse(fs.readFileSync(registryPath, "utf8"));
+  const publicRegistryProducts = registry.products.filter(({ publicUrl, lifecycle }) => publicUrl && lifecycle !== "retired");
+  assert.deepEqual(site.products.map(({ id }) => id), publicRegistryProducts.map(({ id }) => id));
+  assert.equal(new Set(site.products.map(({ id }) => id)).size, site.products.length);
+  assert.equal(new Set(site.products.map(({ canonicalUrl }) => canonicalUrl)).size, site.products.length);
+
+  for (const product of site.products) {
+    assert.deepEqual(Object.keys(product).sort(), projectedFields.sort());
+    const source = publicRegistryProducts.find(({ id }) => id === product.id);
+    assert.equal(product.name, source.name);
+    assert.equal(product.family, source.family);
+    assert.equal(product.lifecycle, source.lifecycle);
+    assert.equal(product.methodologyUrl, source.methodologyUrl);
+    assert.equal(product.updateFrequency, source.updateFrequency);
+    assert.equal(product.canonicalUrl, source.publicUrl);
+    assert.equal(product.owner, source.ownerOrg);
+    assert.equal(product.forecastEvidenceStatus, source.evidenceStatus);
+    assert.match(product.endorsementLabel, /Monarch Castle Technologies/);
+  }
 });
 
-test("homepage keeps sovereign decision intelligence theme", () => {
-  assert.match(indexHtml, /Sovereign decision intelligence/);
-  assert.match(indexHtml, /The Keep/);
-  assert.match(indexHtml, /Intelligence for institutions that cannot afford to be/);
-  assert.match(indexHtml, /mct-styles\.css/);
-  assert.doesNotMatch(indexHtml, /\/styles\/site\.css/);
-});
+test("flagship cards are owner-scoped and the endorsed SDCofA family is still represented", () => {
+  const flagship = site.products.filter(({ owner }) => owner === "MonarchCastleTech");
+  const endorsed = site.products.filter(({ owner }) => owner === "SDCofA");
+  assert.equal(flagship.length, 8);
+  assert.equal(endorsed.length, 3);
 
-test("homepage exposes products and live instruments at canonical paths", () => {
-  for (const path of ["/bnti/", "/wti/", "/mena/", "/sdcofa/"]) {
+  for (const product of flagship) {
+    assert.match(indexHtml, new RegExp(`data-product-id="${product.id}"`));
+  }
+  assert.match(indexHtml, /SDCofA/);
+  assert.match(indexHtml, /endorsed analytical unit/i);
+  for (const path of ["/bnti/", "/wti/", "/mena/"]) {
     assert.match(indexHtml, new RegExp(`href="${path}"`));
   }
-  for (const label of ["BNTI", "WTI", "MENA", "Defense Intelligence", "Financial Intelligence", "Sustainability Intelligence", "SDCofA", "Strategic Data Company of Ankara"]) {
-    assert.match(indexHtml, new RegExp(label));
+});
+
+test("only inventory-approved image marks are emitted; all other products fail closed to text", (t) => {
+  if (!fs.existsSync(logoInventoryPath)) return t.skip("cross-repository governance checkout is not available");
+  const logoInventory = JSON.parse(fs.readFileSync(logoInventoryPath, "utf8"));
+  const approvedByProduct = new Map(logoInventory.logos.map((logo) => [logo.productId, logo]));
+
+  for (const product of site.products) {
+    const approved = approvedByProduct.get(product.id);
+    if (!approved) {
+      assert.deepEqual(product.logo, {
+        kind: "governed-text",
+        label: product.name,
+        status: "review-required"
+      });
+      continue;
+    }
+
+    assert.equal(product.logo.kind, "approved-image");
+    assert.equal(product.logo.sha256, approved.sha256);
+    assert.equal(sha256(path.join(root, "src", product.logo.sourcePath)), approved.sha256);
   }
 });
 
-test("homepage does not make GitHub Pages dashboard URLs primary navigation", () => {
-  assert.doesNotMatch(indexHtml, /href="https:\/\/sdcofa\.github\.io\/border-neighbor-threat-index\//);
-  assert.doesNotMatch(indexHtml, /href="https:\/\/sdcofa\.github\.io\/world-threat-index\//);
-  assert.doesNotMatch(indexHtml, /href="https:\/\/sdcofa\.github\.io\/mena-threat-index\//);
+test("homepage follows the approved editorial order and exposes the four governed pillars", () => {
+  const sectionIds = [
+    "positioning",
+    "capabilities",
+    "portfolio",
+    "datasets-methods",
+    "forecast-evaluation",
+    "trust-provenance",
+    "insights",
+    "company-contact"
+  ];
+  const offsets = sectionIds.map((id) => indexHtml.indexOf(`id="${id}"`));
+  assert.ok(offsets.every((offset) => offset >= 0), "all editorial sections exist");
+  assert.deepEqual(offsets, [...offsets].sort((a, b) => a - b));
+  assert.deepEqual(site.brand.pillars, ["Strategy", "Data", "Intelligence", "Forecasting"]);
+  for (const pillar of site.brand.pillars) assert.match(indexHtml, new RegExp(`>${pillar}<`));
 });
 
-test("tools page includes the required visible calculators", () => {
-  for (const label of [
-    "Country Risk Score Calculator",
-    "Supply Chain Exposure Calculator",
-    "ESG Incident Severity Calculator",
-    "Market Weather Checklist",
-    "OSINT Source Reliability Scorer"
-  ]) {
-    assert.match(toolsHtml, new RegExp(label));
+test("homepage exposes trust links and an explicit non-evidenced forecast state", () => {
+  for (const path of ["/methodology/", "/trust/", "/company/", "/products/"]) {
+    assert.match(indexHtml, new RegExp(`href="${path}"`));
   }
-});
-
-test("mcp page includes the required catalog entries", () => {
-  for (const label of [
-    "mct.risk_calculators",
-    "mct.sdcofa_almanac_bridge",
-    "mct.static_publisher"
-  ]) {
-    assert.match(mcpHtml, new RegExp(label));
-  }
-});
-
-test("sdcofa page describes the standing indices and links to canonical routes", () => {
-  assert.match(sdcofaHtml, /SDCofA publishes standing open-source threat indices/);
-  for (const path of ["/bnti/", "/wti/", "/mena/"]) {
-    assert.match(sdcofaHtml, new RegExp(`href="${path}"`));
-  }
+  assert.match(indexHtml, /not yet evidenced/i);
+  assert.doesNotMatch(indexHtml, /\b(?:best|leading|most accurate|AI-powered)\b/i);
+  assert.doesNotMatch(indexHtml, /\b\d+[,.]?\d*\+?\s+(?:customers|countries|forecasts|signals|datasets)\b/i);
 });

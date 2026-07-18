@@ -1,40 +1,258 @@
 {
-  "brand": "Monarch Castle Technologies",
-  "domain": "monarchcastle.tech",
-  "thesis": "Sovereign decision intelligence for institutions that cannot afford to be surprised.",
-  "engine": "The Keep",
-  "instruments": [
+  "schemaVersion": 1,
+  "source": {
+    "repository": "MonarchCastleTech/company-governance",
+    "files": {
+      "products": "portfolio/products.json",
+      "brand": "portfolio/brand.json",
+      "logoInventory": "portfolio/logo-inventory.json",
+      "claims": "claims/claims-register.json",
+      "forecastBenchmark": "forecasting/benchmark-manifest.json"
+    },
+    "sha256": "e2e237e9d47b6b228b4b6f455c2b71df5d149d620a54daa4b2ede69a396fb0da"
+  },
+  "brand": {
+    "masterbrand": "Monarch Castle Technologies",
+    "endorsedAnalyticalUnit": {
+      "name": "SDCofA",
+      "relationship": "endorsed analytical unit"
+    },
+    "pillars": [
+      "Strategy",
+      "Data",
+      "Intelligence",
+      "Forecasting"
+    ],
+    "positioning": "Decision intelligence grounded in transparent data and calibrated forecasting.",
+    "productEndorsement": "Part of Monarch Castle Technologies"
+  },
+  "forecastEvaluation": {
+    "status": "template-not-evaluated",
+    "evidenceLabel": "Forecast evaluation not yet evidenced"
+  },
+  "claims": {
+    "approvedCount": 0,
+    "publicReleasePolicy": "Only separately approved claims may be published."
+  },
+  "ownerViews": {
+    "MonarchCastleTech": [
+      "cloudy-shiny",
+      "econmap",
+      "esgmap",
+      "macrointel",
+      "milcodec-receiver",
+      "nuclear-energy-intelligence",
+      "prepturk",
+      "supplychain"
+    ],
+    "SDCofA": [
+      "border-neighbor-threat-index",
+      "mena-threat-index",
+      "world-threat-index"
+    ]
+  },
+  "products": [
     {
-      "label": "BNTI",
+      "id": "cloudy-shiny",
+      "name": "Cloudy&Shiny Index",
+      "family": "financial-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/Cloudy-Shiny/blob/main/README.md",
+      "updateFrequency": "hourly",
+      "logo": {
+        "kind": "governed-text",
+        "label": "Cloudy&Shiny Index",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/Cloudy-Shiny/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "econmap",
+      "name": "EconMap",
+      "family": "financial-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/econmap/blob/main/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "EconMap",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/econmap/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "esgmap",
+      "name": "ESGMap",
+      "family": "energy-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/esgmap/blob/master/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "ESGMap",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/esgmap/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "macrointel",
+      "name": "MacroIntel",
+      "family": "financial-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/macrointel/blob/main/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "MacroIntel",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/macrointel/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "milcodec-receiver",
+      "name": "MILCODEC Receiver",
+      "family": "defense-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/milcodec-receiver/blob/main/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "MILCODEC Receiver",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/milcodec-receiver/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "nuclear-energy-intelligence",
+      "name": "Nuclear Energy Intelligence",
+      "family": "energy-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/NuclearEnergyIntelligence/blob/main/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "Nuclear Energy Intelligence",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/NuclearEnergyIntelligence/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "prepturk",
+      "name": "PrepTurk",
+      "family": "emergency-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/prepturk/blob/master/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "PrepTurk",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://github.com/MonarchCastleTech/prepturk",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "supplychain",
+      "name": "Supply Chain Intelligence",
+      "family": "financial-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/supplychain/blob/master/README.md",
+      "updateFrequency": "weekly",
+      "logo": {
+        "kind": "governed-text",
+        "label": "Supply Chain Intelligence",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/supplychain/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "border-neighbor-threat-index",
       "name": "Border Neighbor Threat Index",
-      "division": "Defense Intelligence",
-      "path": "/bnti/",
-      "data": "/bnti/bnti_data.json",
-      "description": "Türkiye border-neighbor threat posture across seven land neighbors."
+      "family": "threat-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/SDCofA/border-neighbor-threat-index/blob/main/README.md",
+      "updateFrequency": "every 2 hours",
+      "logo": {
+        "kind": "governed-text",
+        "label": "Border Neighbor Threat Index",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://sdcofa.github.io/border-neighbor-threat-index/",
+      "owner": "SDCofA",
+      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
-      "label": "WTI",
-      "name": "World Threat Index",
-      "division": "Defense Intelligence",
-      "path": "/wti/",
-      "data": "/wti/wti_data.json",
-      "description": "Global geopolitical pressure readings across countries and blocs."
-    },
-    {
-      "label": "MENA",
+      "id": "mena-threat-index",
       "name": "MENA Threat Index",
-      "division": "Defense Intelligence",
-      "path": "/mena/",
-      "data": "/mena/mena_data.json",
-      "description": "Regional risk assessment for the Middle East and North Africa."
+      "family": "threat-intelligence",
+      "lifecycle": "production",
+      "regions": [],
+      "methodologyUrl": "https://github.com/SDCofA/mena-threat-index/blob/main/README.md",
+      "updateFrequency": "every 2 hours",
+      "logo": {
+        "kind": "approved-image",
+        "sourcePath": "assets/approved/mena-threat-index.png",
+        "publicPath": "/assets/approved/mena-threat-index.png",
+        "sha256": "d3c353b76180200868d240d5d0173d9706e1ff689f9e47ab7654c9e2c2d77863",
+        "alt": "MENA Threat Index product mark"
+      },
+      "canonicalUrl": "https://sdcofa.github.io/mena-threat-index/",
+      "owner": "SDCofA",
+      "forecastEvidenceStatus": "local-release-and-github-metadata-verified",
+      "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
+    },
+    {
+      "id": "world-threat-index",
+      "name": "World Threat Index",
+      "family": "threat-intelligence",
+      "lifecycle": "production",
+      "regions": [],
+      "methodologyUrl": "https://github.com/SDCofA/world-threat-index/blob/main/docs/wti-methodology.md",
+      "updateFrequency": "every few hours",
+      "logo": {
+        "kind": "approved-image",
+        "sourcePath": "assets/approved/world-threat-index.png",
+        "publicPath": "/assets/approved/world-threat-index.png",
+        "sha256": "753515aced48f9b8938624a125ee85808ba138daa8c23e1af01821f1789291b1",
+        "alt": "World Threat Index product mark"
+      },
+      "canonicalUrl": "https://sdcofa.github.io/world-threat-index/",
+      "owner": "SDCofA",
+      "forecastEvidenceStatus": "local-release-and-github-metadata-verified",
+      "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     }
-  ],
-  "productLines": [
-    "Defense Intelligence",
-    "Financial Intelligence",
-    "Supply Chain Intelligence",
-    "Sustainability Intelligence",
-    "Energy Intelligence",
-    "Agent Distribution"
   ]
 }
