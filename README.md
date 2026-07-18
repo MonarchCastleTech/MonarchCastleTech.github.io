@@ -26,7 +26,9 @@ The preview is maintained as a repository asset; the live interface or generated
 
 ## Data and methodology
 
-See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the implementation files in this repository. Source dates, transformation steps, and known gaps must travel with analytical outputs.
+- [site.routes.json](site.routes.json)
+
+These repository-specific sources define the methodology or provenance boundary. Source dates, transformation steps, and known gaps must travel with analytical outputs.
 
 ## Update frequency
 
@@ -46,12 +48,9 @@ Run only in a trusted development environment and review repository-specific pre
 
 ## Architecture
 
-- `package-lock.json` — repository entry point or configuration.
-- `package.json` — repository entry point or configuration.
-- `public/` — implementation or data module.
-- `scripts/` — implementation or data module.
-- `site.routes.json` — repository entry point or configuration.
-- `src/` — implementation or data module.
+- `src/` — repository-specific implementation, data, or configuration boundary.
+- `scripts/` — repository-specific implementation, data, or configuration boundary.
+- `site.routes.json` — repository-specific implementation, data, or configuration boundary.
 
 ## Tests
 
