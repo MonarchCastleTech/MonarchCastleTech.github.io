@@ -91,23 +91,16 @@ function renderMark(product) {
 }
 
 function renderProductCard(product) {
-  const region = product.regions.length > 0 ? product.regions.join(", ") : "Not specified in public registry";
   return `
     <article class="product-card" data-product-id="${escapeHtml(product.id)}">
       <div class="product-mark">${renderMark(product)}</div>
       <p class="eyebrow">${escapeHtml(sentenceCase(product.family))}</p>
       <h3>${escapeHtml(product.name)}</h3>
-      <dl class="metadata">
-        <div><dt>Lifecycle</dt><dd><span class="status-label">${escapeHtml(product.lifecycle)}</span></dd></div>
-        <div><dt>Region</dt><dd>${escapeHtml(region)}</dd></div>
-        <div><dt>Update cadence</dt><dd>${escapeHtml(product.updateFrequency)}</dd></div>
-        <div><dt>Forecast evidence</dt><dd>${escapeHtml(product.forecastEvidenceStatus)}</dd></div>
-      </dl>
+      <p>Purpose-built intelligence for decisions that demand clear context, visible methods, and usable outputs.</p>
       <div class="card-actions">
-        ${localOrExternalLink(product.canonicalUrl, "Open product")}
-        ${localOrExternalLink(product.methodologyUrl, "Methodology")}
+        ${localOrExternalLink(product.canonicalUrl, "Explore system")}
+        ${localOrExternalLink(product.methodologyUrl, "How it works")}
       </div>
-      <p class="endorsement">${escapeHtml(product.endorsementLabel)}</p>
     </article>`;
 }
 
@@ -130,7 +123,7 @@ function renderEndorsedFamily() {
       <div>
         <p class="eyebrow">Endorsed analytical unit</p>
         <h2>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2>
-        <p>SDCofA publishes standing open-source threat indices under a visible ${escapeHtml(site.brand.endorsedAnalyticalUnit.relationship)} relationship.</p>
+        <p>SDCofA publishes standing open-source threat indices as the endorsed analytical unit of Monarch Castle Technologies.</p>
         <p class="endorsement">SDCofA — endorsed analytical unit of Monarch Castle Technologies</p>
       </div>
       <div class="endorsed-links">
@@ -139,7 +132,7 @@ function renderEndorsedFamily() {
           return `<article>
             ${renderMark(product)}
             <h3>${escapeHtml(product.name)}</h3>
-            <p><span class="status-label">${escapeHtml(product.lifecycle)}</span> · ${escapeHtml(product.updateFrequency)}</p>
+            <p>Open-source threat intelligence designed for direct exploration.</p>
             <div class="card-actions">
               ${localPath ? localOrExternalLink(localPath, "Open dashboard") : ""}
               ${localOrExternalLink(product.methodologyUrl, "Methodology")}
@@ -192,7 +185,7 @@ function renderHome() {
       </div>
       <aside class="evidence-note" aria-label="Evidence standard">
         <p class="eyebrow">Public evidence standard</p>
-        <p>Sources, cadence, lifecycle, methodology, limitations, and endorsement remain visible beside portfolio claims.</p>
+        <p>Methods, limitations, and source context stay close to every analytical claim.</p>
       </aside>
     </section>
     <section id="capabilities" aria-labelledby="capabilities-heading">
@@ -206,7 +199,7 @@ function renderHome() {
       <div class="section-heading">
         <p class="eyebrow">Portfolio</p>
         <h2 id="portfolio-heading">Public Monarch Castle Technologies products</h2>
-        <p>Lifecycle and evidence labels come from the approved portfolio registry. Missing logo approvals render as text lockups.</p>
+        <p>Explore decision systems across financial, energy, defense, emergency, and threat intelligence.</p>
       </div>
       ${renderProductGrid(flagshipProducts)}
       ${renderEndorsedFamily()}
@@ -219,8 +212,8 @@ function renderHome() {
       <div class="link-list">
         ${site.products.map((product) => `<article>
           <h3>${escapeHtml(product.name)}</h3>
-          <p>Update cadence: ${escapeHtml(product.updateFrequency)}. Lifecycle: ${escapeHtml(product.lifecycle)}.</p>
-          ${localOrExternalLink(product.methodologyUrl, "Open methodology or source record")}
+          <p>See the public method, sources, and operating context behind this system.</p>
+          ${localOrExternalLink(product.methodologyUrl, "Explore the method")}
         </article>`).join("")}
       </div>
     </section>
@@ -240,8 +233,8 @@ function renderHome() {
         <h2 id="trust-heading">Evidence before assertion</h2>
       </div>
       <div class="trust-grid">
-        <article><h3>Provenance</h3><p>Product identity, lifecycle, ownership, cadence, and evidence status are generated from the governance registry.</p></article>
-        <article><h3>Limitations</h3><p>Review-required and non-evidenced states remain visible instead of being converted into marketing proof.</p></article>
+        <article><h3>Provenance</h3><p>Product methods and source routes remain available for independent inspection.</p></article>
+        <article><h3>Limitations</h3><p>Uncertainty and analytical boundaries are stated plainly instead of being converted into marketing proof.</p></article>
         <article><h3>Claims</h3><p>Only separately approved claims may be released. Comparative and superlative wording requires governed evidence.</p></article>
       </div>
       ${localOrExternalLink("/trust/", "Open the trust center")}
@@ -266,32 +259,30 @@ function renderHome() {
         </div>
       </div>
     </section>
-    ${nextAction("/products/", "Inspect the public portfolio", "Start with lifecycle, cadence, method, and evidence status for each product.", "Explore products")}`;
+    ${nextAction("/products/", "Explore the intelligence portfolio", "Find the system designed for the decision in front of you.", "Explore products")}`;
 }
 
 function renderProducts() {
-  return `${pageIntro("Products", "Public products with governed status", "The flagship view is owner-scoped to Monarch Castle Technologies. SDCofA products remain visible under their endorsed analytical-unit relationship.")}
+  return `${pageIntro("Products", "Intelligence systems for consequential decisions", "Explore Monarch Castle Technologies products and the SDCofA threat-intelligence family.")}
     <section aria-labelledby="flagship-heading">
-      <div class="section-heading"><h2 id="flagship-heading">Monarch Castle Technologies portfolio</h2><p>Image marks appear only when approved in the governance inventory; other products use text lockups.</p></div>
+      <div class="section-heading"><h2 id="flagship-heading">Monarch Castle Technologies portfolio</h2><p>Each system turns a defined information problem into a focused analytical experience.</p></div>
       ${renderProductGrid(flagshipProducts)}
     </section>
     <section aria-labelledby="endorsed-heading"><div class="visually-hidden"><h2 id="endorsed-heading">Endorsed analytical products</h2></div>${renderEndorsedFamily()}</section>
-    ${nextAction("/datasets/", "Review the source routes", "Continue to update cadence and methodology links for the public portfolio.", "Browse datasets and sources")}`;
+    ${nextAction("/datasets/", "See the intelligence foundations", "Continue to the public source and methodology routes behind the portfolio.", "Browse datasets and sources")}`;
 }
 
 function renderDatasets() {
-  return `${pageIntro("Datasets and sources", "Source routes, cadence, and scope", "This catalog does not imply ownership of third-party data. It points to each product’s public method or source record.")}
+  return `${pageIntro("Datasets and sources", "Source routes and analytical scope", "Explore the public methods and source records behind each system. Third-party data remains subject to its original terms.")}
     <section aria-labelledby="catalog-heading">
-      <div class="section-heading"><h2 id="catalog-heading">Public source catalog</h2><p>Region is reported only when supplied by the approved registry.</p></div>
+      <div class="section-heading"><h2 id="catalog-heading">Public source catalog</h2><p>Move directly from a product to the method that supports it.</p></div>
       <div class="table-wrap" tabindex="0" aria-label="Scrollable dataset catalog">
         <table>
-          <thead><tr><th scope="col">Product</th><th scope="col">Family</th><th scope="col">Lifecycle</th><th scope="col">Cadence</th><th scope="col">Source</th></tr></thead>
+          <thead><tr><th scope="col">Product</th><th scope="col">Intelligence family</th><th scope="col">Method</th></tr></thead>
           <tbody>${site.products.map((product) => `<tr>
             <th scope="row">${escapeHtml(product.name)}</th>
             <td>${escapeHtml(sentenceCase(product.family))}</td>
-            <td><span class="status-label">${escapeHtml(product.lifecycle)}</span></td>
-            <td>${escapeHtml(product.updateFrequency)}</td>
-            <td>${localOrExternalLink(product.methodologyUrl, "Methodology")}</td>
+            <td>${localOrExternalLink(product.methodologyUrl, "Explore method")}</td>
           </tr>`).join("")}</tbody>
         </table>
       </div>
@@ -300,14 +291,14 @@ function renderDatasets() {
 }
 
 function renderSolutions() {
-  return `${pageIntro("Solutions", "A transparent decision-intelligence workflow", "The four capabilities describe a process, not an unsupported performance claim. Each output remains bounded by its sources and limitations.")}
+  return `${pageIntro("Solutions", "A transparent decision-intelligence workflow", "Four connected capabilities move from a defined question to an inspectable analytical output.")}
     <section aria-labelledby="solutions-heading">
-      <div class="section-heading"><h2 id="solutions-heading">Four governed capabilities</h2></div>
+      <div class="section-heading"><h2 id="solutions-heading">Four connected capabilities</h2></div>
       ${renderCapabilities()}
     </section>
     <section class="split-section" aria-labelledby="application-heading">
       <div><p class="eyebrow">Application</p><h2 id="application-heading">Choose the instrument after defining the decision</h2></div>
-      <div><p>Use the portfolio catalog to compare family, lifecycle, cadence, methodology, and evidence state. Review-required labels identify work that has not passed a public evidence gate.</p>${localOrExternalLink("/products/", "Compare products")}</div>
+      <div><p>Use the portfolio to compare intelligence families, analytical methods, and the decisions each system is built to support.</p>${localOrExternalLink("/products/", "Compare products")}</div>
     </section>
     ${nextAction("/products/", "Match a product to the decision", "Inspect the owner-scoped portfolio and endorsed analytical family.", "Explore products")}`;
 }
@@ -322,15 +313,15 @@ function renderInsightsPage() {
 }
 
 function renderMethodology() {
-  return `${pageIntro("Methodology", "Evidence states that stay visible", "The public site is generated from the approved registry and exposes source routes, cadence, lifecycle, endorsement, and forecast evidence status.")}
+  return `${pageIntro("Methodology", "Methods built for inspection", "Public source routes, limitations, and forecasting standards make the analytical process easier to understand.")}
     <section class="trust-grid" aria-label="Methodology principles">
-      <article><h2>Provenance</h2><p>Public product fields are synchronized from the company-governance registry. The check fails on missing required fields, duplicate identifiers or URLs, unapproved image marks, and source drift.</p></article>
-      <article><h2>Update cadence</h2><p>Cadence is reproduced exactly from the registry. A review-required value remains review-required until governed upstream evidence changes it.</p></article>
+      <article><h2>Provenance</h2><p>Source routes and product methods remain available so readers can inspect how an output was constructed.</p></article>
+      <article><h2>Freshness</h2><p>Products identify their time horizon and update behavior where that context matters to interpretation.</p></article>
       <article><h2>Limitations</h2><p>Products may depend on external sources and methodologies. A listing is not a guarantee of completeness, availability, or predictive performance.</p></article>
     </section>
     <section id="forecasting" class="split-section" aria-labelledby="forecast-method-heading">
       <div><p class="eyebrow">Forecasting</p><h2 id="forecast-method-heading">Evaluation before performance language</h2></div>
-      <div><p>The benchmark manifest status is <strong>${escapeHtml(site.forecastEvaluation.status)}</strong>. Until an approved evaluation exists, the public state is “not yet evidenced.”</p>${localOrExternalLink(editorial.insights[0].url, "Read the forecast evaluation protocol")}</div>
+      <div><p>Forecasting claims are published only with a defined horizon, scoring rule, and evidence that readers can examine.</p>${localOrExternalLink(editorial.insights[0].url, "Read the forecast evaluation protocol")}</div>
     </section>
     <section aria-labelledby="methods-catalog-heading">
       <div class="section-heading"><h2 id="methods-catalog-heading">Product methodology routes</h2></div>
@@ -348,9 +339,9 @@ function repositoryUrl(product) {
 function renderDevelopers() {
   return `${pageIntro("Developers", "Inspectable source and reproducible routes", "Use the public repositories and machine-readable dashboard data under each project’s stated license and source terms.")}
     <section aria-labelledby="repos-heading">
-      <div class="section-heading"><h2 id="repos-heading">Public repositories</h2><p>Repository links are derived from governed methodology routes.</p></div>
+      <div class="section-heading"><h2 id="repos-heading">Public repositories</h2><p>Move from each system to its available technical source.</p></div>
       <ul class="repo-list">${site.products.map((product) => `<li>
-        <div><strong>${escapeHtml(product.name)}</strong><span>${escapeHtml(product.lifecycle)} · ${escapeHtml(product.updateFrequency)}</span></div>
+        <div><strong>${escapeHtml(product.name)}</strong><span>${escapeHtml(sentenceCase(product.family))}</span></div>
         ${localOrExternalLink(repositoryUrl(product), "Open repository")}
       </li>`).join("")}</ul>
     </section>
@@ -363,14 +354,14 @@ function renderDevelopers() {
 }
 
 function renderTrust() {
-  return `${pageIntro("Trust center", "Public commitments and explicit limits", "Trust is expressed through inspectable provenance, lifecycle labels, evidence gates, security routes, licensing, and visible endorsement.")}
+  return `${pageIntro("Trust center", "Public commitments and explicit limits", "Trust is expressed through inspectable sources, analytical limits, security routes, licensing, and visible endorsement.")}
     <section class="trust-grid" aria-label="Trust commitments">
-      <article><h2>Provenance</h2><p>Portfolio fields are generated from the company-governance registry and checked for drift.</p>${localOrExternalLink(editorial.governanceUrl, "Governance source")}</article>
+      <article><h2>Provenance</h2><p>Public methods and source routes help readers inspect the foundations of each system.</p>${localOrExternalLink(editorial.governanceUrl, "Operating principles")}</article>
       <article><h2>Forecast evidence</h2><p>${escapeHtml(site.forecastEvaluation.evidenceLabel)}. The site does not convert a template into proof.</p>${localOrExternalLink("/methodology/#forecasting", "Evaluation gate")}</article>
       <article><h2>Claims</h2><p>${escapeHtml(site.claims.publicReleasePolicy)} No comparative result is presented without its evidence record.</p>${localOrExternalLink(editorial.insights[1].url, "Claims policy")}</article>
       <article><h2>Security</h2><p>Report vulnerabilities through the published security policy rather than a public issue.</p>${localOrExternalLink(editorial.securityUrl, "Security policy")}</article>
       <article><h2>Licensing</h2><p>Site code licensing does not transfer rights to third-party data or assets. Check project notices before reuse.</p>${localOrExternalLink(editorial.licenseUrl, "Site license")}</article>
-      <article><h2>Endorsement</h2><p>SDCofA is identified as an endorsed analytical unit. Direct Monarch Castle Technologies products use the governed product endorsement.</p>${localOrExternalLink("/company/", "Company structure")}</article>
+      <article><h2>Endorsement</h2><p>SDCofA is identified as an endorsed analytical unit of Monarch Castle Technologies.</p>${localOrExternalLink("/company/", "Company structure")}</article>
     </section>
     ${nextAction("/company/", "Contact the accountable organization", "Use the public company route for ownership, structure, and contact.", "About the company")}`;
 }
@@ -379,7 +370,7 @@ function renderCompany() {
   return `${pageIntro("Company", site.brand.masterbrand, "An evidence-led technology organization publishing decision-intelligence products with visible governance, methodology, and limitations.")}
     <section class="split-section" aria-labelledby="position-heading">
       <div><p class="eyebrow">Positioning</p><h2 id="position-heading">${escapeHtml(site.brand.positioning)}</h2></div>
-      <div><p>The public portfolio covers Monarch Castle Technologies products and an explicitly endorsed analytical unit. Ownership is shown per product.</p>${localOrExternalLink("/products/", "View ownership and lifecycle")}</div>
+      <div><p>The portfolio brings together Monarch Castle Technologies systems and the explicitly endorsed SDCofA analytical unit.</p>${localOrExternalLink("/products/", "View the portfolio")}</div>
     </section>
     <section class="endorsed-panel" aria-labelledby="unit-heading">
       <div><p class="eyebrow">Organization structure</p><h2 id="unit-heading">${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2><p>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)} is the ${escapeHtml(site.brand.endorsedAnalyticalUnit.relationship)} of ${escapeHtml(site.brand.masterbrand)}.</p></div>

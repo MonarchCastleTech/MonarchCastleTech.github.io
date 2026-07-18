@@ -46,11 +46,32 @@ test("root homepage follows the governed shell and links to canonical dashboard 
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
 });
 
-test("approved product assets are present and legacy theme assets are not required", () => {
-  assert.equal(fs.existsSync(path.join(dist, "assets", "approved", "mena-threat-index.png")), true);
-  assert.equal(fs.existsSync(path.join(dist, "assets", "approved", "world-threat-index.png")), true);
+test("every public product asset is present and legacy theme assets are not required", () => {
+  for (const relativePath of [
+    "assets/products/cloudy-shiny-logo.png",
+    "assets/products/econmap-logo.png",
+    "assets/products/esgmap-logo.png",
+    "assets/products/macrointel-logo.png",
+    "assets/products/milcodec-logo.png",
+    "assets/products/nuclear-logo.png",
+    "assets/products/prepturk-logo.png",
+    "assets/products/supplychain-logo.png",
+    "assets/products/bnti-icon.png",
+    "assets/approved/mena-threat-index.png",
+    "assets/approved/world-threat-index.png"
+  ]) {
+    assert.equal(fs.existsSync(path.join(dist, relativePath)), true, `${relativePath} exists`);
+  }
   assert.equal(fs.existsSync(path.join(dist, "mct-styles.css")), false);
   assert.equal(fs.existsSync(path.join(dist, "mct-app.js")), false);
+});
+
+test("built narrative pages contain end-user copy only", () => {
+  const forbidden = /review[- ]required|logo-review-required|github-metadata-verified|forecastEvidenceStatus|lifecycleStatus|approval ticket|(?:governance|approved|public) registry|registry state|implementation state|release state/i;
+  for (const route of routes.sitePages) {
+    const html = fs.readFileSync(path.join(dist, route.output), "utf8");
+    assert.doesNotMatch(html, forbidden, `${route.path} contains no internal workflow language`);
+  }
 });
 
 test("dashboard entrypoints do not leak root-relative paths or redirect shims", () => {

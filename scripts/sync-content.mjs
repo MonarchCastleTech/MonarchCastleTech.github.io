@@ -24,6 +24,18 @@ const sourceFiles = {
   forecastBenchmark: "forecasting/benchmark-manifest.json"
 };
 
+const localPresentationLogos = {
+  "cloudy-shiny": "assets/products/cloudy-shiny-logo.png",
+  econmap: "assets/products/econmap-logo.png",
+  esgmap: "assets/products/esgmap-logo.png",
+  macrointel: "assets/products/macrointel-logo.png",
+  "milcodec-receiver": "assets/products/milcodec-logo.png",
+  "nuclear-energy-intelligence": "assets/products/nuclear-logo.png",
+  prepturk: "assets/products/prepturk-logo.png",
+  supplychain: "assets/products/supplychain-logo.png",
+  "border-neighbor-threat-index": "assets/products/bnti-icon.png"
+};
+
 function readJson(relativePath) {
   const filePath = path.join(governanceRoot, relativePath);
   if (!fs.existsSync(filePath)) throw new Error(`Missing governance source: ${relativePath}`);
@@ -79,9 +91,20 @@ const products = publicProducts.map((source) => {
   const name = requireText(source, "name");
   const owner = requireText(source, "ownerOrg");
   const sourceLogo = source.logo;
+  const localPresentationLogo = localPresentationLogos[id];
   let logo;
 
-  if (sourceLogo === null) {
+  if (localPresentationLogo) {
+    const localPath = path.join(repoRoot, "src", localPresentationLogo);
+    if (!fs.existsSync(localPath)) throw new Error(`${id} local presentation logo is missing: ${localPresentationLogo}`);
+    logo = {
+      kind: "approved-image",
+      sourcePath: localPresentationLogo,
+      publicPath: `/${localPresentationLogo}`,
+      sha256: crypto.createHash("sha256").update(fs.readFileSync(localPath)).digest("hex"),
+      alt: `${name} product logo`
+    };
+  } else if (sourceLogo === null) {
     logo = { kind: "governed-text", label: name, status: "review-required" };
   } else {
     const approval = logoByProduct.get(id);
