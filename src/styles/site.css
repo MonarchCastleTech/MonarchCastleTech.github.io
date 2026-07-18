@@ -160,7 +160,6 @@ h3 {
 .wordmark,
 .brand {
   display: inline-flex;
-  flex-direction: column;
   justify-self: start;
   color: var(--ink);
   line-height: 1;
@@ -169,18 +168,39 @@ h3 {
   text-transform: uppercase;
 }
 
+.wordmark {
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.brand {
+  flex-direction: column;
+}
+
 .wordmark:hover {
   color: var(--ink);
 }
 
-.wordmark span {
+.brand-logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.wordmark-copy {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.wordmark-copy > span {
   font-family: var(--serif);
   font-size: 1.05rem;
   letter-spacing: 0.02em;
   text-transform: none;
 }
 
-.wordmark strong {
+.wordmark-copy strong {
   margin-top: 0.35rem;
   color: var(--gold);
   font-family: var(--mono);
@@ -986,6 +1006,15 @@ thead th {
 
   .site-header {
     gap: 0.75rem;
+  }
+
+  .brand-logo {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .wordmark-copy > span {
+    font-size: 0.88rem;
   }
 
   .header-action {

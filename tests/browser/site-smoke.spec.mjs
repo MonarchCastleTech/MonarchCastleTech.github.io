@@ -53,6 +53,24 @@ test("keyboard navigation exposes the skip link and visible focus", async ({ pag
   await expect(page.locator("#main-content")).toBeFocused();
 });
 
+test("the real MCT masterbrand logo is visible in the public masthead", async ({ page }) => {
+  await page.goto(`${baseURL}/`);
+  const logo = page.locator(".brand-logo");
+  await expect(logo).toBeVisible();
+  const state = await logo.evaluate((image) => ({
+    complete: image.complete,
+    naturalWidth: image.naturalWidth,
+    naturalHeight: image.naturalHeight,
+    width: image.getBoundingClientRect().width,
+    height: image.getBoundingClientRect().height
+  }));
+  expect(state.complete).toBeTruthy();
+  expect(state.naturalWidth).toBeGreaterThan(0);
+  expect(state.naturalHeight).toBeGreaterThan(0);
+  expect(state.width).toBeGreaterThanOrEqual(36);
+  expect(state.height).toBeGreaterThanOrEqual(36);
+});
+
 for (const width of [375, 552, 768, 1440]) {
   test(`homepage and products are composed at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
