@@ -75,6 +75,21 @@ The homepage hierarchy becomes:
 
 Governance remains available through methodology and evidence links. Machine-oriented values such as `github-metadata-verified`, `logo-review-required`, and raw registry field names must not appear as primary marketing copy.
 
+## Public Copy Contract
+
+The flagship is an end-user company website. It must never expose internal workflow or governance vocabulary as public interface copy.
+
+Prohibited public labels include:
+
+- `review required`;
+- `logo review required`;
+- `github metadata verified`;
+- raw lifecycle enum values;
+- approval, ticket, registry, or implementation-state language;
+- internal test, checkpoint, evidence-status, and release-gate identifiers.
+
+Governance data may still control what the build is allowed to publish, but the rendered site translates that state into normal visitor language. Public cards describe what a product does, who it helps, where it is available, and what methodology or limitations matter. If an item is not ready for public presentation, omit it or describe the limitation plainly; never display an internal status code.
+
 ## Component Treatment
 
 ### Header
