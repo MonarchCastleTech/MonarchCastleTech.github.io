@@ -11,7 +11,7 @@ const contract = match?.[1] ?? "";
 const expectedHeadings = ["Repository status","Public access","Screenshots","Data and methodology","Update frequency","Quick start","Architecture","Tests","Provenance","Forecast limitations","Security","License","Citation","Masterbrand endorsement"];
 const methodologyEvidence = ["site.routes.json"];
 const quickStartCommands = ["npm ci","npm run build"];
-const architectureIdentifiers = ["src/","scripts/","site.routes.json"];
+const architectureIdentifiers = ["site.routes.json","src/content/site.json","scripts/build-site.mjs"];
 const thirdPartyExclusions = ["upstream product copies and externally sourced content","logos, trademarks, screenshots, fonts, and external assets"];
 const licenseDecision = "new-mit";
 
@@ -19,7 +19,8 @@ test("MonarchCastleTech/MonarchCastleTech.github.io exposes the complete reposit
   assert.ok(match, "README must include the managed repository-hygiene block");
   assert.ok(contract.includes("Public website for Monarch Castle Technologies"), "README purpose must match the canonical registry");
   assert.match(contract, /lifecycle-active/);
-  assert.match(contract, /not publicly deployed/i);
+  assert.match(contract, /canonical production route/i);
+  assert.match(contract, /certificate\/HTTPS defect/i);
   for (const heading of expectedHeadings) assert.ok(contract.includes(`## ${heading}`), `missing heading: ${heading}`);
   for (const evidence of methodologyEvidence) {
     assert.ok(existsSync(resolve(root, evidence)), `missing methodology evidence: ${evidence}`);
