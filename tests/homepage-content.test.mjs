@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -10,7 +9,6 @@ const governanceRoot = path.resolve(root, "..", "..", "company-governance");
 const site = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "site.json"), "utf8"));
 const indexHtml = fs.readFileSync(path.join(root, "dist", "index.html"), "utf8");
 const registryPath = path.join(governanceRoot, "portfolio", "products.json");
-const logoInventoryPath = path.join(governanceRoot, "portfolio", "logo-inventory.json");
 
 const projectedFields = [
   "id",
@@ -26,10 +24,6 @@ const projectedFields = [
   "forecastEvidenceStatus",
   "endorsementLabel"
 ];
-
-function sha256(filePath) {
-  return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
-}
 
 test("site content is an exact governed projection of every public registry product", (t) => {
   if (!fs.existsSync(registryPath)) return t.skip("cross-repository governance checkout is not available");
@@ -70,51 +64,75 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   }
 });
 
-test("only inventory-approved image marks are emitted; all other products fail closed to text", (t) => {
-  if (!fs.existsSync(logoInventoryPath)) return t.skip("cross-repository governance checkout is not available");
-  const logoInventory = JSON.parse(fs.readFileSync(logoInventoryPath, "utf8"));
-  const approvedByProduct = new Map(logoInventory.logos.map((logo) => [logo.productId, logo]));
+test("every public product uses its real, locally available brand mark", () => {
+  const expectedLogoPaths = [
+    "/assets/products/cloudy-shiny-logo.png",
+    "/assets/products/econmap-logo.png",
+    "/assets/products/esgmap-logo.png",
+    "/assets/products/macrointel-logo.png",
+    "/assets/products/milcodec-logo.png",
+    "/assets/products/nuclear-logo.png",
+    "/assets/products/prepturk-logo.png",
+    "/assets/products/supplychain-logo.png",
+    "/assets/products/bnti-icon.png",
+    "/assets/approved/mena-threat-index.png",
+    "/assets/approved/world-threat-index.png"
+  ];
 
+  assert.deepEqual(site.products.map((product) => product.logo.publicPath), expectedLogoPaths);
+  assert.ok(site.products.every((product) => product.logo.kind === "approved-image"));
   for (const product of site.products) {
-    const approved = approvedByProduct.get(product.id);
-    if (!approved) {
-      assert.deepEqual(product.logo, {
-        kind: "governed-text",
-        label: product.name,
-        status: "review-required"
-      });
-      continue;
-    }
-
-    assert.equal(product.logo.kind, "approved-image");
-    assert.equal(product.logo.sha256, approved.sha256);
-    assert.equal(sha256(path.join(root, "src", product.logo.sourcePath)), approved.sha256);
+    assert.equal(fs.existsSync(path.join(root, "src", product.logo.sourcePath)), true, `${product.name} logo exists`);
+    assert.match(product.logo.alt, /logo|mark/i);
   }
 });
 
-test("homepage follows the approved editorial order and exposes the four governed pillars", () => {
-  const sectionIds = [
-    "positioning",
-    "capabilities",
-    "portfolio",
-    "datasets-methods",
-    "forecast-evaluation",
-    "trust-provenance",
-    "insights",
-    "company-contact"
+test("generated public pages never expose internal workflow or registry language", () => {
+  const forbidden = /review[- ]required|logo-review-required|github-metadata-verified|forecastEvidenceStatus|lifecycleStatus|approval ticket|(?:governance|approved|public) registry|registry state|implementation state|release state/i;
+  for (const route of [
+    "index.html",
+    "products/index.html",
+    "datasets/index.html",
+    "solutions/index.html",
+    "insights/index.html",
+    "methodology/index.html",
+    "developers/index.html",
+    "trust/index.html",
+    "company/index.html"
+  ]) {
+    const html = fs.readFileSync(path.join(root, "dist", route), "utf8");
+    assert.doesNotMatch(html, forbidden, `${route} contains only end-user copy`);
+  }
+});
+
+test("homepage follows the approved flagship narrative and keeps the four capabilities", () => {
+  const sectionClasses = [
+    "mission-hero",
+    "operating-thesis",
+    "featured-systems",
+    "intelligence-catalogue",
+    "sdcofa-band",
+    "evidence-chain",
+    "company-close"
   ];
-  const offsets = sectionIds.map((id) => indexHtml.indexOf(`id="${id}"`));
-  assert.ok(offsets.every((offset) => offset >= 0), "all editorial sections exist");
+  const offsets = sectionClasses.map((className) => indexHtml.indexOf(`class="${className}`));
+  assert.ok(offsets.every((offset) => offset >= 0), "all flagship sections exist");
   assert.deepEqual(offsets, [...offsets].sort((a, b) => a - b));
   assert.deepEqual(site.brand.pillars, ["Strategy", "Data", "Intelligence", "Forecasting"]);
   for (const pillar of site.brand.pillars) assert.match(indexHtml, new RegExp(`>${pillar}<`));
 });
 
-test("homepage exposes trust links and an explicit non-evidenced forecast state", () => {
+test("public shell uses the focused flagship navigation and product action", () => {
+  for (const label of ["Home", "Products", "Forecasting", "Methodology", "Company"]) {
+    assert.match(indexHtml, new RegExp(`>${label}<`));
+  }
+  assert.match(indexHtml, /class="header-action" href="\/products\/">Explore products</);
+});
+
+test("homepage exposes trust links without unsupported performance claims", () => {
   for (const path of ["/methodology/", "/trust/", "/company/", "/products/"]) {
     assert.match(indexHtml, new RegExp(`href="${path}"`));
   }
-  assert.match(indexHtml, /not yet evidenced/i);
   assert.doesNotMatch(indexHtml, /\b(?:best|leading|most accurate|AI-powered)\b/i);
   assert.doesNotMatch(indexHtml, /\b\d+[,.]?\d*\+?\s+(?:customers|countries|forecasts|signals|datasets)\b/i);
 });

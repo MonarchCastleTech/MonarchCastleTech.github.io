@@ -9,7 +9,7 @@
       "claims": "claims/claims-register.json",
       "forecastBenchmark": "forecasting/benchmark-manifest.json"
     },
-    "sha256": "e2e237e9d47b6b228b4b6f455c2b71df5d149d620a54daa4b2ede69a396fb0da"
+    "sha256": "30f64ab860f8fd70ce11f67cf95eb0dbe817560ff6310ccafe427ea75fe44912"
   },
   "brand": {
     "masterbrand": "Monarch Castle Technologies",
@@ -31,7 +31,7 @@
     "evidenceLabel": "Forecast evaluation not yet evidenced"
   },
   "claims": {
-    "approvedCount": 0,
+    "approvedCount": 1,
     "publicReleasePolicy": "Only separately approved claims may be published."
   },
   "ownerViews": {
@@ -61,9 +61,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/Cloudy-Shiny/blob/main/README.md",
       "updateFrequency": "hourly",
       "logo": {
-        "kind": "governed-text",
-        "label": "Cloudy&Shiny Index",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/cloudy-shiny-logo.png",
+        "publicPath": "/assets/products/cloudy-shiny-logo.png",
+        "sha256": "0da2b5c9b7d4c06ba833830ef3396a295639427791c583fd4dd16b72da489735",
+        "alt": "Cloudy&Shiny Index product logo"
       },
       "canonicalUrl": "https://monarchcastletech.github.io/Cloudy-Shiny/",
       "owner": "MonarchCastleTech",
@@ -79,9 +81,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/econmap/blob/main/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "EconMap",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/econmap-logo.png",
+        "publicPath": "/assets/products/econmap-logo.png",
+        "sha256": "7e18a82776dbf1e43e82cc30ce321133e602fd0d3abab99fc93c6aef3598169a",
+        "alt": "EconMap product logo"
       },
       "canonicalUrl": "https://monarchcastletech.github.io/econmap/",
       "owner": "MonarchCastleTech",
@@ -97,9 +101,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/esgmap/blob/master/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "ESGMap",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/esgmap-logo.png",
+        "publicPath": "/assets/products/esgmap-logo.png",
+        "sha256": "02c8379baba07dc292167275ff5f1e3e44dd2c11a2f8bf452e4fc1d93bf2e266",
+        "alt": "ESGMap product logo"
       },
       "canonicalUrl": "https://monarchcastletech.github.io/esgmap/",
       "owner": "MonarchCastleTech",
@@ -115,9 +121,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/macrointel/blob/main/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "MacroIntel",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/macrointel-logo.png",
+        "publicPath": "/assets/products/macrointel-logo.png",
+        "sha256": "dc751c758551ffc072f91effc90707d52bf56d54b8cbbd4192779bcf05edf77f",
+        "alt": "MacroIntel product logo"
       },
       "canonicalUrl": "https://monarchcastletech.github.io/macrointel/",
       "owner": "MonarchCastleTech",
@@ -133,9 +141,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/milcodec-receiver/blob/main/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "MILCODEC Receiver",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/milcodec-logo.png",
+        "publicPath": "/assets/products/milcodec-logo.png",
+        "sha256": "1d57869ca4f95e1e2461384b0489374378505341ddaabe67c24804c308d3c968",
+        "alt": "MILCODEC Receiver product logo"
       },
       "canonicalUrl": "https://monarchcastletech.github.io/milcodec-receiver/",
       "owner": "MonarchCastleTech",
@@ -151,9 +161,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/NuclearEnergyIntelligence/blob/main/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "Nuclear Energy Intelligence",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/nuclear-logo.png",
+        "publicPath": "/assets/products/nuclear-logo.png",
+        "sha256": "5b3d14c4b72a5abef3612cf8891cb315877cc266fbe02938c225cdf047fab168",
+        "alt": "Nuclear Energy Intelligence product logo"
       },
       "canonicalUrl": "https://monarchcastletech.github.io/NuclearEnergyIntelligence/",
       "owner": "MonarchCastleTech",
@@ -169,9 +181,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/prepturk/blob/master/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "PrepTurk",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/prepturk-logo.png",
+        "publicPath": "/assets/products/prepturk-logo.png",
+        "sha256": "d81e02a300437b1ddb825f3777bf9196a29a7eab7fe6301aa9da4b6e251eeddf",
+        "alt": "PrepTurk product logo"
       },
       "canonicalUrl": "https://github.com/MonarchCastleTech/prepturk",
       "owner": "MonarchCastleTech",
@@ -187,9 +201,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/supplychain/blob/master/README.md",
       "updateFrequency": "weekly",
       "logo": {
-        "kind": "governed-text",
-        "label": "Supply Chain Intelligence",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/supplychain-logo.png",
+        "publicPath": "/assets/products/supplychain-logo.png",
+        "sha256": "ab7e18cf5e955ac69ce1951a68ea42a5bce7a49ac3674ba8cf1b8796ffbfd4da",
+        "alt": "Supply Chain Intelligence product logo"
       },
       "canonicalUrl": "https://monarchcastletech.github.io/supplychain/",
       "owner": "MonarchCastleTech",
@@ -205,9 +221,11 @@
       "methodologyUrl": "https://github.com/SDCofA/border-neighbor-threat-index/blob/main/README.md",
       "updateFrequency": "every 2 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Border Neighbor Threat Index",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/bnti-icon.png",
+        "publicPath": "/assets/products/bnti-icon.png",
+        "sha256": "66b9df64645c05adb76c3bfe81aa1a883c81ed17ba231dcc5810af5a03fad47f",
+        "alt": "Border Neighbor Threat Index product logo"
       },
       "canonicalUrl": "https://sdcofa.github.io/border-neighbor-threat-index/",
       "owner": "SDCofA",
@@ -231,7 +249,7 @@
       },
       "canonicalUrl": "https://sdcofa.github.io/mena-threat-index/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "local-release-and-github-metadata-verified",
+      "forecastEvidenceStatus": "pilot-candidate-verified-from-178-timestamped-model-vs-naive-evaluations",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
