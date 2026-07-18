@@ -105,29 +105,34 @@ test("generated public pages never expose internal workflow or registry language
   }
 });
 
-test("homepage follows the approved editorial order and exposes the four governed pillars", () => {
-  const sectionIds = [
-    "positioning",
-    "capabilities",
-    "portfolio",
-    "datasets-methods",
-    "forecast-evaluation",
-    "trust-provenance",
-    "insights",
-    "company-contact"
+test("homepage follows the approved flagship narrative and keeps the four capabilities", () => {
+  const sectionClasses = [
+    "mission-hero",
+    "operating-thesis",
+    "featured-systems",
+    "intelligence-catalogue",
+    "sdcofa-band",
+    "evidence-chain",
+    "company-close"
   ];
-  const offsets = sectionIds.map((id) => indexHtml.indexOf(`id="${id}"`));
-  assert.ok(offsets.every((offset) => offset >= 0), "all editorial sections exist");
+  const offsets = sectionClasses.map((className) => indexHtml.indexOf(`class="${className}`));
+  assert.ok(offsets.every((offset) => offset >= 0), "all flagship sections exist");
   assert.deepEqual(offsets, [...offsets].sort((a, b) => a - b));
   assert.deepEqual(site.brand.pillars, ["Strategy", "Data", "Intelligence", "Forecasting"]);
   for (const pillar of site.brand.pillars) assert.match(indexHtml, new RegExp(`>${pillar}<`));
 });
 
-test("homepage exposes trust links and an explicit non-evidenced forecast state", () => {
+test("public shell uses the focused flagship navigation and product action", () => {
+  for (const label of ["Home", "Products", "Forecasting", "Methodology", "Company"]) {
+    assert.match(indexHtml, new RegExp(`>${label}<`));
+  }
+  assert.match(indexHtml, /class="header-action" href="\/products\/">Explore products</);
+});
+
+test("homepage exposes trust links without unsupported performance claims", () => {
   for (const path of ["/methodology/", "/trust/", "/company/", "/products/"]) {
     assert.match(indexHtml, new RegExp(`href="${path}"`));
   }
-  assert.match(indexHtml, /not yet evidenced/i);
   assert.doesNotMatch(indexHtml, /\b(?:best|leading|most accurate|AI-powered)\b/i);
   assert.doesNotMatch(indexHtml, /\b\d+[,.]?\d*\+?\s+(?:customers|countries|forecasts|signals|datasets)\b/i);
 });

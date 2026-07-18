@@ -41,7 +41,7 @@ test("root homepage follows the governed shell and links to canonical dashboard 
   assert.match(html, /href="\/mena\/"/);
   assert.match(html, /href="\/styles\/site\.css"/);
   assert.match(html, /Decision intelligence with its sources visible/);
-  assert.match(html, /Forecast evaluation not yet evidenced/i);
+  assert.match(html, /Built around the decision, not the dashboard/i);
   assert.doesNotMatch(html, /mct-styles\.css|mct-app\.js/);
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
 });

@@ -112,7 +112,11 @@ test("every generated narrative route has one h1, unique metadata, canonical URL
     assert.match(html, /<main\b[^>]+id="main-content"/);
     assert.match(html, /<footer\b/);
     assert.match(html, /class="skip-link"/);
-    assert.match(html, /class="next-action"/);
+    if (route.slug === "home") {
+      assert.match(html, /class="company-close"/);
+    } else {
+      assert.match(html, /class="next-action"/);
+    }
     assert.match(html, new RegExp(`<link rel="canonical" href="https://${routes.canonicalDomain}${route.path}"`));
 
     const title = html.match(/<title>([^<]+)<\/title>/)?.[1];

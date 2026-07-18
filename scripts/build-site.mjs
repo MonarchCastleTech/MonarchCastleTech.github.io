@@ -21,6 +21,59 @@ const dashboardPaths = {
   "world-threat-index": "/wti/",
   "mena-threat-index": "/mena/"
 };
+const productPresentation = {
+  "cloudy-shiny": {
+    summary: "A market weather system that turns financial signals into an immediate read on risk appetite.",
+    signal: "Market conditions"
+  },
+  econmap: {
+    summary: "Country-level economic indicators arranged for fast comparison and macroeconomic orientation.",
+    signal: "Economic landscape"
+  },
+  esgmap: {
+    summary: "Explore environmental, social, and governance signals through a global geospatial interface.",
+    signal: "Sustainability intelligence"
+  },
+  macrointel: {
+    summary: "Macro signals, country context, and decision-ready economic views in one analytical surface.",
+    signal: "Macro intelligence"
+  },
+  "milcodec-receiver": {
+    summary: "A focused receiver and analysis environment for military-coded communications.",
+    signal: "Defense signals"
+  },
+  "nuclear-energy-intelligence": {
+    summary: "Structured intelligence for monitoring the global nuclear-energy operating environment.",
+    signal: "Energy systems"
+  },
+  prepturk: {
+    summary: "Practical emergency-preparedness intelligence designed for households and communities in Türkiye.",
+    signal: "Preparedness"
+  },
+  supplychain: {
+    summary: "Map operational exposure and trace the forces shaping complex supply networks.",
+    signal: "Supply networks"
+  },
+  "border-neighbor-threat-index": {
+    summary: "Compare how cross-border conditions shape national threat exposure.",
+    signal: "Border risk"
+  },
+  "mena-threat-index": {
+    summary: "A regional threat lens built for direct comparison across the Middle East and North Africa.",
+    signal: "Regional threat"
+  },
+  "world-threat-index": {
+    summary: "Comparative global threat monitoring across political, security, and structural conditions.",
+    signal: "Global threat"
+  }
+};
+
+function presentationFor(product) {
+  return productPresentation[product.id] ?? {
+    summary: "Purpose-built intelligence for decisions that demand clear context and usable outputs.",
+    signal: sentenceCase(product.family)
+  };
+}
 
 function ensureParent(filePath) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -96,7 +149,7 @@ function renderProductCard(product) {
       <div class="product-mark">${renderMark(product)}</div>
       <p class="eyebrow">${escapeHtml(sentenceCase(product.family))}</p>
       <h3>${escapeHtml(product.name)}</h3>
-      <p>Purpose-built intelligence for decisions that demand clear context, visible methods, and usable outputs.</p>
+      <p>${escapeHtml(presentationFor(product).summary)}</p>
       <div class="card-actions">
         ${localOrExternalLink(product.canonicalUrl, "Explore system")}
         ${localOrExternalLink(product.methodologyUrl, "How it works")}
@@ -171,95 +224,100 @@ function nextAction(href, heading, text, label) {
   </aside>`;
 }
 
-function renderHome() {
+function renderFeaturedSystem(product, index) {
+  const presentation = presentationFor(product);
   return `
-    <section class="hero" id="positioning" aria-labelledby="home-heading">
-      <div>
-        <p class="eyebrow">Monarch Castle Technologies</p>
-        <h1 id="home-heading">Decision intelligence with its sources visible.</h1>
-        <p class="lede">${escapeHtml(site.brand.positioning)}</p>
-        <div class="hero-actions">
-          ${localOrExternalLink("/products/", "Explore products", "button-link")}
-          ${localOrExternalLink("/methodology/", "Review methodology", "button-link button-secondary")}
+    <article class="featured-system" data-product-id="${escapeHtml(product.id)}">
+      <div class="featured-system-copy">
+        <p class="eyebrow">${String(index + 1).padStart(2, "0")} / ${escapeHtml(presentation.signal)}</p>
+        <h3>${escapeHtml(product.name)}</h3>
+        <p>${escapeHtml(presentation.summary)}</p>
+        <div class="card-actions">
+          ${localOrExternalLink(product.canonicalUrl, "Explore system", "button-link")}
+          ${localOrExternalLink(product.methodologyUrl, "View methodology")}
         </div>
       </div>
-      <aside class="evidence-note" aria-label="Evidence standard">
-        <p class="eyebrow">Public evidence standard</p>
-        <p>Methods, limitations, and source context stay close to every analytical claim.</p>
+      <div class="featured-system-mark">${renderMark(product)}</div>
+    </article>`;
+}
+
+function renderHome() {
+  const featuredIds = ["esgmap", "macrointel", "world-threat-index"];
+  const featured = featuredIds.map((id) => productById.get(id)).filter(Boolean);
+  return `
+    <section class="mission-hero" id="positioning" aria-labelledby="home-heading">
+      <div class="mission-hero-copy">
+        <p class="eyebrow">Independent decision intelligence</p>
+        <h1 id="home-heading">Decision intelligence with its sources visible.</h1>
+        <p class="lede">Monarch Castle Technologies builds intelligence systems for people navigating markets, energy, security, and strategic risk.</p>
+        <div class="hero-actions">
+          ${localOrExternalLink("/products/", "Explore products", "button-link")}
+          ${localOrExternalLink("/methodology/", "See how we work", "button-link button-secondary")}
+        </div>
+      </div>
+      <aside class="mission-hero-visual" aria-label="Monarch Castle intelligence operating model">
+        <p class="eyebrow">Operating model</p>
+        <ol>
+          <li><span>01</span><strong>Observe</strong><small>Signals and source context</small></li>
+          <li><span>02</span><strong>Structure</strong><small>Models and comparisons</small></li>
+          <li><span>03</span><strong>Decide</strong><small>Clear, usable intelligence</small></li>
+        </ol>
       </aside>
     </section>
-    <section id="capabilities" aria-labelledby="capabilities-heading">
+    <section class="operating-thesis" id="capabilities" aria-labelledby="capabilities-heading">
       <div class="section-heading">
-        <p class="eyebrow">Capabilities</p>
-        <h2 id="capabilities-heading">A governed path from question to evaluation</h2>
+        <p class="eyebrow">Operating thesis</p>
+        <h2 id="capabilities-heading">From complex signals to decisions people can defend.</h2>
+        <p>Strategy defines the question. Data establishes the ground truth. Intelligence reveals what matters. Forecasting tests what may come next.</p>
       </div>
       ${renderCapabilities()}
     </section>
-    <section id="portfolio" aria-labelledby="portfolio-heading">
+    <section class="featured-systems" id="featured-systems" aria-labelledby="featured-heading">
       <div class="section-heading">
-        <p class="eyebrow">Portfolio</p>
-        <h2 id="portfolio-heading">Public Monarch Castle Technologies products</h2>
-        <p>Explore decision systems across financial, energy, defense, emergency, and threat intelligence.</p>
+        <p class="eyebrow">Featured systems</p>
+        <h2 id="featured-heading">Built around the decision, not the dashboard.</h2>
+        <p>Focused analytical products turn specific information problems into experiences people can explore directly.</p>
+      </div>
+      <div class="featured-system-list">${featured.map(renderFeaturedSystem).join("")}</div>
+    </section>
+    <section class="intelligence-catalogue" id="portfolio" aria-labelledby="portfolio-heading">
+      <div class="section-heading">
+        <p class="eyebrow">Intelligence catalogue</p>
+        <h2 id="portfolio-heading">One portfolio. Multiple operating environments.</h2>
+        <p>Explore systems across financial, energy, defense, emergency, and threat intelligence.</p>
       </div>
       ${renderProductGrid(flagshipProducts)}
+      <p class="section-action">${localOrExternalLink("/products/", "View the full product portfolio", "button-link")}</p>
+    </section>
+    <section class="sdcofa-band" id="sdcofa" aria-label="SDCofA analytical unit">
       ${renderEndorsedFamily()}
     </section>
-    <section id="datasets-methods" aria-labelledby="datasets-methods-heading">
+    <section class="evidence-chain" id="methods" aria-labelledby="methods-heading">
       <div class="section-heading">
-        <p class="eyebrow">Datasets and methods</p>
-        <h2 id="datasets-methods-heading">Trace each instrument back to its method</h2>
+        <p class="eyebrow">Evidence chain</p>
+        <h2 id="methods-heading">Intelligence is useful when its reasoning can be followed.</h2>
       </div>
-      <div class="link-list">
-        ${site.products.map((product) => `<article>
-          <h3>${escapeHtml(product.name)}</h3>
-          <p>See the public method, sources, and operating context behind this system.</p>
-          ${localOrExternalLink(product.methodologyUrl, "Explore the method")}
-        </article>`).join("")}
+      <div class="evidence-steps">
+        <article><span>01</span><h3>Source context</h3><p>Start with where an observation came from, when it was captured, and what it can support.</p></article>
+        <article><span>02</span><h3>Analytical method</h3><p>Make transformations, comparisons, and limitations understandable to the reader.</p></article>
+        <article><span>03</span><h3>Decision output</h3><p>Present the result in a form that clarifies choices without hiding uncertainty.</p></article>
       </div>
-    </section>
-    <section id="forecast-evaluation" class="split-section" aria-labelledby="forecast-heading">
-      <div>
-        <p class="eyebrow">Forecast evaluation</p>
-        <h2 id="forecast-heading">${escapeHtml(site.forecastEvaluation.evidenceLabel)}</h2>
-      </div>
-      <div>
-        <p>The current benchmark manifest is a template, not an evaluated result. No public performance advantage is asserted.</p>
-        ${localOrExternalLink("/methodology/#forecasting", "Read the evaluation gate")}
+      <div class="evidence-actions">
+        ${localOrExternalLink("/methodology/", "Explore methodology", "button-link")}
+        ${localOrExternalLink("/trust/", "Read our commitments")}
       </div>
     </section>
-    <section id="trust-provenance" aria-labelledby="trust-heading">
-      <div class="section-heading">
-        <p class="eyebrow">Trust and provenance</p>
-        <h2 id="trust-heading">Evidence before assertion</h2>
+    <section class="company-close" id="company-contact" aria-labelledby="company-heading">
+      <div class="company-close-copy">
+        <p class="eyebrow">Monarch Castle Technologies</p>
+        <h2 id="company-heading">Clarity for the moments that shape what comes next.</h2>
+        <p>Independent products. Inspectable methods. Intelligence designed to be used.</p>
       </div>
-      <div class="trust-grid">
-        <article><h3>Provenance</h3><p>Product methods and source routes remain available for independent inspection.</p></article>
-        <article><h3>Limitations</h3><p>Uncertainty and analytical boundaries are stated plainly instead of being converted into marketing proof.</p></article>
-        <article><h3>Claims</h3><p>Only separately approved claims may be released. Comparative and superlative wording requires governed evidence.</p></article>
+      <div class="company-close-actions">
+        ${localOrExternalLink("/company/", "About the company", "button-link")}
+        ${localOrExternalLink(editorial.contactUrl, "Contact us")}
       </div>
-      ${localOrExternalLink("/trust/", "Open the trust center")}
-    </section>
-    <section id="insights" aria-labelledby="insights-heading">
-      <div class="section-heading">
-        <p class="eyebrow">Insights</p>
-        <h2 id="insights-heading">Public standards and research notes</h2>
-      </div>
-      ${renderInsights()}
-    </section>
-    <section id="company-contact" class="split-section" aria-labelledby="company-heading">
-      <div>
-        <p class="eyebrow">Company and contact</p>
-        <h2 id="company-heading">Build decisions that can be inspected</h2>
-      </div>
-      <div>
-        <p>Monarch Castle Technologies maintains the flagship portfolio and visibly endorses SDCofA as its analytical unit.</p>
-        <div class="card-actions">
-          ${localOrExternalLink("/company/", "About the company")}
-          ${localOrExternalLink(editorial.contactUrl, "Contact on GitHub")}
-        </div>
-      </div>
-    </section>
-    ${nextAction("/products/", "Explore the intelligence portfolio", "Find the system designed for the decision in front of you.", "Explore products")}`;
+    </section>`;
 }
 
 function renderProducts() {
@@ -397,10 +455,16 @@ function renderBody(page) {
 }
 
 function renderNav(currentPath) {
-  return routes.sitePages.map((page) => {
-    const label = page.slug === "home" ? "Home" : sentenceCase(page.slug);
-    const current = page.path === currentPath ? ' aria-current="page"' : "";
-    return `<li><a href="${page.path}"${current}>${escapeHtml(label)}</a></li>`;
+  const navigation = [
+    { label: "Home", path: "/" },
+    { label: "Products", path: "/products/" },
+    { label: "Forecasting", path: "/methodology/#forecasting" },
+    { label: "Methodology", path: "/methodology/" },
+    { label: "Company", path: "/company/" }
+  ];
+  return navigation.map((item) => {
+    const current = item.path === currentPath ? ' aria-current="page"' : "";
+    return `<li><a href="${item.path}"${current}>${escapeHtml(item.label)}</a></li>`;
   }).join("");
 }
 
@@ -429,6 +493,7 @@ function renderPage(page) {
       <span>Monarch Castle</span><strong>Technologies</strong>
     </a>
     <nav aria-label="Primary"><ul>${renderNav(page.path)}</ul></nav>
+    <a class="header-action" href="/products/">Explore products</a>
   </header>
   <main id="main-content" tabindex="-1">${renderBody(page)}</main>
   <footer class="site-footer">
