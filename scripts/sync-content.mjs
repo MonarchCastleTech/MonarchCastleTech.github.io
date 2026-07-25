@@ -32,6 +32,7 @@ const localPresentationLogos = {
   "milcodec-receiver": "assets/products/milcodec-logo.png",
   "nuclear-energy-intelligence": "assets/products/nuclear-logo.png",
   prepturk: "assets/products/prepturk-logo.png",
+  "superlig-forecast": "assets/products/superlig-forecast-logo.png",
   supplychain: "assets/products/supplychain-logo.png",
   "border-neighbor-threat-index": "assets/products/bnti-icon.png"
 };

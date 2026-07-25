@@ -18,6 +18,11 @@ Lifecycle: **Active**. The badge and this statement describe maintenance status,
 
 The canonical production route is [monarchcastle.tech](https://monarchcastle.tech/). A GitHub Pages certificate/HTTPS defect confirmed on 2026-07-18 is tracked in the company-governance infrastructure follow-up; the source-controlled `CNAME` remains unchanged.
 
+The public portfolio includes the
+[Süper Lig Forecast](https://monarchcastletech.github.io/superlig-forecast/),
+a daily five-million-path title, table, and match-outcome forecast with a
+published 20-season expanding-window backtest.
+
 ## Screenshots
 
 ![Monarch Castle Technologies Website repository preview](docs/social-preview.png)

@@ -9,7 +9,7 @@
       "claims": "claims/claims-register.json",
       "forecastBenchmark": "forecasting/benchmark-manifest.json"
     },
-    "sha256": "30f64ab860f8fd70ce11f67cf95eb0dbe817560ff6310ccafe427ea75fe44912"
+    "sha256": "27a20750a66759af33c10c7cbc78e214a42caccdc02ab0ce2a0c12932d89acba"
   },
   "brand": {
     "masterbrand": "Monarch Castle Technologies",
@@ -43,6 +43,7 @@
       "milcodec-receiver",
       "nuclear-energy-intelligence",
       "prepturk",
+      "superlig-forecast",
       "supplychain"
     ],
     "SDCofA": [
@@ -190,6 +191,26 @@
       "canonicalUrl": "https://github.com/MonarchCastleTech/prepturk",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
+    },
+    {
+      "id": "superlig-forecast",
+      "name": "Süper Lig Forecast",
+      "family": "sports-intelligence",
+      "lifecycle": "production",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/superlig-forecast/blob/main/README.md",
+      "updateFrequency": "daily",
+      "logo": {
+        "kind": "approved-image",
+        "sourcePath": "assets/products/superlig-forecast-logo.png",
+        "publicPath": "/assets/products/superlig-forecast-logo.png",
+        "sha256": "abb05f39f892a280778bf9f56a5f6a7b67815cc8d107c61fa067fa416ffd8dba",
+        "alt": "Süper Lig Forecast product logo"
+      },
+      "canonicalUrl": "https://monarchcastletech.github.io/superlig-forecast/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "public-release-verified; 20-season-expanding-window-backtest; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
     },
     {

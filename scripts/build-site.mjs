@@ -50,6 +50,10 @@ const productPresentation = {
     summary: "Practical emergency-preparedness intelligence designed for households and communities in Türkiye.",
     signal: "Preparedness"
   },
+  "superlig-forecast": {
+    summary: "Five million simulated seasons turn current matches, squads, transfers, and market values into transparent title and table probabilities.",
+    signal: "Football forecasting"
+  },
   supplychain: {
     summary: "Map operational exposure and trace the forces shaping complex supply networks.",
     signal: "Supply networks"

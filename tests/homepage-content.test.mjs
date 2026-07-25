@@ -51,7 +51,7 @@ test("site content is an exact governed projection of every public registry prod
 test("flagship cards are owner-scoped and the endorsed SDCofA family is still represented", () => {
   const flagship = site.products.filter(({ owner }) => owner === "MonarchCastleTech");
   const endorsed = site.products.filter(({ owner }) => owner === "SDCofA");
-  assert.equal(flagship.length, 8);
+  assert.equal(flagship.length, 9);
   assert.equal(endorsed.length, 3);
 
   for (const product of flagship) {
@@ -73,6 +73,7 @@ test("every public product uses its real, locally available brand mark", () => {
     "/assets/products/milcodec-logo.png",
     "/assets/products/nuclear-logo.png",
     "/assets/products/prepturk-logo.png",
+    "/assets/products/superlig-forecast-logo.png",
     "/assets/products/supplychain-logo.png",
     "/assets/products/bnti-icon.png",
     "/assets/approved/mena-threat-index.png",
@@ -85,6 +86,21 @@ test("every public product uses its real, locally available brand mark", () => {
     assert.equal(fs.existsSync(path.join(root, "src", product.logo.sourcePath)), true, `${product.name} logo exists`);
     assert.match(product.logo.alt, /logo|mark/i);
   }
+});
+
+test("homepage publishes the Süper Lig Forecast as a daily public product", () => {
+  const forecast = site.products.find(({ id }) => id === "superlig-forecast");
+  assert.ok(forecast);
+  assert.equal(
+    forecast.canonicalUrl,
+    "https://monarchcastletech.github.io/superlig-forecast/",
+  );
+  assert.equal(forecast.updateFrequency, "daily");
+  assert.match(indexHtml, /data-product-id="superlig-forecast"/);
+  assert.match(
+    indexHtml,
+    /Five million simulated seasons turn current matches, squads, transfers, and market values into transparent title and table probabilities\./,
+  );
 });
 
 test("generated public pages never expose internal workflow or registry language", () => {
