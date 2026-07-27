@@ -8,6 +8,8 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const governanceRoot = path.resolve(root, "..", "..", "company-governance");
 const site = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "site.json"), "utf8"));
 const indexHtml = fs.readFileSync(path.join(root, "dist", "index.html"), "utf8");
+const productsHtml = fs.readFileSync(path.join(root, "dist", "products", "index.html"), "utf8");
+const siteCss = fs.readFileSync(path.join(root, "src", "styles", "site.css"), "utf8");
 const registryPath = path.join(governanceRoot, "portfolio", "products.json");
 
 const projectedFields = [
@@ -62,6 +64,21 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   for (const path of ["/bnti/", "/wti/", "/mena/"]) {
     assert.match(indexHtml, new RegExp(`href="${path}"`));
   }
+});
+
+test("products page exposes Monarch Castle Technologies and SDCofA as visibly separate owner groups", () => {
+  assert.match(productsHtml, /class="owner-portfolio-section owner-portfolio-section--flagship"/);
+  assert.match(productsHtml, /<p class="eyebrow">Product owner<\/p>\s*<h2 id="flagship-heading">Monarch Castle Technologies<\/h2>/);
+  assert.match(productsHtml, /class="sdcofa-band owner-portfolio-section owner-portfolio-section--endorsed"/);
+  assert.match(productsHtml, /<p class="eyebrow">Endorsed analytical unit<\/p>\s*<h2 id="endorsed-heading">SDCofA<\/h2>/);
+});
+
+test("logo surfaces stay transparent and dark brand marks receive contrast support", () => {
+  assert.doesNotMatch(siteCss, /\.featured-system-mark\s*\{[^}]*radial-gradient/s);
+  assert.match(siteCss, /\.product-mark\s*\{[^}]*background:\s*transparent;/s);
+  assert.match(siteCss, /\[data-logo-tone="dark"\]\s+\.product-logo\s*\{[^}]*filter:/s);
+  assert.match(indexHtml, /data-product-id="esgmap" data-logo-tone="dark"/);
+  assert.match(productsHtml, /data-product-id="macrointel" data-logo-tone="dark"/);
 });
 
 test("every public product uses its real, locally available brand mark", () => {

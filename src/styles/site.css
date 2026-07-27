@@ -511,9 +511,8 @@ main > section,
   overflow: hidden;
   background:
     linear-gradient(rgba(215, 180, 106, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(215, 180, 106, 0.05) 1px, transparent 1px),
-    radial-gradient(circle at center, rgba(215, 180, 106, 0.12), transparent 65%);
-  background-size: 3rem 3rem, 3rem 3rem, auto;
+    linear-gradient(90deg, rgba(215, 180, 106, 0.05) 1px, transparent 1px);
+  background-size: 3rem 3rem;
 }
 
 .featured-system-mark .product-logo {
@@ -573,7 +572,7 @@ main > section,
   padding: 0.75rem;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
-  background: rgba(243, 239, 228, 0.035);
+  background: transparent;
 }
 
 .product-logo {
@@ -583,6 +582,18 @@ main > section,
   max-height: 100%;
   object-fit: contain;
   object-position: center;
+}
+
+[data-logo-tone="dark"] .product-logo {
+  filter: brightness(1.65) saturate(1.2) contrast(1.05);
+}
+
+.featured-system[data-logo-tone="dark"] .product-logo {
+  filter:
+    brightness(1.65)
+    saturate(1.2)
+    contrast(1.05)
+    drop-shadow(0 1.6rem 2.5rem rgba(0, 0, 0, 0.35));
 }
 
 .text-lockup {

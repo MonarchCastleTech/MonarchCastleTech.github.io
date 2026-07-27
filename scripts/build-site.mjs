@@ -16,6 +16,7 @@ const flagshipProducts = (site.ownerViews?.MonarchCastleTech ?? [])
 const endorsedProducts = (site.ownerViews?.SDCofA ?? [])
   .map((id) => productById.get(id))
   .filter(Boolean);
+const lightLogoIds = new Set(["nuclear-energy-intelligence"]);
 const dashboardPaths = {
   "border-neighbor-threat-index": "/bnti/",
   "world-threat-index": "/wti/",
@@ -147,9 +148,13 @@ function renderMark(product) {
   return `<span class="text-lockup" aria-label="${escapeHtml(product.logo.label)}">${escapeHtml(product.logo.label)}</span>`;
 }
 
+function logoToneFor(product) {
+  return lightLogoIds.has(product.id) ? "light" : "dark";
+}
+
 function renderProductCard(product) {
   return `
-    <article class="product-card" data-product-id="${escapeHtml(product.id)}">
+    <article class="product-card" data-product-id="${escapeHtml(product.id)}" data-logo-tone="${logoToneFor(product)}">
       <div class="product-mark">${renderMark(product)}</div>
       <p class="eyebrow">${escapeHtml(sentenceCase(product.family))}</p>
       <h3>${escapeHtml(product.name)}</h3>
@@ -174,19 +179,19 @@ function renderCapabilities() {
     </article>`).join("")}</div>`;
 }
 
-function renderEndorsedFamily() {
+function renderEndorsedFamily(headingId = "") {
   return `
     <div class="endorsed-panel">
       <div>
         <p class="eyebrow">Endorsed analytical unit</p>
-        <h2>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2>
+        <h2${headingId ? ` id="${escapeHtml(headingId)}"` : ""}>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2>
         <p>SDCofA publishes standing open-source threat indices as the endorsed analytical unit of Monarch Castle Technologies.</p>
         <p class="endorsement">SDCofA — endorsed analytical unit of Monarch Castle Technologies</p>
       </div>
       <div class="endorsed-links">
         ${endorsedProducts.map((product) => {
           const localPath = dashboardPaths[product.id];
-          return `<article>
+          return `<article data-product-id="${escapeHtml(product.id)}" data-logo-tone="${logoToneFor(product)}">
             ${renderMark(product)}
             <h3>${escapeHtml(product.name)}</h3>
             <p>Open-source threat intelligence designed for direct exploration.</p>
@@ -231,7 +236,7 @@ function nextAction(href, heading, text, label) {
 function renderFeaturedSystem(product, index) {
   const presentation = presentationFor(product);
   return `
-    <article class="featured-system" data-product-id="${escapeHtml(product.id)}">
+    <article class="featured-system" data-product-id="${escapeHtml(product.id)}" data-logo-tone="${logoToneFor(product)}">
       <div class="featured-system-copy">
         <p class="eyebrow">${String(index + 1).padStart(2, "0")} / ${escapeHtml(presentation.signal)}</p>
         <h3>${escapeHtml(product.name)}</h3>
@@ -293,8 +298,8 @@ function renderHome() {
       ${renderProductGrid(flagshipProducts)}
       <p class="section-action">${localOrExternalLink("/products/", "View the full product portfolio", "button-link")}</p>
     </section>
-    <section class="sdcofa-band" id="sdcofa" aria-label="SDCofA analytical unit">
-      ${renderEndorsedFamily()}
+    <section class="sdcofa-band" id="sdcofa" aria-labelledby="sdcofa-heading">
+      ${renderEndorsedFamily("sdcofa-heading")}
     </section>
     <section class="evidence-chain" id="methods" aria-labelledby="methods-heading">
       <div class="section-heading">
@@ -326,11 +331,11 @@ function renderHome() {
 
 function renderProducts() {
   return `${pageIntro("Products", "Intelligence systems for consequential decisions", "Explore Monarch Castle Technologies products and the SDCofA threat-intelligence family.")}
-    <section aria-labelledby="flagship-heading">
-      <div class="section-heading"><h2 id="flagship-heading">Monarch Castle Technologies portfolio</h2><p>Each system turns a defined information problem into a focused analytical experience.</p></div>
+    <section class="owner-portfolio-section owner-portfolio-section--flagship" aria-labelledby="flagship-heading">
+      <div class="section-heading"><div><p class="eyebrow">Product owner</p><h2 id="flagship-heading">Monarch Castle Technologies</h2></div><p>Each system turns a defined information problem into a focused analytical experience.</p></div>
       ${renderProductGrid(flagshipProducts)}
     </section>
-    <section aria-labelledby="endorsed-heading"><div class="visually-hidden"><h2 id="endorsed-heading">Endorsed analytical products</h2></div>${renderEndorsedFamily()}</section>
+    <section class="sdcofa-band owner-portfolio-section owner-portfolio-section--endorsed" aria-labelledby="endorsed-heading">${renderEndorsedFamily("endorsed-heading")}</section>
     ${nextAction("/datasets/", "See the intelligence foundations", "Continue to the public source and methodology routes behind the portfolio.", "Browse datasets and sources")}`;
 }
 

@@ -89,7 +89,7 @@ test("every public product logo loads, stays contained, and remains visible", as
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${baseURL}/products/`);
   const logos = page.locator(".product-mark img, .endorsed-links img");
-  expect(await logos.count()).toBe(11);
+  expect(await logos.count()).toBe(12);
 
   for (let index = 0; index < await logos.count(); index += 1) {
     const state = await logos.nth(index).evaluate((image) => {
