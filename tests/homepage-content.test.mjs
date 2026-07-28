@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -73,12 +74,29 @@ test("products page exposes Monarch Castle Technologies and SDCofA as visibly se
   assert.match(productsHtml, /<p class="eyebrow">Endorsed analytical unit<\/p>\s*<h2 id="endorsed-heading">SDCofA<\/h2>/);
 });
 
-test("logo surfaces stay transparent and dark brand marks receive contrast support", () => {
+test("product logos use approved dark assets without runtime color filters", () => {
+  assert.doesNotMatch(indexHtml, /data-logo-tone=/);
+  assert.doesNotMatch(productsHtml, /data-logo-tone=/);
+  assert.doesNotMatch(siteCss, /\[data-logo-tone=/);
+  assert.doesNotMatch(siteCss, /filter:\s*[^;]*(?:brightness|saturate|contrast)\(/);
   assert.doesNotMatch(siteCss, /\.featured-system-mark\s*\{[^}]*radial-gradient/s);
   assert.match(siteCss, /\.product-mark\s*\{[^}]*background:\s*transparent;/s);
-  assert.match(siteCss, /\[data-logo-tone="dark"\]\s+\.product-logo\s*\{[^}]*filter:/s);
-  assert.match(indexHtml, /data-product-id="esgmap" data-logo-tone="dark"/);
-  assert.match(productsHtml, /data-product-id="macrointel" data-logo-tone="dark"/);
+
+  const expectedDarkLogoHashes = {
+    "cloudy-shiny-logo.png": "570096f66a606d8a861e585a7fa7ec7ae530d0218f2fcf295d2879f9433b1444",
+    "econmap-logo.png": "629613546a1c014085ce4f8a668a0e0a2f3600858c08442d055098e3cb476db1",
+    "esgmap-logo.png": "52129544e21310234b24bff1d98ceb9270dddf83aaaeab11f714aa29145bf37f",
+    "macrointel-logo.png": "79e875086ad5f496c042f693a443df5d7dc58d330271e07e233af79e75fbe295",
+    "milcodec-logo.png": "9dfeaad8d391b9d0dc6a2d76e049d47e578f17000b7469575a8e5cb7ba7a54f5",
+    "nuclear-logo.png": "5822e425d9b32e58c132737f52d83d6b1f583d51c46dba4f8c103db9b05b9d85",
+    "prepturk-logo.png": "5e3e3ce1b2573f8c166cf6227574f46c0f8cfbcc396a39ffa55dd5d2ccb53e3e",
+    "supplychain-logo.png": "35dd5ba80c2768aec9942e1af64910871328bf24d55a04afbfba1c0f8146e01b"
+  };
+
+  for (const [name, expected] of Object.entries(expectedDarkLogoHashes)) {
+    const bytes = fs.readFileSync(path.join(root, "src", "assets", "products", name));
+    assert.equal(crypto.createHash("sha256").update(bytes).digest("hex"), expected);
+  }
 });
 
 test("every public product uses its real, locally available brand mark", () => {

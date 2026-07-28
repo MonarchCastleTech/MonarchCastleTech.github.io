@@ -584,18 +584,6 @@ main > section,
   object-position: center;
 }
 
-[data-logo-tone="dark"] .product-logo {
-  filter: brightness(1.65) saturate(1.2) contrast(1.05);
-}
-
-.featured-system[data-logo-tone="dark"] .product-logo {
-  filter:
-    brightness(1.65)
-    saturate(1.2)
-    contrast(1.05)
-    drop-shadow(0 1.6rem 2.5rem rgba(0, 0, 0, 0.35));
-}
-
 .text-lockup {
   max-width: 100%;
   color: var(--ink);

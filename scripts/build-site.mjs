@@ -16,7 +16,6 @@ const flagshipProducts = (site.ownerViews?.MonarchCastleTech ?? [])
 const endorsedProducts = (site.ownerViews?.SDCofA ?? [])
   .map((id) => productById.get(id))
   .filter(Boolean);
-const lightLogoIds = new Set(["nuclear-energy-intelligence"]);
 const dashboardPaths = {
   "border-neighbor-threat-index": "/bnti/",
   "world-threat-index": "/wti/",
@@ -148,13 +147,9 @@ function renderMark(product) {
   return `<span class="text-lockup" aria-label="${escapeHtml(product.logo.label)}">${escapeHtml(product.logo.label)}</span>`;
 }
 
-function logoToneFor(product) {
-  return lightLogoIds.has(product.id) ? "light" : "dark";
-}
-
 function renderProductCard(product) {
   return `
-    <article class="product-card" data-product-id="${escapeHtml(product.id)}" data-logo-tone="${logoToneFor(product)}">
+    <article class="product-card" data-product-id="${escapeHtml(product.id)}">
       <div class="product-mark">${renderMark(product)}</div>
       <p class="eyebrow">${escapeHtml(sentenceCase(product.family))}</p>
       <h3>${escapeHtml(product.name)}</h3>
@@ -191,7 +186,7 @@ function renderEndorsedFamily(headingId = "") {
       <div class="endorsed-links">
         ${endorsedProducts.map((product) => {
           const localPath = dashboardPaths[product.id];
-          return `<article data-product-id="${escapeHtml(product.id)}" data-logo-tone="${logoToneFor(product)}">
+          return `<article data-product-id="${escapeHtml(product.id)}">
             ${renderMark(product)}
             <h3>${escapeHtml(product.name)}</h3>
             <p>Open-source threat intelligence designed for direct exploration.</p>
@@ -236,7 +231,7 @@ function nextAction(href, heading, text, label) {
 function renderFeaturedSystem(product, index) {
   const presentation = presentationFor(product);
   return `
-    <article class="featured-system" data-product-id="${escapeHtml(product.id)}" data-logo-tone="${logoToneFor(product)}">
+    <article class="featured-system" data-product-id="${escapeHtml(product.id)}">
       <div class="featured-system-copy">
         <p class="eyebrow">${String(index + 1).padStart(2, "0")} / ${escapeHtml(presentation.signal)}</p>
         <h3>${escapeHtml(product.name)}</h3>
