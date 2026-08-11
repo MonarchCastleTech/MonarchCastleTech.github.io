@@ -54,8 +54,8 @@ test("site content is an exact governed projection of every public registry prod
 test("flagship cards are owner-scoped and the endorsed SDCofA family is still represented", () => {
   const flagship = site.products.filter(({ owner }) => owner === "MonarchCastleTech");
   const endorsed = site.products.filter(({ owner }) => owner === "SDCofA");
-  assert.equal(flagship.length, 9);
-  assert.equal(endorsed.length, 3);
+  assert.equal(flagship.length, site.ownerViews.MonarchCastleTech.length);
+  assert.equal(endorsed.length, site.ownerViews.SDCofA.length);
 
   for (const product of flagship) {
     assert.match(indexHtml, new RegExp(`data-product-id="${product.id}"`));
@@ -99,7 +99,7 @@ test("product logos use approved dark assets without runtime color filters", () 
   }
 });
 
-test("every public product uses its real, locally available brand mark", () => {
+test("every public product uses approved imagery or governed text branding", () => {
   const expectedLogoPaths = [
     "/assets/products/cloudy-shiny-logo.png",
     "/assets/products/econmap-logo.png",
@@ -115,11 +115,19 @@ test("every public product uses its real, locally available brand mark", () => {
     "/assets/approved/world-threat-index.png"
   ];
 
-  assert.deepEqual(site.products.map((product) => product.logo.publicPath), expectedLogoPaths);
-  assert.ok(site.products.every((product) => product.logo.kind === "approved-image"));
+  assert.deepEqual(
+    site.products.filter((product) => product.logo.kind === "approved-image").map((product) => product.logo.publicPath),
+    expectedLogoPaths,
+  );
   for (const product of site.products) {
-    assert.equal(fs.existsSync(path.join(root, "src", product.logo.sourcePath)), true, `${product.name} logo exists`);
-    assert.match(product.logo.alt, /logo|mark/i);
+    if (product.logo.kind === "approved-image") {
+      assert.equal(fs.existsSync(path.join(root, "src", product.logo.sourcePath)), true, `${product.name} logo exists`);
+      assert.match(product.logo.alt, /logo|mark/i);
+    } else {
+      assert.equal(product.logo.kind, "governed-text");
+      assert.equal(product.logo.label, product.name);
+      assert.equal(product.logo.status, "review-required");
+    }
   }
 });
 
