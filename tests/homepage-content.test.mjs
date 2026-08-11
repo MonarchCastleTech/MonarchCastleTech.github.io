@@ -136,7 +136,7 @@ test("homepage publishes the Süper Lig Forecast as a daily public product", () 
   assert.ok(forecast);
   assert.equal(
     forecast.canonicalUrl,
-    "https://monarchcastletech.github.io/superlig-forecast/",
+    "https://monarchcastle.tech/superlig-forecast/",
   );
   assert.equal(forecast.updateFrequency, "daily");
   assert.match(indexHtml, /data-product-id="superlig-forecast"/);

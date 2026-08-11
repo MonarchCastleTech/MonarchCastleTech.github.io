@@ -9,7 +9,7 @@
       "claims": "claims/claims-register.json",
       "forecastBenchmark": "forecasting/benchmark-manifest.json"
     },
-    "sha256": "0c17133a22b7ba4a044af5de6b328e62f97806e93c823d5fb5609a6bb5c1bd64"
+    "sha256": "747641ff7c6513aaf7aa5f0e20735730e1d02c1e0baceb11b0d71a41f6fef984"
   },
   "brand": {
     "masterbrand": "Monarch Castle Technologies",
@@ -76,7 +76,7 @@
         "label": "Caspian & Black Sea Monitor",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/caspian-black-sea-monitor/",
+      "canonicalUrl": "https://monarchcastle.tech/caspian-black-sea-monitor/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -114,7 +114,7 @@
         "sha256": "570096f66a606d8a861e585a7fa7ec7ae530d0218f2fcf295d2879f9433b1444",
         "alt": "Cloudy&Shiny Index product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/Cloudy-Shiny/",
+      "canonicalUrl": "https://monarchcastle.tech/Cloudy-Shiny/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -168,7 +168,7 @@
         "label": "Defense Procurement Intelligence",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/defense-procurement/",
+      "canonicalUrl": "https://monarchcastle.tech/defense-procurement/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -188,7 +188,7 @@
         "sha256": "629613546a1c014085ce4f8a668a0e0a2f3600858c08442d055098e3cb476db1",
         "alt": "EconMap product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/econmap/",
+      "canonicalUrl": "https://monarchcastle.tech/econmap/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -208,7 +208,7 @@
         "sha256": "52129544e21310234b24bff1d98ceb9270dddf83aaaeab11f714aa29145bf37f",
         "alt": "ESGMap product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/esgmap/",
+      "canonicalUrl": "https://monarchcastle.tech/esgmap/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -228,7 +228,7 @@
         "sha256": "79e875086ad5f496c042f693a443df5d7dc58d330271e07e233af79e75fbe295",
         "alt": "MacroIntel product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/macrointel/",
+      "canonicalUrl": "https://monarchcastle.tech/macrointel/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -246,7 +246,7 @@
         "label": "MENA Energy Flow Tracker",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/mena-energy-flow/",
+      "canonicalUrl": "https://monarchcastle.tech/mena-energy-flow/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -266,7 +266,7 @@
         "sha256": "9dfeaad8d391b9d0dc6a2d76e049d47e578f17000b7469575a8e5cb7ba7a54f5",
         "alt": "MILCODEC Receiver product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/milcodec-receiver/",
+      "canonicalUrl": "https://monarchcastle.tech/milcodec-receiver/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -286,7 +286,7 @@
         "sha256": "5822e425d9b32e58c132737f52d83d6b1f583d51c46dba4f8c103db9b05b9d85",
         "alt": "Nuclear Energy Intelligence product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/NuclearEnergyIntelligence/",
+      "canonicalUrl": "https://monarchcastle.tech/NuclearEnergyIntelligence/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -322,7 +322,7 @@
         "label": "Port Congestion Pulse",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/port-congestion-pulse/",
+      "canonicalUrl": "https://monarchcastle.tech/port-congestion-pulse/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -342,7 +342,7 @@
         "sha256": "5e3e3ce1b2573f8c166cf6227574f46c0f8cfbcc396a39ffa55dd5d2ccb53e3e",
         "alt": "PrepTurk product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/prepturk/",
+      "canonicalUrl": "https://monarchcastle.tech/prepturk/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; approved-product-logo-and-MCT-endorsement-visible",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -380,7 +380,7 @@
         "sha256": "abb05f39f892a280778bf9f56a5f6a7b67815cc8d107c61fa067fa416ffd8dba",
         "alt": "Süper Lig Forecast product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/superlig-forecast/",
+      "canonicalUrl": "https://monarchcastle.tech/superlig-forecast/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "public-release-verified; 20-season-expanding-window-backtest; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -400,7 +400,7 @@
         "sha256": "35dd5ba80c2768aec9942e1af64910871328bf24d55a04afbfba1c0f8146e01b",
         "alt": "Supply Chain Intelligence product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/supplychain/",
+      "canonicalUrl": "https://monarchcastle.tech/supplychain/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -418,7 +418,7 @@
         "label": "T?rkiye Economic Sentiment Radar",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/tr-economic-sentiment/",
+      "canonicalUrl": "https://monarchcastle.tech/tr-economic-sentiment/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
