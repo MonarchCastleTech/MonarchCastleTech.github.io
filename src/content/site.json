@@ -9,7 +9,7 @@
       "claims": "claims/claims-register.json",
       "forecastBenchmark": "forecasting/benchmark-manifest.json"
     },
-    "sha256": "65c36b4a232e58074247861815b67d3e84427d6b958f835405014436348cc633"
+    "sha256": "0c17133a22b7ba4a044af5de6b328e62f97806e93c823d5fb5609a6bb5c1bd64"
   },
   "brand": {
     "masterbrand": "Monarch Castle Technologies",
@@ -342,9 +342,9 @@
         "sha256": "5e3e3ce1b2573f8c166cf6227574f46c0f8cfbcc396a39ffa55dd5d2ccb53e3e",
         "alt": "PrepTurk product logo"
       },
-      "canonicalUrl": "https://github.com/MonarchCastleTech/prepturk",
+      "canonicalUrl": "https://monarchcastletech.github.io/prepturk/",
       "owner": "MonarchCastleTech",
-      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "forecastEvidenceStatus": "github-pages-and-actions-verified; approved-product-logo-and-MCT-endorsement-visible",
       "endorsementLabel": "Part of Monarch Castle Technologies"
     },
     {
