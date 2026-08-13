@@ -39,7 +39,8 @@ test("root homepage follows the governed shell and links to canonical dashboard 
   assert.match(html, /href="\/wti\/"/);
   assert.match(html, /href="\/mena\/"/);
   assert.match(html, /href="\/styles\/site\.css"/);
-  assert.match(html, /Decision intelligence with its sources visible/);
+  assert.match(html, /Intelligence for institutions that cannot afford to be surprised/);
+  assert.match(html, /src="\/assets\/products\/bnti-hero\.png"/);
   assert.match(html, /Built around the decision, not the dashboard/i);
   assert.doesNotMatch(html, /mct-styles\.css|mct-app\.js/);
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
@@ -56,6 +57,7 @@ test("every public product asset is present and legacy theme assets are not requ
     "assets/products/prepturk-logo.png",
     "assets/products/supplychain-logo.png",
     "assets/products/bnti-icon.png",
+    "assets/products/bnti-hero.png",
     "assets/approved/mena-threat-index.png",
     "assets/approved/world-threat-index.png"
   ]) {

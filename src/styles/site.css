@@ -391,6 +391,64 @@ main > section,
   color: var(--muted);
 }
 
+.bnti-first {
+  overflow: hidden;
+  border: 1px solid rgba(215, 180, 106, 0.32);
+  background: linear-gradient(155deg, rgba(15, 35, 53, 0.94), rgba(4, 13, 21, 0.72));
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.28);
+}
+
+.hero-product-link {
+  display: grid;
+  grid-template-columns: minmax(8rem, 13rem) 1fr;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.hero-product-link img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.hero-product-link span {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.hero-product-link strong {
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  font-weight: 500;
+  line-height: 0.9;
+}
+
+.hero-product-link small,
+.hero-product-copy,
+.hero-product-meta {
+  color: var(--muted);
+}
+
+.hero-product-copy {
+  margin: 1.2rem 0;
+}
+
+.hero-product-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .section-heading {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
@@ -953,6 +1011,10 @@ thead th {
     max-width: 32rem;
   }
 
+  .hero-product-link {
+    grid-template-columns: minmax(7rem, 11rem) 1fr;
+  }
+
   .featured-system {
     min-height: 0;
   }
@@ -991,6 +1053,22 @@ thead th {
 
   .next-action .button-link {
     justify-self: start;
+  }
+}
+
+@media (max-width: 34.5rem) {
+  .hero-product-link {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-product-link img {
+    width: min(13rem, 70vw);
+    margin-inline: auto;
+  }
+
+  .hero-product-meta {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

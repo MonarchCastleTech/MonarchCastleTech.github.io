@@ -67,6 +67,16 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   }
 });
 
+test("homepage revives the sovereign theme and presents BNTI first", () => {
+  assert.match(indexHtml, /Sovereign decision intelligence/);
+  assert.match(indexHtml, /The Keep/);
+  assert.match(indexHtml, /Intelligence for institutions that cannot afford to be surprised/);
+  assert.match(indexHtml, /class="mission-hero-visual bnti-first"/);
+  assert.match(indexHtml, /src="\/assets\/products\/bnti-hero\.png"/);
+  assert.match(indexHtml, /href="\/bnti\/">Open BNTI/);
+  assert.ok(indexHtml.indexOf('data-product-id="border-neighbor-threat-index"') < indexHtml.indexOf('data-product-id="esgmap"'));
+});
+
 test("products page exposes Monarch Castle Technologies and SDCofA as visibly separate owner groups", () => {
   assert.match(productsHtml, /class="owner-portfolio-section owner-portfolio-section--flagship"/);
   assert.match(productsHtml, /<p class="eyebrow">Product owner<\/p>\s*<h2 id="flagship-heading">Monarch Castle Technologies<\/h2>/);

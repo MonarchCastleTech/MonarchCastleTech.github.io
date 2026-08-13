@@ -230,6 +230,7 @@ function nextAction(href, heading, text, label) {
 
 function renderFeaturedSystem(product, index) {
   const presentation = presentationFor(product);
+  const productUrl = dashboardPaths[product.id] ?? product.canonicalUrl;
   return `
     <article class="featured-system" data-product-id="${escapeHtml(product.id)}">
       <div class="featured-system-copy">
@@ -237,7 +238,7 @@ function renderFeaturedSystem(product, index) {
         <h3>${escapeHtml(product.name)}</h3>
         <p>${escapeHtml(presentation.summary)}</p>
         <div class="card-actions">
-          ${localOrExternalLink(product.canonicalUrl, "Explore system", "button-link")}
+          ${localOrExternalLink(productUrl, "Explore system", "button-link")}
           ${localOrExternalLink(product.methodologyUrl, "View methodology")}
         </div>
       </div>
@@ -246,26 +247,27 @@ function renderFeaturedSystem(product, index) {
 }
 
 function renderHome() {
-  const featuredIds = ["esgmap", "macrointel", "world-threat-index"];
+  const featuredIds = ["border-neighbor-threat-index", "esgmap", "macrointel"];
   const featured = featuredIds.map((id) => productById.get(id)).filter(Boolean);
   return `
     <section class="mission-hero" id="positioning" aria-labelledby="home-heading">
       <div class="mission-hero-copy">
-        <p class="eyebrow">Independent decision intelligence</p>
-        <h1 id="home-heading">Decision intelligence with its sources visible.</h1>
-        <p class="lede">Monarch Castle Technologies builds intelligence systems for people navigating markets, energy, security, and strategic risk.</p>
+        <p class="eyebrow">Sovereign decision intelligence</p>
+        <h1 id="home-heading">Intelligence for institutions that cannot afford to be surprised.</h1>
+        <p class="lede">Monarch Castle Technologies builds The Keep: an operating system for transparent, source-visible intelligence across security, markets, energy, and strategic risk.</p>
         <div class="hero-actions">
-          ${localOrExternalLink("/products/", "Explore products", "button-link")}
+          ${localOrExternalLink("/bnti/", "Open BNTI", "button-link")}
           ${localOrExternalLink("/methodology/", "See how we work", "button-link button-secondary")}
         </div>
       </div>
-      <aside class="mission-hero-visual" aria-label="Monarch Castle intelligence operating model">
-        <p class="eyebrow">Operating model</p>
-        <ol>
-          <li><span>01</span><strong>Observe</strong><small>Signals and source context</small></li>
-          <li><span>02</span><strong>Structure</strong><small>Models and comparisons</small></li>
-          <li><span>03</span><strong>Decide</strong><small>Clear, usable intelligence</small></li>
-        </ol>
+      <aside class="mission-hero-visual bnti-first" aria-label="Border Neighbor Threat Index">
+        <p class="eyebrow">First live instrument</p>
+        <a class="hero-product-link" href="/bnti/">
+          <img src="/assets/products/bnti-hero.png" alt="Border Neighbor Threat Index" />
+          <span><strong>BNTI</strong><small>Border Neighbor Threat Index</small></span>
+        </a>
+        <p class="hero-product-copy">Scheduled, inspectable cross-border threat intelligence for Türkiye's seven land-neighbor relationships.</p>
+        <div class="hero-product-meta"><span>Updated every 2 hours</span><span>Open dashboard</span></div>
       </aside>
     </section>
     <section class="operating-thesis" id="capabilities" aria-labelledby="capabilities-heading">
