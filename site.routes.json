@@ -1,5 +1,5 @@
 {
-  "canonicalDomain": "monarchcastle.tech",
+  "canonicalDomain": "monarchcastletech.github.io",
   "upstreams": {
     "bnti": "https://github.com/SDCofA/border-neighbor-threat-index.git",
     "wti": "https://github.com/SDCofA/world-threat-index.git",

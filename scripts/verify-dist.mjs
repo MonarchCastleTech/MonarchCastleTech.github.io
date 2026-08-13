@@ -131,7 +131,11 @@ function assertMountedRootRelativePaths(html, mount) {
   );
 }
 
-assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), routes.canonicalDomain);
+if (routes.canonicalDomain === "monarchcastletech.github.io") {
+  assert.equal(fs.existsSync(path.join(dist, "CNAME")), false, "broken custom domain is not published");
+} else {
+  assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), routes.canonicalDomain);
+}
 assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true, ".nojekyll exists");
 assertNarrativePages();
 

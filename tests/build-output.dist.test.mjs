@@ -8,9 +8,8 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const dist = path.join(root, "dist");
 const routes = JSON.parse(fs.readFileSync(path.join(root, "site.routes.json"), "utf8"));
 
-test("build output preserves the custom-domain files", () => {
-  assert.equal(fs.existsSync(path.join(dist, "CNAME")), true);
-  assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), "monarchcastle.tech");
+test("build output uses the reliable GitHub Pages host", () => {
+  assert.equal(fs.existsSync(path.join(dist, "CNAME")), false);
   assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true);
 });
 

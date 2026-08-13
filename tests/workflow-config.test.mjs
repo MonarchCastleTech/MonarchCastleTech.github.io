@@ -53,7 +53,7 @@ test("live site health script covers canonical routes and dashboard data freshne
   assert.match(script, /SITE_BASE_URL/);
 });
 
-test("HTTPS enforcement workflow retries until GitHub Pages certificate exists", () => {
+test("Pages host verification workflow runs autonomously", () => {
   assert.equal(fs.existsSync(httpsWorkflowPath), true);
   const workflow = fs.readFileSync(httpsWorkflowPath, "utf8");
 
@@ -64,14 +64,14 @@ test("HTTPS enforcement workflow retries until GitHub Pages certificate exists",
   assert.match(workflow, /GH_TOKEN/);
 });
 
-test("HTTPS enforcement script treats missing certificate as pending and enables HTTPS when available", () => {
+test("Pages host script removes a broken custom domain", () => {
   assert.equal(fs.existsSync(httpsScriptPath), true);
   const script = fs.readFileSync(httpsScriptPath, "utf8");
 
   assert.match(script, /PAGES_REPO/);
-  assert.match(script, /https_enforced/);
-  assert.match(script, /certificate does not exist yet/i);
-  assert.match(script, /Resource not accessible by integration/i);
+  assert.match(script, /PAGES_HOST/);
+  assert.match(script, /page\.cname/);
+  assert.match(script, /cname=/);
   assert.match(script, /--method/);
   assert.match(script, /PUT/);
 });

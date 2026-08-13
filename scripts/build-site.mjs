@@ -520,7 +520,6 @@ function renderPage(page) {
 
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
-copyFile(path.join(root, "public", "CNAME"), path.join(dist, "CNAME"));
 fs.writeFileSync(path.join(dist, ".nojekyll"), "");
 
 for (const page of routes.sitePages) {

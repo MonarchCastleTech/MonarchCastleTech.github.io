@@ -16,9 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Enforce HTTPS when certificate is available
+      - name: Verify reliable Pages host
         run: node scripts/enforce-pages-https.mjs
         env:
           GH_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN || github.token }}
           PAGES_REPO: MonarchCastleTech/MonarchCastleTech.github.io
-          PAGES_CNAME: monarchcastle.tech
+          PAGES_HOST: monarchcastletech.github.io

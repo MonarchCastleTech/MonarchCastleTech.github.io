@@ -14,10 +14,8 @@ const requiredNarrativePaths = [
   "/company/"
 ];
 
-test("canonical domain and CNAME stay fixed", () => {
-  const cname = fs.readFileSync(new URL("../public/CNAME", import.meta.url), "utf8").trim();
-  assert.equal(routes.canonicalDomain, "monarchcastle.tech");
-  assert.equal(cname, "monarchcastle.tech");
+test("canonical domain stays on the reliable GitHub Pages host", () => {
+  assert.equal(routes.canonicalDomain, "monarchcastletech.github.io");
 });
 
 test("the existing route manifest declares the homepage and all eight narrative routes", () => {
