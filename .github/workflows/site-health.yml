@@ -23,5 +23,5 @@ jobs:
       - name: Check live site routes and data freshness
         run: node scripts/check-live-site.mjs
         env:
-          SITE_BASE_URL: https://monarchcastle.tech
+          SITE_BASE_URL: https://monarchcastletech.github.io
           SITE_DATA_MAX_AGE_HOURS: "12"

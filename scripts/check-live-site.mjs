@@ -1,4 +1,4 @@
-const baseUrl = new URL(process.env.SITE_BASE_URL || "https://monarchcastle.tech");
+const baseUrl = new URL(process.env.SITE_BASE_URL || "https://monarchcastletech.github.io");
 const maxAgeHours = Number(process.env.SITE_DATA_MAX_AGE_HOURS || 12);
 const requireHttps = process.env.SITE_REQUIRE_HTTPS === "1";
 
