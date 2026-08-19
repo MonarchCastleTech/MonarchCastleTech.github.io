@@ -3,7 +3,7 @@ const maxAgeHours = Number(process.env.SITE_DATA_MAX_AGE_HOURS || 12);
 const requireHttps = process.env.SITE_REQUIRE_HTTPS === "1";
 
 const routeChecks = [
-  { path: "/", markers: ["Decision intelligence grounded in transparent data", "assets/products/logo.png", 'id="sdcofa"'] },
+  { path: "/", markers: ["Decision intelligence", "assets/products/logo.png", 'id="sdcofa"'] },
   { path: "/tools/", markers: ["Tools", "Calculators"] },
   { path: "/mcp/", markers: ["MCP", "catalog"] },
   { path: "/sdcofa/", markers: ["Strategic Data Company of Ankara", "BNTI", "WTI", "MENA"] },
