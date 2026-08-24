@@ -20,7 +20,7 @@ test("MonarchCastleTech/MonarchCastleTech.github.io exposes the complete reposit
   assert.ok(contract.includes("Public website for Monarch Castle Technologies"), "README purpose must match the canonical registry");
   assert.match(contract, /lifecycle-active/);
   assert.match(contract, /canonical production route/i);
-  assert.match(contract, /certificate\/HTTPS defect/i);
+  assert.match(contract, /GitHub Pages host|retired custom-domain/i);
   for (const heading of expectedHeadings) assert.ok(contract.includes(`## ${heading}`), `missing heading: ${heading}`);
   for (const evidence of methodologyEvidence) {
     assert.ok(existsSync(resolve(root, evidence)), `missing methodology evidence: ${evidence}`);
