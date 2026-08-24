@@ -16,7 +16,7 @@ Lifecycle: **Active**. The badge and this statement describe maintenance status,
 
 ## Public access
 
-The canonical production route is [monarchcastle.tech](https://monarchcastle.tech/). A GitHub Pages certificate/HTTPS defect confirmed on 2026-07-18 is tracked in the company-governance infrastructure follow-up; the source-controlled `CNAME` remains unchanged.
+The canonical production route is [monarchcastletech.github.io](https://monarchcastletech.github.io/). A GitHub Pages certificate/HTTPS defect confirmed on 2026-07-18 is tracked in the company-governance infrastructure follow-up; the source-controlled `CNAME` remains unchanged.
 
 The public portfolio includes the
 [Süper Lig Forecast](https://monarchcastletech.github.io/superlig-forecast/),
@@ -49,7 +49,7 @@ npm run build
 
 Run only in a trusted development environment and review repository-specific prerequisites before using networked or hardware features.
 
-When the sibling `company-governance` checkout is available, regenerate and verify the public registry projection with:
+Regenerate and verify the local public registry projection with:
 
 ```shell
 npm run sync:content

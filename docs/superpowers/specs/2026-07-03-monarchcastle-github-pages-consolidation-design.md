@@ -4,9 +4,9 @@ Date: 2026-07-03
 
 ## Goal
 
-Move Monarch Castle's public web presence to `monarchcastle.tech`, hosted on GitHub Pages, with the main corporate site at the apex and the full live dashboards available under short product paths such as `/bnti/`, `/wti/`, and `/mena/`.
+Move Monarch Castle's public web presence to `monarchcastletech.github.io`, hosted on GitHub Pages, with the main corporate site at the apex and the full live dashboards available under short product paths such as `/bnti/`, `/wti/`, and `/mena/`.
 
-The result should make `monarchcastle.tech` the canonical public home while preserving the existing GitHub-hosted operating model.
+The result should make `monarchcastletech.github.io` the canonical public home while preserving the existing GitHub-hosted operating model.
 
 ## Source Sites
 
@@ -37,7 +37,7 @@ The canonical Pages repository should be the organization/user Pages site that w
 - the merged root site,
 - copied dashboard directories for BNTI, WTI, and MENA,
 - shared Monarch Castle assets,
-- `CNAME` containing `monarchcastle.tech`,
+- `CNAME` containing `monarchcastletech.github.io`,
 - any route helpers needed for clean static subpath behavior.
 
 This avoids paid hosting, keeps deployment inside GitHub, and gives every product a short canonical URL under the same domain.
@@ -67,7 +67,7 @@ The root should feel like the command foyer for the whole group: editorial and i
 
 ## DNS Plan
 
-Configure GitHub Pages before changing DNS when possible, then update the registrar DNS for `monarchcastle.tech`.
+Configure GitHub Pages before changing DNS when possible, then update the registrar DNS for `monarchcastletech.github.io`.
 
 For the apex domain:
 
@@ -99,15 +99,15 @@ Before handoff:
 - `/bnti/`, `/wti/`, and `/mena/` load their dashboards directly,
 - dashboard assets load without 404s,
 - dashboard data files are fetched from canonical subpaths or stable raw/public URLs,
-- all navigation links point to `monarchcastle.tech` paths where appropriate,
+- all navigation links point to `monarchcastletech.github.io` paths where appropriate,
 - responsive layout works on desktop and mobile,
 - `CNAME` is present in the publish output,
 - DNS instructions match the chosen Pages owner.
 
 After DNS propagation:
 
-- `monarchcastle.tech` resolves to GitHub Pages A records,
-- `www.monarchcastle.tech` resolves to the GitHub Pages hostname,
+- `monarchcastletech.github.io` resolves to GitHub Pages A records,
+- `www.monarchcastletech.github.io` resolves to the GitHub Pages hostname,
 - HTTPS is active,
 - `www` and apex redirect consistently to the selected canonical domain.
 

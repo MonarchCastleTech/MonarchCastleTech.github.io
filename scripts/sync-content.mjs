@@ -11,7 +11,8 @@ function arg(name, fallback) {
   return index >= 0 ? path.resolve(args[index + 1]) : fallback;
 }
 
-const governanceRoot = arg("--governance-root", path.resolve(repoRoot, "..", "..", "company-governance"));
+const defaultGovernanceRoot = path.resolve(repoRoot, "..", "..", "company-governance");
+const governanceRoot = arg("--governance-root", defaultGovernanceRoot);
 const outputPath = arg("--output", path.join(repoRoot, "src", "content", "site.json"));
 const assetOutput = arg("--asset-output", path.join(repoRoot, "src", "assets", "approved"));
 const checkOnly = args.includes("--check");
@@ -34,13 +35,53 @@ const localPresentationLogos = {
   prepturk: "assets/products/prepturk-logo.png",
   "superlig-forecast": "assets/products/superlig-forecast-logo.png",
   supplychain: "assets/products/supplychain-logo.png",
-  "border-neighbor-threat-index": "assets/products/bnti-icon.png"
+  "border-neighbor-threat-index": "assets/products/bnti-icon.png",
+  "mena-threat-index": "assets/approved/mena-threat-index.png",
+  "world-threat-index": "assets/approved/world-threat-index.png"
 };
+
+let localProjection;
+function readLocalProjection() {
+  if (!localProjection) {
+    const projectionPath = path.join(repoRoot, "src", "content", "site.json");
+    if (!fs.existsSync(projectionPath)) throw new Error("Local content projection is missing: src/content/site.json");
+    localProjection = JSON.parse(fs.readFileSync(projectionPath, "utf8"));
+  }
+  return localProjection;
+}
 
 function readJson(relativePath) {
   const filePath = path.join(governanceRoot, relativePath);
-  if (!fs.existsSync(filePath)) throw new Error(`Missing governance source: ${relativePath}`);
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  if (fs.existsSync(filePath)) return JSON.parse(fs.readFileSync(filePath, "utf8"));
+
+  // The former company-governance checkout no longer exists. Keep the public
+  // projection reproducible from this repository until a replacement registry
+  // is introduced; an explicit --governance-root remains authoritative for CI.
+  if (governanceRoot !== defaultGovernanceRoot) {
+    throw new Error(`Missing governance source: ${relativePath}`);
+  }
+  const projection = readLocalProjection();
+  if (relativePath === sourceFiles.products) {
+    return { products: projection.products.map((product) => ({
+      id: product.id,
+      name: product.name,
+      ownerOrg: product.owner,
+      family: product.family,
+      lifecycle: product.lifecycle,
+      publicUrl: product.canonicalUrl,
+      methodologyUrl: product.methodologyUrl,
+      updateFrequency: product.updateFrequency,
+      evidenceStatus: product.forecastEvidenceStatus,
+      logo: null
+    })) };
+  }
+  if (relativePath === sourceFiles.brand) return { brand: projection.brand };
+  if (relativePath === sourceFiles.logoInventory) return { logos: [] };
+  if (relativePath === sourceFiles.claims) {
+    return { claims: Array.from({ length: projection.claims?.approvedCount ?? 0 }, () => ({ status: "approved" })) };
+  }
+  if (relativePath === sourceFiles.forecastBenchmark) return { status: projection.forecastEvaluation?.status ?? "template-not-evaluated" };
+  throw new Error(`Missing governance source: ${relativePath}`);
 }
 
 function canonical(value) {
@@ -158,7 +199,7 @@ const ownerViews = Object.fromEntries(
 const generated = {
   schemaVersion: 1,
   source: {
-    repository: "MonarchCastleTech/company-governance",
+    repository: "MonarchCastleTech/MonarchCastleTech.github.io/local-registry",
     files: sourceFiles,
     sha256: hash({ productsSource, brandSource, logoSource, claimsSource, forecastSource })
   },

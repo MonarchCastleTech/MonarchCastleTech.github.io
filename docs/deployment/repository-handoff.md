@@ -20,7 +20,7 @@ Configure GitHub Pages in this order:
 
 1. Open repository Settings > Pages.
 2. Set Source to `GitHub Actions`.
-3. After the Pages workflow is configured, set Custom domain to `monarchcastle.tech`.
+3. After the Pages workflow is configured, set Custom domain to `monarchcastletech.github.io`.
 4. Wait for GitHub Pages to finish the DNS check.
 5. Enable Enforce HTTPS when GitHub makes it available.
 
@@ -53,13 +53,13 @@ Verify the publish artifact before or immediately after cutover:
 Get-Content dist/CNAME
 ```
 
-Expected output: exactly `monarchcastle.tech`
+Expected output: exactly `monarchcastletech.github.io`
 
 Verify DNS after the registrar changes propagate:
 
 ```powershell
-Resolve-DnsName monarchcastle.tech -Type A
-Resolve-DnsName www.monarchcastle.tech -Type CNAME
+Resolve-DnsName monarchcastletech.github.io -Type A
+Resolve-DnsName www.monarchcastletech.github.io -Type CNAME
 ```
 
 Expected apex `A` answers are the four GitHub Pages IP addresses above. Expected `www` CNAME target is `monarchcastletech.github.io`.

@@ -149,11 +149,14 @@ function renderMark(product) {
 
 function renderProductCard(product) {
   return `
-    <article class="product-card" data-product-id="${escapeHtml(product.id)}">
-      <div class="product-mark">${renderMark(product)}</div>
-      <p class="eyebrow">${escapeHtml(sentenceCase(product.family))}</p>
-      <h3>${escapeHtml(product.name)}</h3>
+    <article class="product-card system-row" data-product-id="${escapeHtml(product.id)}">
+      <div class="system-row-index" aria-hidden="true">${escapeHtml(product.id.slice(0, 3).toUpperCase())}</div>
+      <div class="system-row-copy">
+        <p class="eyebrow">${escapeHtml(sentenceCase(product.family))}</p>
+        <h3>${escapeHtml(product.name)}</h3>
+      </div>
       <p>${escapeHtml(presentationFor(product).summary)}</p>
+      <dl class="system-row-meta"><div><dt>Owner</dt><dd>${escapeHtml(product.owner)}</dd></div><div><dt>Cadence</dt><dd>${escapeHtml(product.updateFrequency === "review-required" ? "not declared" : product.updateFrequency)}</dd></div></dl>
       <div class="card-actions">
         ${localOrExternalLink(product.canonicalUrl, "Explore system")}
         ${localOrExternalLink(product.methodologyUrl, "How it works")}
@@ -187,7 +190,7 @@ function renderEndorsedFamily(headingId = "") {
         ${endorsedProducts.map((product) => {
           const localPath = dashboardPaths[product.id];
           return `<article data-product-id="${escapeHtml(product.id)}">
-            ${renderMark(product)}
+            <span class="system-row-index" aria-hidden="true">${escapeHtml(product.id.slice(0, 3).toUpperCase())}</span>
             <h3>${escapeHtml(product.name)}</h3>
             <p>Open-source threat intelligence designed for direct exploration.</p>
             <div class="card-actions">
@@ -242,7 +245,7 @@ function renderFeaturedSystem(product, index) {
           ${localOrExternalLink(product.methodologyUrl, "View methodology")}
         </div>
       </div>
-      <div class="featured-system-mark">${renderMark(product)}</div>
+      <div class="featured-system-mark" aria-hidden="true"><span class="system-index">${String(index + 1).padStart(2, "0")}</span><span>${escapeHtml(product.family)}</span></div>
     </article>`;
 }
 

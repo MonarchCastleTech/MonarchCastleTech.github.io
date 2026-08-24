@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build and deploy a GitHub Pages-hosted `monarchcastle.tech` site with a merged Monarch Castle homepage and full dashboards served at `/bnti/`, `/wti/`, and `/mena/`.
+**Goal:** Build and deploy a GitHub Pages-hosted `monarchcastletech.github.io` site with a merged Monarch Castle homepage and full dashboards served at `/bnti/`, `/wti/`, and `/mena/`.
 
 **Architecture:** Create one static-site repository that builds a `dist/` artifact for GitHub Pages. The root site is authored locally from Monarch Castle content and assets, while dashboard subpaths are synced from the existing public GitHub repositories, copied into route folders, and rewritten so root-relative assets work under subpaths.
 
@@ -11,10 +11,10 @@
 ## Global Constraints
 
 - Host the canonical site on GitHub Pages.
-- Use `monarchcastle.tech` as the canonical custom domain.
+- Use `monarchcastletech.github.io` as the canonical custom domain.
 - Serve full dashboards directly under `/bnti/`, `/wti/`, and `/mena/`; do not make those paths redirects.
 - Preserve the existing GitHub-hosted operating model and avoid paid hosting.
-- Include `CNAME` containing exactly `monarchcastle.tech` in the published artifact.
+- Include `CNAME` containing exactly `monarchcastletech.github.io` in the published artifact.
 - Do not rebuild dashboard data pipelines in this version.
 - Configure DNS with GitHub Pages apex `A` records and `www` CNAME after GitHub Pages is configured.
 - Keep source dashboard repositories as upstream inputs: `SDCofA/border-neighbor-threat-index`, `SDCofA/world-threat-index`, and `SDCofA/mena-threat-index`.
@@ -24,7 +24,7 @@
 
 ## Scope Check
 
-This is one static-site consolidation project. It contains content, dashboard mounting, deployment, and DNS handoff, but all work feeds one independently testable deliverable: `monarchcastle.tech` served from a single GitHub Pages artifact.
+This is one static-site consolidation project. It contains content, dashboard mounting, deployment, and DNS handoff, but all work feeds one independently testable deliverable: `monarchcastletech.github.io` served from a single GitHub Pages artifact.
 
 ## File Structure
 
@@ -78,9 +78,9 @@ import test from "node:test";
 
 const routes = JSON.parse(fs.readFileSync(new URL("../site.routes.json", import.meta.url), "utf8"));
 
-test("canonical domain is monarchcastle.tech", () => {
+test("canonical domain is monarchcastletech.github.io", () => {
   const cname = fs.readFileSync(new URL("../public/CNAME", import.meta.url), "utf8").trim();
-  assert.equal(cname, "monarchcastle.tech");
+  assert.equal(cname, "monarchcastletech.github.io");
 });
 
 test("full dashboards are mounted at canonical subpaths", () => {
@@ -152,14 +152,14 @@ Create `.nojekyll` as an empty file.
 Create `public/CNAME`:
 
 ```text
-monarchcastle.tech
+monarchcastletech.github.io
 ```
 
 Create `site.routes.json`:
 
 ```json
 {
-  "canonicalDomain": "monarchcastle.tech",
+  "canonicalDomain": "monarchcastletech.github.io",
   "upstreams": {
     "theme": "https://github.com/akgularda/monarch-castle-technologies.git",
     "products": "https://github.com/monarchcastletech/monarchcastletech.github.io.git",
@@ -383,7 +383,7 @@ const dist = path.join(root, "dist");
 
 test("build output includes canonical site files", () => {
   assert.equal(fs.existsSync(path.join(dist, "CNAME")), true);
-  assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), "monarchcastle.tech");
+  assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), "monarchcastletech.github.io");
   assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true);
   assert.equal(fs.existsSync(path.join(dist, "index.html")), true);
 });
@@ -731,7 +731,7 @@ const root = process.cwd();
 const routes = JSON.parse(fs.readFileSync(path.join(root, "site.routes.json"), "utf8"));
 const dist = path.join(root, "dist");
 
-assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), "monarchcastle.tech");
+assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), "monarchcastletech.github.io");
 
 for (const page of routes.localPages) {
   assert.equal(fs.existsSync(path.join(dist, page.output)), true, `${page.output} exists`);
@@ -836,7 +836,7 @@ Create `src/content/site.json`:
 ```json
 {
   "brand": "Monarch Castle Technologies",
-  "domain": "monarchcastle.tech",
+  "domain": "monarchcastletech.github.io",
   "thesis": "Sovereign decision intelligence for institutions that cannot afford to be surprised.",
   "engine": "The Keep",
   "instruments": [
@@ -1031,9 +1031,9 @@ jobs:
 Create `docs/deployment/github-pages-dns.md`:
 
 ```markdown
-# monarchcastle.tech GitHub Pages DNS Handoff
+# monarchcastletech.github.io GitHub Pages DNS Handoff
 
-Canonical host: `monarchcastle.tech`
+Canonical host: `monarchcastletech.github.io`
 
 GitHub Pages repository: `monarchcastletech.github.io` unless implementation chooses a different repository with admin access.
 
@@ -1042,7 +1042,7 @@ GitHub Pages repository: `monarchcastletech.github.io` unless implementation cho
 1. Open repository Settings.
 2. Go to Pages.
 3. Set Source to GitHub Actions.
-4. Set Custom domain to `monarchcastle.tech`.
+4. Set Custom domain to `monarchcastletech.github.io`.
 5. Wait for DNS check to pass.
 6. Enable Enforce HTTPS when GitHub allows it.
 
@@ -1074,13 +1074,13 @@ Create the `www` record:
 | --- | --- | --- |
 | CNAME | www | monarchcastletech.github.io |
 
-Do not create wildcard records for `*.monarchcastle.tech`.
+Do not create wildcard records for `*.monarchcastletech.github.io`.
 
 ## Verification Commands
 
 ```powershell
-Resolve-DnsName monarchcastle.tech -Type A
-Resolve-DnsName www.monarchcastle.tech -Type CNAME
+Resolve-DnsName monarchcastletech.github.io -Type A
+Resolve-DnsName www.monarchcastletech.github.io -Type CNAME
 ```
 
 Expected apex `A` answers are the four GitHub Pages IP addresses above. Expected `www` CNAME target is `monarchcastletech.github.io`.
@@ -1206,7 +1206,7 @@ If that repository already contains the old site, pull it first, preserve unrela
 
 ## Pages Settings
 
-Set Pages source to GitHub Actions and custom domain to `monarchcastle.tech`.
+Set Pages source to GitHub Actions and custom domain to `monarchcastletech.github.io`.
 
 ## Required Secret State
 
@@ -1229,7 +1229,7 @@ git commit -m "test: add browser smoke verification"
 
 **Interfaces:**
 - Consumes: completed implementation, GitHub remote, Pages workflow, and registrar DNS access.
-- Produces: live `https://monarchcastle.tech/` with functional dashboard subpaths.
+- Produces: live `https://monarchcastletech.github.io/` with functional dashboard subpaths.
 
 - [ ] **Step 1: Verify clean local state**
 
@@ -1260,7 +1260,7 @@ In GitHub repository settings:
 
 ```text
 Settings -> Pages -> Source: GitHub Actions
-Settings -> Pages -> Custom domain: monarchcastle.tech
+Settings -> Pages -> Custom domain: monarchcastletech.github.io
 ```
 
 Expected: GitHub accepts the custom domain and the Pages workflow deploys.
@@ -1284,8 +1284,8 @@ Expected: registrar saves the records. Remove parking/default records that confl
 Run:
 
 ```powershell
-Resolve-DnsName monarchcastle.tech -Type A
-Resolve-DnsName www.monarchcastle.tech -Type CNAME
+Resolve-DnsName monarchcastletech.github.io -Type A
+Resolve-DnsName www.monarchcastletech.github.io -Type CNAME
 ```
 
 Expected: apex returns GitHub Pages IP addresses; `www` returns `monarchcastletech.github.io`.
@@ -1293,13 +1293,13 @@ Expected: apex returns GitHub Pages IP addresses; `www` returns `monarchcastlete
 Open these URLs:
 
 ```text
-https://monarchcastle.tech/
-https://monarchcastle.tech/bnti/
-https://monarchcastle.tech/wti/
-https://monarchcastle.tech/mena/
+https://monarchcastletech.github.io/
+https://monarchcastletech.github.io/bnti/
+https://monarchcastletech.github.io/wti/
+https://monarchcastletech.github.io/mena/
 ```
 
-Expected: each page loads from `monarchcastle.tech`, dashboard routes show the full dashboard surfaces, and browser devtools show no missing local CSS/JS/data assets for the mounted pages.
+Expected: each page loads from `monarchcastletech.github.io`, dashboard routes show the full dashboard surfaces, and browser devtools show no missing local CSS/JS/data assets for the mounted pages.
 
 - [ ] **Step 6: Commit final doc adjustment if repository owner changed**
 

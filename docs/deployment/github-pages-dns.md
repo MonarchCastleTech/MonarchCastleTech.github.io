@@ -1,6 +1,6 @@
-# monarchcastle.tech GitHub Pages DNS Handoff
+# monarchcastletech.github.io GitHub Pages DNS Handoff
 
-Canonical host: `monarchcastle.tech`
+Canonical host: `monarchcastletech.github.io`
 
 GitHub Pages repository: `monarchcastletech.github.io` unless implementation chooses a different repository with admin access.
 
@@ -9,7 +9,7 @@ GitHub Pages repository: `monarchcastletech.github.io` unless implementation cho
 1. Open repository Settings.
 2. Go to Pages.
 3. Set Source to GitHub Actions.
-4. Set Custom domain to `monarchcastle.tech`.
+4. Set Custom domain to `monarchcastletech.github.io`.
 5. Wait for DNS check to pass.
 6. Enable Enforce HTTPS when GitHub allows it.
 
@@ -41,13 +41,13 @@ Create the `www` record:
 | --- | --- | --- |
 | CNAME | www | monarchcastletech.github.io |
 
-Do not create wildcard records for `*.monarchcastle.tech`.
+Do not create wildcard records for `*.monarchcastletech.github.io`.
 
 ## Verification Commands
 
 ```powershell
-Resolve-DnsName monarchcastle.tech -Type A
-Resolve-DnsName www.monarchcastle.tech -Type CNAME
+Resolve-DnsName monarchcastletech.github.io -Type A
+Resolve-DnsName www.monarchcastletech.github.io -Type CNAME
 ```
 
 Expected apex `A` answers are the four GitHub Pages IP addresses above. Expected `www` CNAME target is `monarchcastletech.github.io`.
