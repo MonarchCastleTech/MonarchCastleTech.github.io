@@ -3,7 +3,7 @@
   "securityUrl": "https://github.com/MonarchCastleTech/.github/blob/main/SECURITY.md",
   "licenseUrl": "https://github.com/MonarchCastleTech/MonarchCastleTech.github.io/blob/main/LICENSE",
   "citationUrl": "https://github.com/MonarchCastleTech/MonarchCastleTech.github.io/blob/main/CITATION.cff",
-  "governanceUrl": "https://github.com/MonarchCastleTech/company-governance",
+  "governanceUrl": "/company/",
   "capabilities": [
     {
       "name": "Strategy",
@@ -26,17 +26,17 @@
     {
       "title": "Forecast evaluation protocol",
       "summary": "The public protocol defines preregistration, baselines, time-aware validation, scoring, and limitations before performance claims can be released.",
-      "url": "https://github.com/MonarchCastleTech/company-governance/blob/main/forecasting/evaluation-protocol.md"
+      "url": "/methodology/#forecasting"
     },
     {
       "title": "Claims policy",
       "summary": "Public comparative language requires an approved evidence record; unqualified superlatives are not released.",
-      "url": "https://github.com/MonarchCastleTech/company-governance/blob/main/claims/claims-policy.md"
+      "url": "/trust/"
     },
     {
       "title": "Brand and endorsement architecture",
       "summary": "The masterbrand, product relationships, approved marks, and SDCofA endorsement are governed as explicit public contracts.",
-      "url": "https://github.com/MonarchCastleTech/company-governance/blob/main/brand/brand-architecture.md"
+      "url": "/company/"
     }
   ]
 }
