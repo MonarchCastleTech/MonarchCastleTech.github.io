@@ -4,6 +4,10 @@ const baseURL = process.env.BASE_URL ?? "http://127.0.0.1:4173";
 const narrativeRoutes = [
   "/",
   "/products/",
+  "/platform/",
+  "/impact/",
+  "/pricing/",
+  "/pilot/",
   "/datasets/",
   "/solutions/",
   "/insights/",
@@ -129,7 +133,7 @@ test("flagship palette resolves to MCT navy, gold, and warm white", async ({ pag
       ink: style.getPropertyValue("--ink").trim()
     };
   });
-  expect(palette).toEqual({ navy: "#071522", gold: "#d7b46a", ink: "#f3efe4" });
+  expect(palette).toEqual({ navy: "#07090a", gold: "#d6a34e", ink: "#f1f3f2" });
 });
 
 for (const colorScheme of ["light", "dark"]) {
@@ -147,4 +151,14 @@ test("homepage exposes canonical dashboard links", async ({ page }) => {
   for (const route of Object.keys(dashboardExpectations)) {
     await expect(page.locator(`a[href="${route}"]`).first()).toBeVisible();
   }
+});
+
+test("The Keep preview loads all public feeds and declared composite", async ({ page }) => {
+  await page.goto(`${baseURL}/platform/`);
+  await expect(page.getByText("All feeds connected")).toBeVisible();
+  const values = await page.locator("#metric-bnti, #metric-wti, #metric-mena, #metric-composite").allTextContents();
+  expect(values).toHaveLength(4);
+  expect(values.every((value) => /^\d+\.\d{2}$/.test(value))).toBeTruthy();
+  await expect(page.locator("#exposure-list li")).toHaveCount(8);
+  await expect(page.locator("#signal-list li")).toHaveCount(5);
 });

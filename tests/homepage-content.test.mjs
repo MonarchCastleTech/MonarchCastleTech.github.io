@@ -56,14 +56,14 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   }
 });
 
-test("homepage revives the sovereign theme and presents BNTI first", () => {
-  assert.match(indexHtml, /Sovereign decision intelligence/);
+test("homepage presents the private-sector platform and BNTI first", () => {
+  assert.match(indexHtml, /Early warning for private enterprise/);
   assert.match(indexHtml, /The Keep/);
-  assert.match(indexHtml, /Intelligence for institutions that cannot afford to be surprised/);
+  assert.match(indexHtml, /See disruption before it reaches your operation/);
   assert.match(indexHtml, /class="mission-hero-visual bnti-first"/);
   assert.match(indexHtml, /src="\/assets\/products\/bnti-hero\.png"/);
-  assert.match(indexHtml, /href="\/bnti\/">Open BNTI/);
-  assert.ok(indexHtml.indexOf('data-product-id="border-neighbor-threat-index"') < indexHtml.indexOf('data-product-id="esgmap"'));
+  assert.match(indexHtml, /href="\/bnti\/">Open free BNTI/);
+  assert.ok(indexHtml.indexOf('data-product-id="border-neighbor-threat-index"') < indexHtml.indexOf('data-product-id="world-threat-index"'));
 });
 
 test("products page exposes Monarch Castle Technologies and SDCofA as visibly separate owner groups", () => {
@@ -150,6 +150,10 @@ test("generated public pages never expose internal workflow or registry language
   for (const route of [
     "index.html",
     "products/index.html",
+    "platform/index.html",
+    "impact/index.html",
+    "pricing/index.html",
+    "pilot/index.html",
     "datasets/index.html",
     "solutions/index.html",
     "insights/index.html",
@@ -180,13 +184,13 @@ test("homepage follows the approved flagship narrative and keeps the four capabi
   for (const pillar of site.brand.pillars) assert.match(indexHtml, new RegExp(`>${pillar}<`));
 });
 
-test("public shell uses the focused flagship navigation and product action", () => {
+test("public shell uses the commercial platform navigation and pilot action", () => {
   assert.match(indexHtml, /<img class="brand-logo" src="\/assets\/products\/logo\.png" alt="" \/>/);
   assert.match(indexHtml, /<link rel="icon" type="image\/png" href="\/assets\/products\/logo\.png" \/>/);
-  for (const label of ["Home", "Products", "Forecasting", "Methodology", "Company"]) {
+  for (const label of ["Platform", "Offerings", "Products", "Methodology", "Company"]) {
     assert.match(indexHtml, new RegExp(`>${label}<`));
   }
-  assert.match(indexHtml, /class="header-action" href="\/products\/">Explore products</);
+  assert.match(indexHtml, /class="header-action" href="\/pilot\/">Request pilot</);
 });
 
 test("homepage exposes trust links without unsupported performance claims", () => {

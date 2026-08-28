@@ -3,7 +3,11 @@ const maxAgeHours = Number(process.env.SITE_DATA_MAX_AGE_HOURS || 12);
 const requireHttps = process.env.SITE_REQUIRE_HTTPS === "1";
 
 const routeChecks = [
-  { path: "/", markers: ["Intelligence for institutions that cannot afford to be surprised.", "assets/products/logo.png", 'id="sdcofa"'] },
+  { path: "/", markers: ["See disruption before it reaches your operation.", "assets/products/logo.png", 'id="sdcofa"'] },
+  { path: "/platform/", markers: ["A unified early-warning workspace", "scripts/platform.js", "metric-composite"] },
+  { path: "/impact/", markers: ["Built for commercial exposure", "Energy and commodities"] },
+  { path: "/pricing/", markers: ["Public products stay free", "From $15k"] },
+  { path: "/pilot/", markers: ["Turn one exposure", "Open pilot intake"] },
   { path: "/tools/", markers: ["Tools", "Calculators"] },
   { path: "/mcp/", markers: ["MCP", "catalog"] },
   { path: "/sdcofa/", markers: ["Strategic Data Company of Ankara", "BNTI", "WTI", "MENA"] },

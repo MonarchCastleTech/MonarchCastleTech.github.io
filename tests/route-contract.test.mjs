@@ -5,6 +5,10 @@ import test from "node:test";
 const routes = JSON.parse(fs.readFileSync(new URL("../site.routes.json", import.meta.url), "utf8"));
 const requiredNarrativePaths = [
   "/products/",
+  "/platform/",
+  "/impact/",
+  "/pricing/",
+  "/pilot/",
   "/datasets/",
   "/solutions/",
   "/insights/",
@@ -18,7 +22,7 @@ test("canonical domain stays on the reliable GitHub Pages host", () => {
   assert.equal(routes.canonicalDomain, "monarchcastletech.github.io");
 });
 
-test("the existing route manifest declares the homepage and all eight narrative routes", () => {
+test("the route manifest declares the homepage and all narrative routes", () => {
   assert.ok(Array.isArray(routes.sitePages));
   assert.deepEqual(
     routes.sitePages.filter(({ path }) => path !== "/").map(({ path }) => path),

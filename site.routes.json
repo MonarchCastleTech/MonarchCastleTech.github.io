@@ -21,6 +21,34 @@
       "description": "Explore the governed Monarch Castle Technologies portfolio and the endorsed SDCofA analytical family."
     },
     {
+      "slug": "platform",
+      "path": "/platform/",
+      "output": "platform/index.html",
+      "title": "The Keep Platform | Monarch Castle Technologies",
+      "description": "A unified early-warning workspace for private-sector exposure across geopolitical, economic, energy, and supply-chain risk."
+    },
+    {
+      "slug": "impact",
+      "path": "/impact/",
+      "output": "impact/index.html",
+      "title": "Operational Use Cases | Monarch Castle Technologies",
+      "description": "See how energy, logistics, finance, and insurance teams can use transparent early-warning intelligence."
+    },
+    {
+      "slug": "pricing",
+      "path": "/pricing/",
+      "output": "pricing/index.html",
+      "title": "Platform Access | Monarch Castle Technologies",
+      "description": "Public products remain free. Paid access applies only to The Keep enterprise workspace and services."
+    },
+    {
+      "slug": "pilot",
+      "path": "/pilot/",
+      "output": "pilot/index.html",
+      "title": "Request a Private-Sector Pilot | Monarch Castle Technologies",
+      "description": "Scope a time-boxed early-warning pilot for energy, logistics, finance, insurance, or advisory operations."
+    },
+    {
       "slug": "datasets",
       "path": "/datasets/",
       "output": "datasets/index.html",

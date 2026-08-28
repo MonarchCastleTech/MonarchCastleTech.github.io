@@ -1,0 +1,9 @@
+period,paid_pilots,new_annual_customers,ending_annual_customers,pilot_revenue_usd,ending_arr_usd,assumed_annual_acv_usd,notes
+Q4-2026,1,0,0,15000,0,36000,First paid validation pilot
+Q1-2027,2,1,1,30000,36000,36000,First pilot conversion
+Q2-2027,2,2,3,30000,126000,42000,Repeatable scope and onboarding
+Q3-2027,2,2,5,30000,225000,45000,First referenceable impact records
+Q4-2027,2,3,8,30000,400000,50000,Target 12-month commercial run rate
+Q1-2028,3,3,11,45000,572000,52000,Channel and partner experiments
+Q2-2028,3,4,15,45000,825000,55000,Enterprise expansion
+Q3-2028,3,4,19,45000,1140000,60000,Illustrative one-million ARR crossing

@@ -39,7 +39,9 @@ test("root homepage follows the governed shell and links to canonical dashboard 
   assert.match(html, /href="\/wti\/"/);
   assert.match(html, /href="\/mena\/"/);
   assert.match(html, /href="\/styles\/site\.css"/);
-  assert.match(html, /Intelligence for institutions that cannot afford to be surprised/);
+  assert.match(html, /See disruption before it reaches your operation/);
+  assert.match(html, /Every current public product stays open/);
+  assert.match(html, /href="\/platform\/"/);
   assert.match(html, /src="\/assets\/products\/bnti-hero\.png"/);
   assert.match(html, /Built around the decision, not the dashboard/i);
   assert.doesNotMatch(html, /mct-styles\.css|mct-app\.js/);

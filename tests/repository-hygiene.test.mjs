@@ -44,8 +44,8 @@ test("MonarchCastleTech/MonarchCastleTech.github.io keeps every managed image lo
   const previewPath = resolve(root, "docs/social-preview.png");
   const preview = readFileSync(previewPath);
   assert.equal(preview.subarray(1, 4).toString("ascii"), "PNG");
-  assert.equal(preview.readUInt32BE(16), 1280);
-  assert.equal(preview.readUInt32BE(20), 640);
+  assert.equal(preview.readUInt32BE(16), 1200);
+  assert.equal(preview.readUInt32BE(20), 630);
   assert.ok(statSync(previewPath).size < 1_000_000);
   assert.ok(statSync(previewPath).size > 5_000, "preview must contain more than a flat placeholder");
   assert.ok(new Set(preview.subarray(33, -12)).size > 100, "preview needs a non-uniform content signal");

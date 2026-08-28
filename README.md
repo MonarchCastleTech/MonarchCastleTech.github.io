@@ -8,6 +8,8 @@
 
 Public website for Monarch Castle Technologies
 
+The site presents **The Keep**, a unified private-sector early-warning platform. Existing public products remain free; commercial access applies only to the unified workspace, private integrations, team workflows, delivery guarantees, and support.
+
 ![Lifecycle: Active](docs/lifecycle-active.svg)
 
 ## Repository status
@@ -58,12 +60,15 @@ npm run check:content
 
 ## Architecture
 
-- `site.routes.json` — the single route manifest for the homepage, eight narrative routes, supporting pages, and mounted dashboards.
+- `site.routes.json` — the single route manifest for the homepage, twelve narrative routes, supporting pages, and mounted dashboards.
 - `src/content/site.json` — deterministic generated projection of the approved portfolio and brand registries.
 - `src/content/editorial.json` — non-inventory narrative, contact, trust, and capability copy.
 - `scripts/sync-content.mjs` — fail-closed governance projection and approved-mark synchronizer.
 - `scripts/build-site.mjs` — self-contained narrative renderer plus dashboard mount pipeline.
 - `scripts/verify-dist.mjs` — route, metadata, local-reference, claims, and dashboard boundary verifier.
+- `src/scripts/platform.js` — deterministic, no-storage public The Keep preview over mounted BNTI, WTI, and MENA outputs.
+- `docs/business/` — market-entry, pricing, pilot, target-account, and incorporation preparation records.
+- `docs/architecture/the-keep.md` and `docs/runbooks/platform-operations.md` — Codex-independent operating architecture and incident runbook.
 
 ## Tests
 

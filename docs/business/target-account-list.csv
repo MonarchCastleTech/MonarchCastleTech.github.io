@@ -1,0 +1,33 @@
+priority,company,sector,initial_hypothesis,public_site,status
+1,Vitol,Energy and commodities,Route and regional exposure monitoring,https://www.vitol.com/,research
+2,Trafigura,Energy and commodities,Trade route sanctions and disruption watchlists,https://www.trafigura.com/,research
+3,Gunvor Group,Energy and commodities,Energy-flow and geopolitical exposure monitoring,https://gunvorgroup.com/,research
+4,Glencore,Energy and commodities,Country logistics and commodity exposure,https://www.glencore.com/,research
+5,Mercuria,Energy and commodities,Market and geopolitical event integration,https://mercuria.com/,research
+6,Shell,Energy and commodities,Country and infrastructure early warning,https://www.shell.com/,research
+7,BP,Energy and commodities,Regional operations and route risk,https://www.bp.com/,research
+8,TotalEnergies,Energy and commodities,Cross-border asset and route monitoring,https://totalenergies.com/,research
+9,Maersk,Logistics and supply chain,Port corridor and country disruption,https://www.maersk.com/,research
+10,MSC,Logistics and supply chain,Port congestion and regional risk,https://www.msc.com/,research
+11,CMA CGM,Logistics and supply chain,Route disruption and port watchlists,https://www.cma-cgm.com/,research
+12,DHL Group,Logistics and supply chain,Global network early warning,https://group.dhl.com/,research
+13,Kuehne+Nagel,Logistics and supply chain,Customer route and country exposure,https://home.kuehne-nagel.com/,research
+14,DSV,Logistics and supply chain,Network resilience and border pressure,https://www.dsv.com/,research
+15,Flexport,Logistics and supply chain,Digital forwarding disruption signals,https://www.flexport.com/,research
+16,Expeditors,Logistics and supply chain,Trade lane and border watchlists,https://www.expeditors.com/,research
+17,Allianz,Insurance and reinsurance,Emerging country and accumulation risk,https://www.allianz.com/,research
+18,AXA,Insurance and reinsurance,Geopolitical event triage and exposure,https://www.axa.com/,research
+19,Zurich Insurance Group,Insurance and reinsurance,Commercial risk early warning,https://www.zurich.com/,research
+20,Munich Re,Insurance and reinsurance,Emerging accumulation and scenario monitoring,https://www.munichre.com/,research
+21,Swiss Re,Insurance and reinsurance,Country event and portfolio signals,https://www.swissre.com/,research
+22,Hannover Re,Insurance and reinsurance,Regional risk triage,https://www.hannover-re.com/,research
+23,Aon,Insurance and advisory,Client risk intelligence workflows,https://www.aon.com/,research
+24,Marsh McLennan,Insurance and advisory,Client exposure and risk advisory,https://www.marshmclennan.com/,research
+25,HSBC,Finance,Country risk and trade corridor monitoring,https://www.hsbc.com/,research
+26,Standard Chartered,Finance,Emerging-market exposure monitoring,https://www.sc.com/,research
+27,ING,Finance,Country macro and event watchlists,https://www.ing.com/,research
+28,S&P Global,Data and risk,Source-visible geopolitical product integration,https://www.spglobal.com/,research
+29,Moody's,Data and risk,Country event and risk workflow integration,https://www.moodys.com/,research
+30,Control Risks,Risk advisory,Analyst workflow and client briefing automation,https://www.controlrisks.com/,research
+31,Kroll,Risk advisory,Investigative and country-risk monitoring,https://www.kroll.com/,research
+32,Verisk,Data and risk,Insurance exposure intelligence integration,https://www.verisk.com/,research
