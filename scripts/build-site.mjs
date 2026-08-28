@@ -9,6 +9,7 @@ const editorial = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "
 const dist = path.join(root, "dist");
 const cacheRoot = path.join(root, ".cache", "upstreams");
 const canonicalOrigin = `https://${routes.canonicalDomain}`;
+const secureWorkspaceUrl = "https://the-keep-enterprise.ardakgul4.workers.dev/login";
 const productById = new Map(site.products.map((product) => [product.id, product]));
 const flagshipProducts = (site.ownerViews?.MonarchCastleTech ?? [])
   .map((id) => productById.get(id))
@@ -403,7 +404,7 @@ function renderPlatform() {
         </div>
       </div>
     </section>
-    <section class="platform-boundary" aria-labelledby="boundary-heading"><div><p class="eyebrow">Open-product promise</p><h2 id="boundary-heading">The public portfolio stays public.</h2></div><div><p>BNTI, WTI, EconMap, GeoRisk, MacroIntel, and every current published product remain available without a platform subscription.</p><p>Paid access covers unified watchlists, organization workspaces, private data connections, scheduled briefings, exports, API access, and support.</p>${localOrExternalLink("/pricing/", "Compare access")}</div></section>
+    <section class="platform-boundary" aria-labelledby="boundary-heading"><div><p class="eyebrow">Open-product promise</p><h2 id="boundary-heading">The public portfolio stays public.</h2></div><div><p>BNTI, WTI, EconMap, GeoRisk, MacroIntel, and every current published product remain available without a platform subscription.</p><p>Paid access covers unified watchlists, organization workspaces, private data connections, scheduled briefings, exports, API access, and support.</p><p>${localOrExternalLink(secureWorkspaceUrl, "Enter secure workspace", "button-link")} ${localOrExternalLink("/pricing/", "Compare access")}</p></div></section>
     <section class="process-grid" aria-label="Platform operating model"><article><span>01</span><h3>Collect</h3><p>Scheduled product workflows refresh declared public sources.</p></article><article><span>02</span><h3>Normalize</h3><p>Versioned schemas preserve timestamps, provenance, and missingness.</p></article><article><span>03</span><h3>Connect</h3><p>The Keep aligns signals across geography, time, sector, and exposure.</p></article><article><span>04</span><h3>Deliver</h3><p>Teams receive watchlists, alerts, exports, and reproducible evidence.</p></article></section>
     ${nextAction("/pilot/", "Connect one real operating decision", "A six-week pilot begins with an exposure, a decision owner, and an agreed success measure.", "Request a pilot")}`;
 }
@@ -422,7 +423,7 @@ function renderImpact() {
 }
 
 function renderPricing() {
-  return `${pageIntro("Platform access", "Public products stay free. The unified workspace is commercial.", "No existing dashboard, methodology page, or public data output is placed behind a paywall.")}
+  return `${pageIntro("Platform access", "Public products stay free. The unified workspace is commercial.", "No existing dashboard, methodology page, or public data output is placed behind a paywall. Explore independently; no sales call is required.")}
     <section class="pricing-grid" aria-label="The Keep commercial access">
       <article><p class="eyebrow">Public</p><h2>Open products</h2><p class="price">$0</p><ul><li>Every current public dashboard</li><li>Published methodologies</li><li>Public source and timestamp trails</li><li>Repository access under stated licenses</li></ul>${localOrExternalLink("/products/", "Explore free products", "button-link button-secondary")}</article>
       <article class="pricing-featured"><p class="eyebrow">Six-week engagement</p><h2>Paid pilot</h2><p class="price">From $15k</p><ul><li>One defined exposure and decision workflow</li><li>Unified watchlist and scheduled briefing</li><li>Customer-provided data mapping when permitted</li><li>Measured lead-time and analyst-effort baseline</li></ul>${localOrExternalLink("/pilot/", "Scope a pilot", "button-link")}</article>
@@ -435,7 +436,7 @@ function renderPricing() {
 function renderPilot() {
   const intakeUrl = "https://github.com/MonarchCastleTech/MonarchCastleTech.github.io/issues/new?template=pilot_request.yml";
   return `${pageIntro("Private-sector pilot", "Turn one exposure into a working early-warning loop", "A six-week pilot has a decision owner, a bounded scope, declared data, and a measurable operational result.")}
-    <section class="pilot-layout" aria-labelledby="pilot-scope-heading"><div><p class="eyebrow">Pilot structure</p><h2 id="pilot-scope-heading">Small enough to finish. Useful enough to renew.</h2><ol class="pilot-steps"><li><span>01</span><div><strong>Define</strong><p>Choose one portfolio, route, region, supplier set, or recurring risk decision.</p></div></li><li><span>02</span><div><strong>Connect</strong><p>Map public products and approved customer inputs into The Keep.</p></div></li><li><span>03</span><div><strong>Operate</strong><p>Run scheduled monitoring, briefing, escalation, and evidence capture.</p></div></li><li><span>04</span><div><strong>Measure</strong><p>Compare lead time, analyst effort, coverage, and reproducibility against baseline.</p></div></li></ol></div><aside class="pilot-card"><p class="eyebrow">Non-confidential intake</p><h3>Request a pilot</h3><p>Use the public intake to describe sector, geography, and decision. Do not include confidential, personal, or regulated information.</p><dl><div><dt>Duration</dt><dd>6 weeks</dd></div><div><dt>Starting price</dt><dd>USD 15,000</dd></div><div><dt>Customer</dt><dd>Private-sector organizations</dd></div></dl>${localOrExternalLink(intakeUrl, "Open pilot intake", "button-link")}<small>A GitHub account is required for this temporary intake route.</small></aside></section>
+    <section class="pilot-layout" aria-labelledby="pilot-scope-heading"><div><p class="eyebrow">Pilot structure</p><h2 id="pilot-scope-heading">Small enough to finish. Useful enough to renew.</h2><ol class="pilot-steps"><li><span>01</span><div><strong>Define</strong><p>Choose one portfolio, route, region, supplier set, or recurring risk decision.</p></div></li><li><span>02</span><div><strong>Connect</strong><p>Map public products and approved customer inputs into The Keep.</p></div></li><li><span>03</span><div><strong>Operate</strong><p>Run scheduled monitoring, briefing, escalation, and evidence capture.</p></div></li><li><span>04</span><div><strong>Measure</strong><p>Compare lead time, analyst effort, coverage, and reproducibility against baseline.</p></div></li></ol></div><aside class="pilot-card"><p class="eyebrow">Non-confidential intake</p><h3>Request a pilot</h3><p>Use the asynchronous public intake to describe sector, geography, and decision. No cold call is required. Do not include confidential, personal, or regulated information.</p><dl><div><dt>Duration</dt><dd>6 weeks</dd></div><div><dt>Starting price</dt><dd>USD 15,000</dd></div><div><dt>Customer</dt><dd>Private-sector organizations</dd></div></dl>${localOrExternalLink(intakeUrl, "Open pilot intake", "button-link")}<small>A GitHub account is required for this temporary intake route.</small></aside></section>
     <section class="trust-grid" aria-label="Pilot conditions"><article><h2>No hidden lock-in</h2><p>Public product access remains unchanged before, during, and after a pilot.</p></article><article><h2>No invented certainty</h2><p>Outputs preserve confidence, limitations, missingness, and source boundaries.</p></article><article><h2>No government dependency</h2><p>The commercial plan targets private companies in energy, logistics, finance, insurance, and advisory services.</p></article></section>
     ${nextAction("/methodology/", "Inspect the method before buying", "Review provenance, automation, model evaluation, and platform formulas.", "Read methodology")}`;
 }
@@ -627,7 +628,7 @@ function renderPage(page) {
       <span class="wordmark-copy"><span>Monarch Castle</span><strong>Technologies</strong></span>
     </a>
     <nav aria-label="Primary"><ul>${renderNav(page.path)}</ul></nav>
-    <a class="header-action" href="/platform/">Open The Keep</a>
+    <a class="header-action" href="${secureWorkspaceUrl}">Open The Keep</a>
   </header>
   <main id="main-content" tabindex="-1">${renderBody(page)}</main>
   <footer class="site-footer">

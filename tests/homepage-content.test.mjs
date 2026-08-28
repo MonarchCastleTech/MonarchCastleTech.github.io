@@ -190,7 +190,7 @@ test("public shell uses product-led navigation and a self-serve platform action"
   for (const label of ["Platform", "Products", "Insights", "Methodology", "Company"]) {
     assert.match(indexHtml, new RegExp(`>${label}<`));
   }
-  assert.match(indexHtml, /class="header-action" href="\/platform\/">Open The Keep</);
+  assert.match(indexHtml, /class="header-action" href="https:\/\/the-keep-enterprise\.ardakgul4\.workers\.dev\/login">Open The Keep</);
 });
 
 test("homepage exposes trust links without unsupported performance claims", () => {
