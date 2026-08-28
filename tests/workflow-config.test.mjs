@@ -41,7 +41,7 @@ test("live site health script covers canonical routes and dashboard data freshne
   assert.equal(fs.existsSync(healthScriptPath), true);
   const script = fs.readFileSync(healthScriptPath, "utf8");
 
-  for (const path of ["/", "/platform/", "/impact/", "/pricing/", "/pilot/", "/tools/", "/mcp/", "/sdcofa/", "/bnti/", "/wti/", "/mena/"]) {
+  for (const path of ["/", "/platform/", "/impact/", "/pricing/", "/pilot/", "/insights/", "/insights/feed.xml", "/sitemap.xml", "/robots.txt", "/llms.txt", "/tools/", "/mcp/", "/sdcofa/", "/bnti/", "/wti/", "/mena/"]) {
     assert.match(script, new RegExp(`"${path}"`));
   }
 

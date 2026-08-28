@@ -13,6 +13,14 @@ test("build output uses the reliable GitHub Pages host", () => {
   assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true);
 });
 
+test("build output publishes autonomous discovery surfaces", () => {
+  for (const relativePath of ["insights/feed.xml", "sitemap.xml", "robots.txt", "llms.txt"]) {
+    assert.equal(fs.existsSync(path.join(dist, relativePath)), true, `${relativePath} exists`);
+  }
+  assert.match(fs.readFileSync(path.join(dist, "insights", "feed.xml"), "utf8"), /<rss version="2\.0">/);
+  assert.match(fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8"), /\/insights\//);
+});
+
 test("build output includes every governed narrative route", () => {
   for (const route of routes.sitePages) {
     const target = path.join(dist, route.output);

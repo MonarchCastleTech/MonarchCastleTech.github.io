@@ -184,13 +184,13 @@ test("homepage follows the approved flagship narrative and keeps the four capabi
   for (const pillar of site.brand.pillars) assert.match(indexHtml, new RegExp(`>${pillar}<`));
 });
 
-test("public shell uses the commercial platform navigation and pilot action", () => {
+test("public shell uses product-led navigation and a self-serve platform action", () => {
   assert.match(indexHtml, /<img class="brand-logo" src="\/assets\/products\/logo\.png" alt="" \/>/);
   assert.match(indexHtml, /<link rel="icon" type="image\/png" href="\/assets\/products\/logo\.png" \/>/);
-  for (const label of ["Platform", "Offerings", "Products", "Methodology", "Company"]) {
+  for (const label of ["Platform", "Products", "Insights", "Methodology", "Company"]) {
     assert.match(indexHtml, new RegExp(`>${label}<`));
   }
-  assert.match(indexHtml, /class="header-action" href="\/pilot\/">Request pilot</);
+  assert.match(indexHtml, /class="header-action" href="\/platform\/">Open The Keep</);
 });
 
 test("homepage exposes trust links without unsupported performance claims", () => {

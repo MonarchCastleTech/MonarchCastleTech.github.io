@@ -21,6 +21,7 @@ const dashboardPaths = {
   "world-threat-index": "/wti/",
   "mena-threat-index": "/mena/"
 };
+const publicSignals = readPublicSignalSnapshot();
 const productPresentation = {
   "cloudy-shiny": {
     summary: "A market weather system that turns financial signals into an immediate read on risk appetite.",
@@ -77,6 +78,45 @@ function presentationFor(product) {
     summary: "Purpose-built intelligence for decisions that demand clear context and usable outputs.",
     signal: sentenceCase(product.family)
   };
+}
+
+function readPublicSignalSnapshot() {
+  const records = [];
+  for (const mount of routes.dashboardMounts) {
+    const source = path.join(cacheRoot, mount.repoKey, mount.dataFile);
+    if (!fs.existsSync(source)) continue;
+    try {
+      const payload = JSON.parse(fs.readFileSync(source, "utf8"));
+      const value = Number(payload?.meta?.main_index);
+      if (!Number.isFinite(value)) continue;
+      const countries = Object.entries(payload?.countries ?? {}).map(([code, record]) => ({
+        name: record?.name ?? code,
+        value: Number(record?.index)
+      })).filter((record) => Number.isFinite(record.value)).sort((a, b) => b.value - a.value).slice(0, 3);
+      records.push({
+        generatedAt: payload?.meta?.generated_at ?? payload?.meta?.issued_at ?? null,
+        label: mount.label,
+        path: mount.path,
+        status: payload?.meta?.status ?? "Published",
+        top: countries,
+        value
+      });
+    } catch {
+      // A malformed upstream is excluded; mounted-artifact verification remains authoritative.
+    }
+  }
+  return records;
+}
+
+function renderPublicSignalSnapshot() {
+  if (!publicSignals.length) return "";
+  const latest = publicSignals.map((record) => record.generatedAt).filter(Boolean).sort().at(-1);
+  return `<section aria-labelledby="public-snapshot-heading">
+    <div class="section-heading"><div><p class="eyebrow">Automatically published</p><h2 id="public-snapshot-heading">Current public signal snapshot</h2></div><p>Built from the latest mounted product outputs. Missing feeds are omitted; no substitute values are generated.</p></div>
+    <div class="workspace-metrics">${publicSignals.map((record) => `<article><span>${escapeHtml(record.label)}</span><strong>${record.value.toFixed(2)}</strong><small>${escapeHtml(record.status)}</small></article>`).join("")}</div>
+    <div class="insight-grid">${publicSignals.map((record) => `<article><h3>${escapeHtml(record.label)}</h3><p>${record.top.length ? `Highest published exposures: ${record.top.map((item) => `${escapeHtml(item.name)} ${item.value.toFixed(2)}`).join(", ")}.` : "No country-level values were published in this output."}</p>${localOrExternalLink(record.path, "Inspect dashboard")}</article>`).join("")}</div>
+    <p class="platform-disclaimer">Latest declared source timestamp: ${escapeHtml(latest ?? "unavailable")}. Scores retain each product’s own methodology and should not be treated as directly interchangeable.</p>
+  </section>`;
 }
 
 function ensureParent(filePath) {
@@ -436,7 +476,8 @@ function renderSolutions() {
 }
 
 function renderInsightsPage() {
-  return `${pageIntro("Insights", "Governed records instead of an activity feed", "This page links durable methods and policies. It does not fabricate recency, readership, or live research activity.")}
+  return `${pageIntro("Insights", "Public signals with their evidence attached", "Automatically refreshed product outputs appear beside durable methods and policies. Timestamps and limitations remain visible.")}
+    ${renderPublicSignalSnapshot()}
     <section aria-labelledby="records-heading">
       <div class="section-heading"><h2 id="records-heading">Selected public records</h2></div>
       ${renderInsights()}
@@ -540,8 +581,8 @@ function renderBody(page) {
 function renderNav(currentPath) {
   const navigation = [
     { label: "Platform", path: "/platform/" },
-    { label: "Offerings", path: "/solutions/" },
     { label: "Products", path: "/products/" },
+    { label: "Insights", path: "/insights/" },
     { label: "Methodology", path: "/methodology/" },
     { label: "Company", path: "/company/" }
   ];
@@ -574,6 +615,7 @@ function renderPage(page) {
   <meta name="twitter:title" content="${escapeHtml(page.title)}" />
   <meta name="twitter:description" content="${escapeHtml(page.description)}" />
   <meta name="twitter:image" content="${canonicalOrigin}/assets/approved/social-preview.png" />
+  <link rel="alternate" type="application/rss+xml" title="Monarch Castle public signals" href="/insights/feed.xml" />
   <link rel="icon" type="image/png" href="/assets/products/logo.png" />
   <link rel="stylesheet" href="/styles/site.css" />
 </head>
@@ -585,7 +627,7 @@ function renderPage(page) {
       <span class="wordmark-copy"><span>Monarch Castle</span><strong>Technologies</strong></span>
     </a>
     <nav aria-label="Primary"><ul>${renderNav(page.path)}</ul></nav>
-    <a class="header-action" href="/pilot/">Request pilot</a>
+    <a class="header-action" href="/platform/">Open The Keep</a>
   </header>
   <main id="main-content" tabindex="-1">${renderBody(page)}</main>
   <footer class="site-footer">
@@ -606,6 +648,28 @@ function renderPage(page) {
 `;
 }
 
+function xmlEscape(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[character]);
+}
+
+function renderRssFeed() {
+  const items = publicSignals.map((record) => {
+    const published = record.generatedAt && !Number.isNaN(new Date(record.generatedAt).valueOf()) ? `<pubDate>${new Date(record.generatedAt).toUTCString()}</pubDate>` : "";
+    const description = `${record.label} published ${record.value.toFixed(2)} (${record.status}). ${record.top.map((item) => `${item.name} ${item.value.toFixed(2)}`).join(", ")}`;
+    return `<item><title>${xmlEscape(record.label)} public signal: ${record.value.toFixed(2)}</title><link>${canonicalOrigin}${record.path}</link><guid isPermaLink="false">${xmlEscape(`${record.label}:${record.generatedAt ?? record.value}`)}</guid><description>${xmlEscape(description)}</description>${published}</item>`;
+  }).join("");
+  return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Monarch Castle public signals</title><link>${canonicalOrigin}/insights/</link><description>Automatically published, source-visible outputs from Monarch Castle Technologies and its endorsed analytical portfolio.</description><language>en</language>${items}</channel></rss>`;
+}
+
+function renderSitemap() {
+  const paths = [
+    ...routes.sitePages.map((page) => page.path),
+    ...routes.localPages.map((page) => page.path),
+    ...routes.dashboardMounts.map((mount) => mount.path)
+  ];
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map((pagePath) => `<url><loc>${canonicalOrigin}${xmlEscape(pagePath)}</loc></url>`).join("")}</urlset>`;
+}
+
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
 fs.writeFileSync(path.join(dist, ".nojekyll"), "");
@@ -615,6 +679,12 @@ for (const page of routes.sitePages) {
   ensureParent(target);
   fs.writeFileSync(target, renderPage(page));
 }
+
+ensureParent(path.join(dist, "insights", "feed.xml"));
+fs.writeFileSync(path.join(dist, "insights", "feed.xml"), renderRssFeed());
+fs.writeFileSync(path.join(dist, "sitemap.xml"), renderSitemap());
+fs.writeFileSync(path.join(dist, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${canonicalOrigin}/sitemap.xml\n`);
+fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods.\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n`);
 
 for (const page of routes.localPages) {
   copyFile(path.join(root, page.source), path.join(dist, page.output));
