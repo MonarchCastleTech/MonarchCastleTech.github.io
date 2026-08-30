@@ -111,12 +111,11 @@ function readPublicSignalSnapshot() {
 
 function renderPublicSignalSnapshot() {
   if (!publicSignals.length) return "";
-  const latest = publicSignals.map((record) => record.generatedAt).filter(Boolean).sort().at(-1);
   return `<section aria-labelledby="public-snapshot-heading">
-    <div class="section-heading"><div><p class="eyebrow">Automatically published</p><h2 id="public-snapshot-heading">Current public signal snapshot</h2></div><p>Built from the latest mounted product outputs. Missing feeds are omitted; no substitute values are generated.</p></div>
+    <div class="section-heading"><div><p class="eyebrow">Live operating picture</p><h2 id="public-snapshot-heading">What deserves attention now</h2></div><p>${publicSignals.length} independent intelligence views, refreshed automatically and ready to explore.</p></div>
     <div class="workspace-metrics">${publicSignals.map((record) => `<article><span>${escapeHtml(record.label)}</span><strong>${record.value.toFixed(2)}</strong><small>${escapeHtml(record.status)}</small></article>`).join("")}</div>
-    <div class="insight-grid">${publicSignals.map((record) => `<article><h3>${escapeHtml(record.label)}</h3><p>${record.top.length ? `Highest published exposures: ${record.top.map((item) => `${escapeHtml(item.name)} ${item.value.toFixed(2)}`).join(", ")}.` : "No country-level values were published in this output."}</p>${localOrExternalLink(record.path, "Inspect dashboard")}</article>`).join("")}</div>
-    <p class="platform-disclaimer">Latest declared source timestamp: ${escapeHtml(latest ?? "unavailable")}. Scores retain each product’s own methodology and should not be treated as directly interchangeable.</p>
+    <div class="insight-grid">${publicSignals.map((record) => `<article><h3>${escapeHtml(record.label)}</h3><p>${record.top.length ? `Priority exposures: ${record.top.map((item) => `${escapeHtml(item.name)} ${item.value.toFixed(2)}`).join(", ")}.` : "Open the dashboard for the current regional picture."}</p>${localOrExternalLink(record.path, "Open intelligence view")}</article>`).join("")}</div>
+    <p class="platform-disclaimer">Each index is a focused intelligence lens. Open any view for its drivers, sources, and method.</p>
   </section>`;
 }
 
@@ -398,7 +397,7 @@ function renderPlatform() {
       <div class="workspace-grid">
         <aside class="workspace-nav" aria-label="Platform modules"><strong>THE KEEP</strong><button class="is-active" type="button">Overview</button><button type="button">Exposure</button><button type="button">Signals</button><button type="button">Methods</button><hr><small>PUBLIC PREVIEW</small></aside>
         <div class="workspace-content">
-          <div class="workspace-metrics"><article><span>Global threat</span><strong id="metric-wti">—</strong><small id="status-wti">WTI</small></article><article><span>Border pressure</span><strong id="metric-bnti">—</strong><small id="status-bnti">BNTI</small></article><article><span>MENA exposure</span><strong id="metric-mena">—</strong><small id="status-mena">MENA</small></article><article><span>Composite stress</span><strong id="metric-composite">—</strong><small>Declared mean</small></article></div>
+          <div class="workspace-metrics"><article><span>Global threat</span><strong id="metric-wti">—</strong><small id="status-wti">WTI</small></article><article><span>Border pressure</span><strong id="metric-bnti">—</strong><small id="status-bnti">BNTI</small></article><article><span>MENA exposure</span><strong id="metric-mena">—</strong><small id="status-mena">MENA</small></article><article><span>Composite stress</span><strong id="metric-composite">—</strong><small>Blended signal</small></article></div>
           <div class="workspace-panels"><section class="exposure-panel"><header><div><p class="eyebrow">Cross-system view</p><h3>Highest current exposures</h3></div><span id="feed-state">Connecting</span></header><ol id="exposure-list"><li class="loading-row">Loading source-visible indicators…</li></ol></section><section class="signal-panel"><header><p class="eyebrow">Recent signals</p><h3>Traceable event stream</h3></header><ol id="signal-list"><li class="loading-row">Loading published events…</li></ol></section></div>
           <p class="workspace-note" id="platform-note">This preview reads only public product outputs. No private customer data is collected or stored.</p>
         </div>
@@ -477,7 +476,7 @@ function renderSolutions() {
 }
 
 function renderInsightsPage() {
-  return `${pageIntro("Insights", "Public signals with their evidence attached", "Automatically refreshed product outputs appear beside durable methods and policies. Timestamps and limitations remain visible.")}
+  return `${pageIntro("Insights", "Live signals. Clear next steps.", "See where pressure is building, compare intelligence views, and move directly into the underlying evidence.")}
     ${renderPublicSignalSnapshot()}
     <section aria-labelledby="records-heading">
       <div class="section-heading"><h2 id="records-heading">Selected public records</h2></div>

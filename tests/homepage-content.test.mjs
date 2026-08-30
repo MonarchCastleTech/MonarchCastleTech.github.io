@@ -9,6 +9,7 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const site = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "site.json"), "utf8"));
 const indexHtml = fs.readFileSync(path.join(root, "dist", "index.html"), "utf8");
 const productsHtml = fs.readFileSync(path.join(root, "dist", "products", "index.html"), "utf8");
+const insightsHtml = fs.readFileSync(path.join(root, "dist", "insights", "index.html"), "utf8");
 const siteCss = fs.readFileSync(path.join(root, "src", "styles", "site.css"), "utf8");
 
 const projectedFields = [
@@ -191,6 +192,11 @@ test("public shell uses product-led navigation and a self-serve platform action"
     assert.match(indexHtml, new RegExp(`>${label}<`));
   }
   assert.match(indexHtml, /class="header-action" href="https:\/\/the-keep-enterprise\.ardakgul4\.workers\.dev\/login">Open The Keep</);
+});
+
+test("insights lead with the operating picture instead of internal process language", () => {
+  assert.match(insightsHtml, /What deserves attention now/);
+  assert.doesNotMatch(insightsHtml, /Latest declared source timestamp|Need improvement|directly interchangeable/i);
 });
 
 test("homepage exposes trust links without unsupported performance claims", () => {

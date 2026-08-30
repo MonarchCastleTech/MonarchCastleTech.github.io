@@ -25,3 +25,6 @@ jobs:
         env:
           SITE_BASE_URL: https://monarchcastletech.github.io
           SITE_DATA_MAX_AGE_HOURS: "12"
+
+      - name: Check every public product
+        run: node scripts/check-portfolio-sites.mjs

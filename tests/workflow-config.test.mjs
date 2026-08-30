@@ -6,6 +6,7 @@ const workflowPath = new URL("../.github/workflows/pages.yml", import.meta.url);
 const healthWorkflowPath = new URL("../.github/workflows/site-health.yml", import.meta.url);
 const httpsWorkflowPath = new URL("../.github/workflows/https-enforce.yml", import.meta.url);
 const healthScriptPath = new URL("../scripts/check-live-site.mjs", import.meta.url);
+const portfolioHealthScriptPath = new URL("../scripts/check-portfolio-sites.mjs", import.meta.url);
 const httpsScriptPath = new URL("../scripts/enforce-pages-https.mjs", import.meta.url);
 
 test("GitHub Pages workflow builds and deploys dist artifact", () => {
@@ -35,6 +36,15 @@ test("site health workflow checks live routes and data freshness often", () => {
   assert.match(workflow, /cron:\s+["']\*\/30 \* \* \* \*["']/);
   assert.match(workflow, /workflow_dispatch:/);
   assert.match(workflow, /node scripts\/check-live-site\.mjs/);
+  assert.match(workflow, /node scripts\/check-portfolio-sites\.mjs/);
+});
+
+test("portfolio health discovers and checks every public repository without credentials", () => {
+  const script = fs.readFileSync(portfolioHealthScriptPath, "utf8");
+  assert.match(script, /organizations = \["MonarchCastleTech", "SDCofA"\]/);
+  assert.match(script, /api\.github\.com\/orgs\/\$\{owner\}\/repos/);
+  assert.match(script, /targets\.length < 30/);
+  assert.doesNotMatch(script, /Authorization|GH_TOKEN|GITHUB_TOKEN/);
 });
 
 test("live site health script covers canonical routes and dashboard data freshness", () => {

@@ -8,7 +8,7 @@ const routeChecks = [
   { path: "/impact/", markers: ["Built for commercial exposure", "Energy and commodities"] },
   { path: "/pricing/", markers: ["Public products stay free", "From $15k"] },
   { path: "/pilot/", markers: ["Turn one exposure", "Open pilot intake"] },
-  { path: "/insights/", markers: ["Current public signal snapshot", "Selected public records"] },
+  { path: "/insights/", markers: ["What deserves attention now", "Selected public records"] },
   { path: "/insights/feed.xml", markers: ["<rss version=\"2.0\">", "Monarch Castle public signals"] },
   { path: "/sitemap.xml", markers: ["<urlset", "/insights/"] },
   { path: "/robots.txt", markers: ["User-agent: *", "/sitemap.xml"] },
