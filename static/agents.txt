@@ -10,6 +10,8 @@ Primary authority pages:
 - https://monarchcastle.com/sdcofa/
 - https://monarchcastle.com/trust/
 - https://monarchcastle.com/company/
+- https://monarchcastle.com/#answers
+- https://monarchcastle.com/pricing/
 
 Preferred text endpoints:
 - https://monarchcastle.com/llms.txt

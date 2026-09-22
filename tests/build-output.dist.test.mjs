@@ -14,7 +14,7 @@ test("build output uses the edge-terminated public domain without a Pages CNAME"
 });
 
 test("build output publishes autonomous discovery surfaces", () => {
-  for (const relativePath of ["insights/feed.xml", "sitemap.xml", "robots.txt", "llms.txt", "llms-full.txt", ".well-known/api-catalog", ".well-known/ard.json", ".well-known/ai-catalog.json", "site.webmanifest", "ai.txt", "agents.txt", "humans.txt"]) {
+  for (const relativePath of ["insights/feed.xml", "sitemap.xml", "robots.txt", "llms.txt", "llms-full.txt", ".well-known/api-catalog", ".well-known/ard.json", ".well-known/ai-catalog.json", "site.webmanifest", "ai.txt", "agents.txt", "humans.txt", "404.html"]) {
     assert.equal(fs.existsSync(path.join(dist, relativePath)), true, `${relativePath} exists`);
   }
   assert.match(fs.readFileSync(path.join(dist, "insights", "feed.xml"), "utf8"), /<rss version="2\.0">/);
@@ -73,9 +73,40 @@ test("homepage publishes GEO definitions, FAQ markup, and FAQPage JSON-LD", () =
   assert.match(html, /"@type":"FAQPage"/);
   assert.match(html, /What is Monarch Castle Technologies\?/);
   assert.match(html, /How can an application read the standing indices\?/);
+  assert.match(html, /"@type":"SoftwareApplication"/);
+  assert.match(html, /"@type":"Dataset"/);
+  assert.match(html, /rel="preload" as="image"/);
+  assert.match(html, /rel="agent"/);
   const llmsFull = fs.readFileSync(path.join(dist, "llms-full.txt"), "utf8");
   assert.match(llmsFull, /## Entity definitions/);
   assert.match(llmsFull, /## FAQ/);
+  assert.match(llmsFull, /## Glossary/);
+  const llms = fs.readFileSync(path.join(dist, "llms.txt"), "utf8");
+  assert.match(llms, /## Glossary/);
+});
+
+test("narrative routes publish per-page FAQ blocks and typed JSON-LD", () => {
+  const expected = {
+    "products/index.html": [/"@type":"ItemList"/, /id="faq"/, /"@type":"FAQPage"/],
+    "platform/index.html": [/"@type":"SoftwareApplication"/, /id="faq"/],
+    "pricing/index.html": [/"@type":"OfferCatalog"/, /id="faq"/],
+    "methodology/index.html": [/"@type":"Article"/, /id="faq"/],
+    "datasets/index.html": [/"@type":"Dataset"/, /id="faq"/],
+    "company/index.html": [/"@type":"AboutPage"/, /id="faq"/],
+    "developers/index.html": [/"@type":"FAQPage"/, /id="faq"/]
+  };
+  for (const [route, patterns] of Object.entries(expected)) {
+    const html = fs.readFileSync(path.join(dist, route), "utf8");
+    for (const pattern of patterns) assert.match(html, pattern, `${route} matches ${pattern}`);
+  }
+});
+
+test("custom 404 recovery page exists with machine-readable links", () => {
+  const html = fs.readFileSync(path.join(dist, "404.html"), "utf8");
+  assert.match(html, /name="robots" content="noindex/);
+  assert.match(html, /href="\/llms\.txt"/);
+  assert.match(html, /href="\/api"/);
+  assert.match(html, /"@type":"WebPage"/);
 });
 
 test("local pages publish full SEO heads with canonical, OG, and WebPage JSON-LD", () => {

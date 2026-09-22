@@ -63,12 +63,13 @@
       "displayName": "monarchcastle.com FAQ answers",
       "type": "text/plain",
       "url": "https://monarchcastle.com/#answers",
-      "description": "Citable plain-language answers: what Monarch Castle publishes, what The Keep is, what BNTI/WTI/MENA mean, and how machines should read index data.",
+      "description": "Citable plain-language answers: what Monarch Castle publishes, what The Keep is, what BNTI/WTI/MENA mean, and how machines should read index data. Narrative pages also expose #faq anchors.",
       "capabilities": ["answer-generation", "citation"],
       "representativeQueries": [
         "what is Monarch Castle Technologies",
         "are the public products free",
-        "how do I read the standing indices from an application"
+        "how do I read the standing indices from an application",
+        "what does SDCofA endorsement mean"
       ]
     }
   ]

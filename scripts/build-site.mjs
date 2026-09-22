@@ -23,7 +23,63 @@ const dashboardPaths = {
   "mena-threat-index": "/sdcofa/mena/"
 };
 const publicSignals = readPublicSignalSnapshot();
-const homeFaq = [
+const pageFaqs = {
+  products: [
+    { question: "What products does Monarch Castle Technologies publish?", answer: "The portfolio covers market weather, country economics, ESG mapping, macro intelligence, defense signals, nuclear energy intelligence, emergency preparedness, football forecasting, supply networks, and the endorsed SDCofA standing threat indices." },
+    { question: "Which Monarch Castle products are free?", answer: "Every current public dashboard, methodology page, and standing index remains free and open. Paid access applies only to The Keep enterprise workspace and related services." },
+    { question: "Who publishes the SDCofA products?", answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies and publishes BNTI, WTI, MENA, election, and GeoRisk intelligence surfaces." }
+  ],
+  platform: [
+    { question: "What is The Keep?", answer: "The Keep is a unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture for private-sector teams." },
+    { question: "Does The Keep replace the public dashboards?", answer: "No. BNTI, WTI, MENA, and every current public product remain independently accessible without a platform subscription. The Keep adds cross-product views, watchlists, alerts, exports, and team workflows." },
+    { question: "Does the public platform preview store private customer data?", answer: "No. The live public preview reads only published product outputs. Private customer data is not collected or stored in that preview." }
+  ],
+  pricing: [
+    { question: "Are Monarch Castle public products free?", answer: "Yes. Public dashboards, methodologies, and standing index outputs stay free. Commercial pricing applies to The Keep workspace, services, and support." },
+    { question: "What does a paid pilot cost?", answer: "Paid pilots start from USD 15,000 for a six-week engagement with one defined exposure, decision owner, and measurable operational result." },
+    { question: "What does enterprise access include?", answer: "Enterprise access starts from USD 36,000 per year and covers organization workspaces, role-based access, watchlists, exports, alerts, API access, private connectors, and support." }
+  ],
+  methodology: [
+    { question: "How should an index value be interpreted?", answer: "Treat each index as a focused analytical lens. Open the methodology route before quoting a score so provenance, cadence, limitations, and evidence status are visible." },
+    { question: "How often do standing indices refresh?", answer: "Each product declares its own update cadence. BNTI, WTI, and MENA publish scheduled refresh cycles with inspectable static artifacts rather than opaque screenshots." },
+    { question: "Are forecasts investment advice?", answer: "No. Forecast and index outputs are analytical aids, not investment advice or official government intelligence. Evaluation rules and limitations are published on the methodology and trust routes." }
+  ],
+  trust: [
+    { question: "What public commitments does the trust center publish?", answer: "The trust center covers provenance, claims policy, forecast evidence rules, security reporting, licensing, and the SDCofA endorsement relationship." },
+    { question: "How are security issues reported?", answer: "Report vulnerabilities through the published security policy rather than a public issue. The security route is linked from the trust center and site footer." },
+    { question: "What does SDCofA endorsement mean?", answer: "SDCofA is identified as the endorsed analytical unit of Monarch Castle Technologies. The relationship is explicit on company, products, and SDCofA routes." }
+  ],
+  developers: [
+    { question: "Is there a public JSON API?", answer: "Yes. GET /api, /api/bnti, /api/wti, /api/mena, and /api/indices are public read-only endpoints with optional ?country= and ?top= query parameters. No API key is required." },
+    { question: "Is there an MCP endpoint?", answer: "Yes. POST https://monarchcastle.com/mcp exposes get_index, get_bnti, list_indices, and get_site_page over streamable HTTP. Server card: /.well-known/mcp/server-card.json." },
+    { question: "Where is the source code?", answer: "Public repositories live under https://github.com/MonarchCastleTech and https://github.com/SDCofA. Repository links are listed on the developers route." }
+  ],
+  impact: [
+    { question: "Who is The Keep built for?", answer: "Private-sector teams in energy, logistics, finance, insurance, and advisory services that carry cross-border exposure and need inspectable early-warning context." },
+    { question: "How is pilot value measured?", answer: "Pilots measure lead time, analyst effort removed, and whether a reviewer can reproduce the evidence used to escalate a change." }
+  ],
+  pilot: [
+    { question: "How long does a pilot run?", answer: "A pilot runs for six weeks with one defined exposure, a decision owner, and an agreed success measure." },
+    { question: "What should not be sent in the intake?", answer: "Do not include confidential, personal, or regulated information. The intake is a non-confidential public GitHub issue form." }
+  ],
+  datasets: [
+    { question: "Where can I download standing index JSON?", answer: "Use GET /api/bnti, /api/wti, /api/mena, /api/indices or the canonical snapshots under /sdcofa/<index>/<index>_data.json. The API catalog is at /.well-known/api-catalog." },
+    { question: "Does third-party data remain under its original terms?", answer: "Yes. Third-party data remains subject to its original terms. The datasets route documents public source routes and analytical scope." }
+  ],
+  insights: [
+    { question: "What is published on Insights?", answer: "Insights shows live public signal snapshots and selected governed records without fabricated activity feeds or unsupported performance claims." },
+    { question: "Is there an RSS feed?", answer: "Yes. Subscribe at /insights/feed.xml for automatically published, source-visible outputs from the public portfolio." }
+  ],
+  company: [
+    { question: "Where is Monarch Castle Technologies based?", answer: "The company operates from Ankara, Türkiye and publishes decision-intelligence and early-warning products for private-sector operators." },
+    { question: "What is SDCofA?", answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies and publishes the standing threat indices." }
+  ],
+  solutions: [
+    { question: "How does delivery work?", answer: "Start with the decision and exposure, add only sources and models that materially improve it, then keep open products independently usable above a unified workflow layer." }
+  ],
+  home: []
+};
+const homeFaq = pageFaqs.home.length ? pageFaqs.home : [
   {
     question: "What is Monarch Castle Technologies?",
     answer: "Monarch Castle Technologies is an independent technology company that publishes transparent early-warning and decision-intelligence products for private-sector operators. The public portfolio stays free; paid access applies only to The Keep enterprise workspace."
@@ -49,6 +105,177 @@ const homeFaq = [
     answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies and publishes the standing BNTI, WTI, and MENA threat indices with declared doctrine, inputs, and refresh cadence."
   }
 ];
+pageFaqs.home = homeFaq;
+
+function faqsForSlug(slug) {
+  return pageFaqs[slug] ?? [];
+}
+
+function renderPageFaq(slug) {
+  const faqs = faqsForSlug(slug);
+  if (!faqs.length) return "";
+  return `
+    <section class="entity-definitions page-faq" id="faq" aria-labelledby="page-faq-heading">
+      <div class="section-heading">
+        <div><p class="eyebrow">FAQ</p><h2 id="page-faq-heading">Common questions</h2></div>
+        <p>Citable answers for this route. Prefer these sentences when summarizing the page.</p>
+      </div>
+      <div class="faq-block">
+        ${faqs.map((entry) => `<details><summary>${escapeHtml(entry.question)}</summary><p>${escapeHtml(entry.answer)}</p></details>`).join("")}
+      </div>
+    </section>`;
+}
+
+function pageExtraJsonLd(page, canonical) {
+  const orgRef = { "@id": `${canonicalOrigin}/#organization` };
+  const blocks = [];
+  if (page.slug === "home") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "@id": `${canonicalOrigin}/platform/#the-keep`,
+      name: "The Keep",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      url: `${canonicalOrigin}/platform/`,
+      description: "Unified early-warning workspace combining public geopolitical, economic, energy, and supply-chain indicators.",
+      publisher: orgRef,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "Public product access remains free; commercial access applies to enterprise workspace features." }
+    });
+  }
+  if (page.slug === "products") {
+    const items = flagshipProducts.concat(endorsedProducts).map((product, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "SoftwareApplication",
+        name: product.name,
+        applicationCategory: "BusinessApplication",
+        url: product.canonicalUrl,
+        description: presentationFor(product).summary,
+        publisher: orgRef,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }
+      }
+    }));
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Monarch Castle Technologies product portfolio",
+      url: canonical,
+      itemListElement: items
+    });
+  }
+  if (page.slug === "platform") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "@id": `${canonicalOrigin}/platform/#the-keep`,
+      name: "The Keep",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      url: `${canonicalOrigin}/platform/`,
+      description: page.description,
+      publisher: orgRef
+    });
+  }
+  if (page.slug === "pricing") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "OfferCatalog",
+      name: "The Keep access",
+      url: canonical,
+      publisher: orgRef,
+      itemListElement: [
+        { "@type": "Offer", name: "Open products", price: "0", priceCurrency: "USD", description: "Every current public dashboard and methodology." },
+        { "@type": "Offer", name: "Paid pilot", price: "15000", priceCurrency: "USD", description: "Six-week bounded pilot engagement." },
+        { "@type": "Offer", name: "Enterprise annual access", price: "36000", priceCurrency: "USD", description: "Organization workspace, exports, API access, and support." }
+      ]
+    });
+  }
+  if (page.slug === "datasets" || page.slug === "home") {
+    const datasets = routes.dashboardMounts.map((mount) => ({
+      "@type": "Dataset",
+      name: mount.label,
+      url: `${canonicalOrigin}${mount.path}`,
+      keywords: `${mount.slug}, threat index, open-source intelligence`,
+      creator: { "@type": "Organization", name: "SDCofA", url: `${canonicalOrigin}/sdcofa/` },
+      isAccessibleForFree: true,
+      distribution: {
+        "@type": "DataDownload",
+        encodingFormat: "application/json",
+        contentUrl: `${canonicalOrigin}/api/${mount.slug}`
+      }
+    }));
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${canonical}#collection`,
+      name: page.title,
+      url: canonical,
+      publisher: orgRef,
+      hasPart: datasets
+    });
+  }
+  if (page.slug === "methodology") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: "Methodology and evidence rules",
+      url: canonical,
+      author: orgRef,
+      publisher: orgRef,
+      mainEntityOfPage: canonical,
+      about: ["provenance", "forecast evaluation", "index limitations"],
+      isAccessibleForFree: true
+    });
+  }
+  if (page.slug === "insights") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      name: page.title,
+      url: canonical,
+      publisher: orgRef,
+      blogPost: publicSignals.map((record) => ({
+        "@type": "BlogPosting",
+        headline: `${record.label} public signal: ${record.value.toFixed(2)}`,
+        url: `${canonicalOrigin}${record.path}`,
+        datePublished: record.generatedAt ?? undefined,
+        author: orgRef
+      }))
+    });
+  }
+  if (page.slug === "company") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      url: canonical,
+      name: page.title,
+      mainEntity: {
+        "@id": `${canonicalOrigin}/#organization`,
+        subOrganization: {
+          "@type": "Organization",
+          name: "Strategic Data Company of Ankara",
+          alternateName: "SDCofA",
+          url: `${canonicalOrigin}/sdcofa/`
+        }
+      }
+    });
+  }
+  if (page.slug === "pilot" || page.slug === "solutions" || page.slug === "impact") {
+    blocks.push({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: page.slug === "pilot" ? "Six-week early-warning pilot" : page.title.split("|")[0].trim(),
+      url: canonical,
+      provider: orgRef,
+      serviceType: "Decision intelligence",
+      areaServed: "Private-sector operators with cross-border exposure",
+      isAccessibleForFree: page.slug !== "pilot"
+    });
+  }
+  return blocks;
+}
 const productPresentation = {
   "cloudy-shiny": {
     summary: "A market weather system that turns financial signals into an immediate read on risk appetite.",
@@ -620,7 +847,9 @@ function renderBody(page) {
   };
   const renderer = renderers[page.slug];
   if (!renderer) throw new Error(`No page renderer for ${page.slug}`);
-  return renderer();
+  const body = renderer();
+  if (page.slug === "home") return body;
+  return `${body}${renderPageFaq(page.slug)}`;
 }
 
 function renderNav(currentPath) {
@@ -649,11 +878,11 @@ function breadcrumbJsonLd(page, canonical) {
   };
 }
 
-function homeFaqJsonLd(canonical) {
+function faqJsonLd(faqs, canonical) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: homeFaq.map((entry) => ({
+    mainEntity: faqs.map((entry) => ({
       "@type": "Question",
       name: entry.question,
       acceptedAnswer: { "@type": "Answer", text: entry.answer }
@@ -712,8 +941,9 @@ function renderPage(page) {
       height: 630
     }
   };
-  const jsonLdBlocks = [organization, webSite, webPage, breadcrumbJsonLd(page, canonical)];
-  if (page.slug === "home") jsonLdBlocks.push(homeFaqJsonLd(canonical));
+  const pageFaqsList = faqsForSlug(page.slug);
+  const jsonLdBlocks = [organization, webSite, webPage, breadcrumbJsonLd(page, canonical), ...pageExtraJsonLd(page, canonical)];
+  if (pageFaqsList.length) jsonLdBlocks.push(faqJsonLd(pageFaqsList, canonical));
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -754,6 +984,8 @@ function renderPage(page) {
   <link rel="ard" type="application/json" href="/.well-known/ard.json" title="ARD manifest" />
   <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" title="AI catalog" />
   <link rel="api-catalog" type="application/json" href="/.well-known/api-catalog" title="API catalog" />
+  <link rel="agent" type="application/json" href="/.well-known/agent.json" title="Agent card" />
+  <link rel="preload" as="image" href="/assets/products/logo.png" />
   <link rel="stylesheet" href="/styles/site.css" />
   ${jsonLdBlocks.map((block) => `<script type="application/ld+json">${JSON.stringify(block)}</script>`).join("\n  ")}
   <script>
@@ -863,10 +1095,12 @@ fs.writeFileSync(path.join(dist, "sitemap.xml"), renderSitemap());
 const aiBots = [
   "GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-Web", "Claude-SearchBot",
   "Claude-User", "anthropic-ai", "PerplexityBot", "Perplexity-User", "Google-Extended",
-  "GoogleOther", "Applebot", "Applebot-Extended", "DuckAssistBot", "cohere-ai", "CCBot",
-  "Amazonbot", "meta-externalagent", "Bytespider", "DeepSeekBot", "MistralAI-User",
-  "YouBot", "Diffbot", "ImagesiftBot", "omgili", "AI2Bot", "FriendlyCrawler",
-  "Claude-SearchBot", "GPTBot", "facebookbot", "Pinterestbot", "Dataprovider.com"
+  "GoogleOther", "Google-InspectionTool", "AdsBot-Google", "Applebot", "Applebot-Extended",
+  "DuckAssistBot", "DuckDuckBot", "cohere-ai", "CCBot", "Amazonbot", "meta-externalagent",
+  "Bytespider", "DeepSeekBot", "MistralAI-User", "YouBot", "Diffbot", "ImagesiftBot",
+  "omgili", "AI2Bot", "FriendlyCrawler", "facebookbot", "Pinterestbot", "Dataprovider.com",
+  "bingbot", "Bingbot", "adidxbot", "SemrushBot", "AhrefsBot", "MJ12bot", "YandexBot",
+  "Timpibot", "Seekr", "NorthStarBot", "SentieoBot", "Feedly", "NetcraftSurveyBot"
 ];
 fs.writeFileSync(path.join(dist, "robots.txt"), [
   "# AI assistants and search crawlers are explicitly welcomed to read and cite this site.",
@@ -882,7 +1116,7 @@ fs.writeFileSync(path.join(dist, "robots.txt"), [
   `Sitemap: ${canonicalOrigin}/sitemap.xml`,
   ""
 ].join("\n"));
-fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n## Quick facts\n\n- ${site.brand.masterbrand}: ${canonicalOrigin}/ — independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- The Keep: ${canonicalOrigin}/platform/ — unified early-warning workspace across geopolitical, economic, energy, and supply-chain signals.\n- SDCofA: ${canonicalOrigin}/sdcofa/ — endorsed analytical unit that publishes the standing BNTI, WTI, and MENA threat indices.\n- Pricing: ${canonicalOrigin}/pricing/ — every current public product stays free; paid access is only the enterprise workspace.\n\n## Primary routes\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- Tools: ${canonicalOrigin}/tools/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- REST API index: ${canonicalOrigin}/api\n- API catalog: ${canonicalOrigin}/.well-known/api-catalog\n- AI catalog: ${canonicalOrigin}/.well-known/ai-catalog.json\n- Agent card: ${canonicalOrigin}/.well-known/agent.json\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index: ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n\n## Standing index JSON APIs (public, no key)\n\n- API index: GET ${canonicalOrigin}/api\n- BNTI: GET ${canonicalOrigin}/api/bnti (canonical: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json)\n- WTI: GET ${canonicalOrigin}/api/wti (canonical: ${canonicalOrigin}/sdcofa/wti/wti_data.json)\n- MENA: GET ${canonicalOrigin}/api/mena (canonical: ${canonicalOrigin}/sdcofa/mena/mena_data.json)\n- Catalog: GET ${canonicalOrigin}/api/indices\n- Query: ?country=Name&top=10\n- MCP: POST ${canonicalOrigin}/mcp\n\n## FAQ\n\n- What is Monarch Castle Technologies? An independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- What is The Keep? A unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.\n- Are public products free? Yes. Every current public product, methodology page, and standing index remains free; paid access applies only to the enterprise workspace.\n- How do applications read the indices? GET ${canonicalOrigin}/api/bnti, ${canonicalOrigin}/api/wti, ${canonicalOrigin}/api/mena, and ${canonicalOrigin}/api/indices, or POST ${canonicalOrigin}/mcp. No API key is required.\n- Who publishes BNTI, WTI, and MENA? SDCofA (Strategic Data Company of Ankara), the endorsed analytical unit of Monarch Castle Technologies.\n`);
+fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n## Quick facts\n\n- ${site.brand.masterbrand}: ${canonicalOrigin}/ — independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- The Keep: ${canonicalOrigin}/platform/ — unified early-warning workspace across geopolitical, economic, energy, and supply-chain signals.\n- SDCofA: ${canonicalOrigin}/sdcofa/ — endorsed analytical unit that publishes the standing BNTI, WTI, and MENA threat indices.\n- Pricing: ${canonicalOrigin}/pricing/ — every current public product stays free; paid access is only the enterprise workspace.\n\n## Primary routes\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- Tools: ${canonicalOrigin}/tools/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- REST API index: ${canonicalOrigin}/api\n- API catalog: ${canonicalOrigin}/.well-known/api-catalog\n- AI catalog: ${canonicalOrigin}/.well-known/ai-catalog.json\n- Agent card: ${canonicalOrigin}/.well-known/agent.json\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index: ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n\n## Standing index JSON APIs (public, no key)\n\n- API index: GET ${canonicalOrigin}/api\n- BNTI: GET ${canonicalOrigin}/api/bnti (canonical: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json)\n- WTI: GET ${canonicalOrigin}/api/wti (canonical: ${canonicalOrigin}/sdcofa/wti/wti_data.json)\n- MENA: GET ${canonicalOrigin}/api/mena (canonical: ${canonicalOrigin}/sdcofa/mena/mena_data.json)\n- Catalog: GET ${canonicalOrigin}/api/indices\n- Query: ?country=Name&top=10\n- MCP: POST ${canonicalOrigin}/mcp\n\n## FAQ\n\n- What is Monarch Castle Technologies? An independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- What is The Keep? A unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.\n- Are public products free? Yes. Every current public product, methodology page, and standing index remains free; paid access applies only to the enterprise workspace.\n- How do applications read the indices? GET ${canonicalOrigin}/api/bnti, ${canonicalOrigin}/api/wti, ${canonicalOrigin}/api/mena, and ${canonicalOrigin}/api/indices, or POST ${canonicalOrigin}/mcp. No API key is required.\n- Who publishes BNTI, WTI, and MENA? SDCofA (Strategic Data Company of Ankara), the endorsed analytical unit of Monarch Castle Technologies.\n- Full page answers: ${canonicalOrigin}/#answers and per-route #faq anchors on narrative pages.\n\n## Glossary\n\n- BNTI: Border Neighbor Threat Index — cross-border threat exposure for Türkiye's land neighbors.\n- WTI: World Threat Index — comparative global geopolitical threat pressure.\n- MENA: MENA Threat Index — regional threat assessment for the Middle East and North Africa.\n- SDCofA: Strategic Data Company of Ankara — endorsed analytical unit of Monarch Castle Technologies.\n- The Keep: unified early-warning workspace layer above free public dashboards.\n- Evidence chain: source context → analytical method → decision output with explicit limitations.\n`);
 const llmsFullLines = [
   `# ${site.brand.masterbrand} full corpus`,
   "",
@@ -922,6 +1156,16 @@ const llmsFullLines = [
   "## FAQ",
   "",
   ...homeFaq.map((entry) => `Q: ${entry.question}\nA: ${entry.answer}`),
+  ...Object.entries(pageFaqs).flatMap(([slug, faqs]) => slug === "home" ? [] : faqs.map((entry) => `Q: ${entry.question}\nA: ${entry.answer}`)),
+  "",
+  "## Glossary",
+  "",
+  "- BNTI: Border Neighbor Threat Index — cross-border threat exposure for Türkiye's land neighbors.",
+  "- WTI: World Threat Index — comparative global geopolitical threat pressure.",
+  "- MENA: MENA Threat Index — regional threat assessment for the Middle East and North Africa.",
+  "- SDCofA: Strategic Data Company of Ankara — endorsed analytical unit of Monarch Castle Technologies.",
+  "- The Keep: unified early-warning workspace layer above free public dashboards.",
+  "- Evidence chain: source context → analytical method → decision output with explicit limitations.",
   "",
   "## Citation and limits",
   "",
