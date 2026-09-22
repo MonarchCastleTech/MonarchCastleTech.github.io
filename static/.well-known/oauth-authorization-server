@@ -6,5 +6,18 @@
   "grant_types_supported": [],
   "response_types_supported": [],
   "scopes_supported": [],
-  "documentation_uri": "https://monarchcastle.com/auth.md"
+  "documentation_uri": "https://monarchcastle.com/auth.md",
+  "agent_auth": {
+    "skill": "https://monarchcastle.com/auth.md",
+    "register_uri": "https://monarchcastle.com/auth.md",
+    "registration_method": "anonymous",
+    "registration_methods": ["anonymous"],
+    "identity_types_supported": ["anonymous"],
+    "anonymous": {
+      "credential_types_supported": [],
+      "claim_uri": "https://monarchcastle.com/auth.md"
+    },
+    "revocation_uri": "https://monarchcastle.com/auth.md",
+    "authorization_servers": ["https://monarchcastle.com"]
+  }
 }

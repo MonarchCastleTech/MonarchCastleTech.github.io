@@ -18,12 +18,14 @@
     {
       "protocol": "agent-to-agent",
       "version": "0.3.0",
+      "url": "https://monarchcastle.com/",
       "endpoint": "https://monarchcastle.com/",
       "transport": "https"
     },
     {
       "protocol": "mcp",
       "version": "2025-06-18",
+      "url": "https://monarchcastle.com/mcp",
       "endpoint": "https://monarchcastle.com/mcp",
       "transport": "streamable-http"
     }

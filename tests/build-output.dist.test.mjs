@@ -52,6 +52,11 @@ test("agent discovery surfaces are published for OAuth and A2A scanners", () => 
   assert.ok(Array.isArray(oauthAs.grant_types_supported));
   assert.ok(oauthAs.token_endpoint);
   assert.ok(oauthAs.jwks_uri);
+  assert.ok(oauthAs.agent_auth && typeof oauthAs.agent_auth === "object");
+  assert.equal(oauthAs.agent_auth.skill, "https://monarchcastle.com/auth.md");
+  assert.equal(oauthAs.agent_auth.register_uri, "https://monarchcastle.com/auth.md");
+  assert.ok(Array.isArray(oauthAs.agent_auth.identity_types_supported) && oauthAs.agent_auth.identity_types_supported.length > 0);
+  assert.ok(oauthAs.agent_auth.anonymous && Array.isArray(oauthAs.agent_auth.anonymous.credential_types_supported));
   const prm = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "oauth-protected-resource"), "utf8"));
   assert.deepEqual(prm.authorization_servers, ["https://monarchcastle.com"]);
   assert.ok(Array.isArray(prm.scopes_supported) && prm.scopes_supported.length > 0);
@@ -62,6 +67,10 @@ test("agent discovery surfaces are published for OAuth and A2A scanners", () => 
   assert.ok(card.provider.organizationName);
   assert.ok(card.version);
   assert.ok(Array.isArray(card.supportedInterfaces) && card.supportedInterfaces.length > 0);
+  for (const iface of card.supportedInterfaces) {
+    assert.ok(typeof iface.url === "string" && iface.url.startsWith("https://"), `interface url present: ${iface.protocol}`);
+    assert.ok(iface.transport, `interface transport present: ${iface.protocol}`);
+  }
 });
 
 test("root homepage follows the governed shell and links to canonical dashboard paths", () => {
