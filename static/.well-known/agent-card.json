@@ -1,0 +1,29 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "monarchcastle.com",
+  "description": "Public agent surface for Monarch Castle Technologies: standing indices (BNTI, WTI, MENA), product pages, and methodology.",
+  "url": "https://monarchcastle.com/",
+  "provider": {
+    "organizationId": "monarchcastle",
+    "organizationName": "Monarch Castle Technologies",
+    "url": "https://monarchcastle.com/"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "skills": [
+    {
+      "id": "site-navigation",
+      "name": "monarchcastle-site",
+      "description": "Navigate and cite monarchcastle.com pages and standing indices.",
+      "url": "https://monarchcastle.com/.well-known/agent-skills/monarchcastle-site/SKILL.md",
+      "tags": ["navigation", "citation"]
+    }
+  ],
+  "defaultInputModes": ["text"],
+  "defaultOutputModes": ["text"],
+  "documentationUrl": "https://monarchcastle.com/llms.txt",
+  "supportsAuthenticatedExtendedCard": false
+}

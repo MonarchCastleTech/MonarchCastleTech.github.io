@@ -24,16 +24,29 @@
     </header>
     <main>
       <section class="hero compact">
-        <p class="eyebrow">MCP-ready distribution</p>
-        <h1>Tool packs that agents can discover before servers exist.</h1>
-        <p>Static catalog records and starter server specifications for Monarch Castle tools.</p>
+        <p class="eyebrow">MCP server</p>
+        <h1>Standing indices over streamable HTTP.</h1>
+        <p>Connect an MCP client to <code>https://monarchcastle.com/mcp</code> to read BNTI, WTI, and MENA snapshots without scraping HTML.</p>
       </section>
       <section class="section">
         <div class="product-grid">
-          <article><h3><code>mct.risk_calculators</code></h3><p>Catalog record for the browser-only calculator bench used in repeatable risk scoring workflows.</p></article>
-          <article><h3><code>mct.sdcofa_almanac_bridge</code></h3><p>Static connector surface for SDCofA datasets, route metadata, and publication-ready intelligence snapshots.</p></article>
-          <article><h3><code>mct.static_publisher</code></h3><p>Publishable static distribution seed for dashboards, reports, and agent-facing tool records.</p></article>
+          <article><h3><code>get_bnti</code></h3><p>Border Neighbor Threat Index snapshot: meta status, country scores, and latest events.</p></article>
+          <article><h3><code>get_index</code></h3><p>Any standing index by slug: <code>bnti</code>, <code>wti</code>, <code>mena</code>. Optional country filter and top-N ranking.</p></article>
+          <article><h3><code>list_indices</code></h3><p>Enumerate available indices with dashboard URLs and latest top-level status.</p></article>
+          <article><h3><code>get_site_page</code></h3><p>Fetch a canonical monarchcastle.com page as plain text for citation.</p></article>
         </div>
+      </section>
+      <section class="section">
+        <h2>Connect</h2>
+        <pre><code>{
+  "mcpServers": {
+    "monarchcastle": {
+      "url": "https://monarchcastle.com/mcp",
+      "transport": "streamable-http"
+    }
+  }
+}</code></pre>
+        <p>Server card: <a href="/.well-known/mcp/server-card.json"><code>/.well-known/mcp/server-card.json</code></a> · Auth policy: <a href="/auth.md"><code>/auth.md</code></a></p>
       </section>
     </main>
     <footer>

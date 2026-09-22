@@ -1,17 +1,25 @@
 {
   "serverInfo": {
     "name": "monarchcastle.com",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "description": "Streamable HTTP MCP server for Mon Castle standing indices (BNTI, WTI, MENA) and canonical site pages."
   },
   "transport": {
     "type": "streamable-http",
     "endpoint": "https://monarchcastle.com/mcp"
   },
   "endpoint": "https://monarchcastle.com/mcp",
+  "protocolVersion": "2025-06-18",
   "capabilities": {
     "tools": { "listChanged": false },
     "resources": {},
     "prompts": {}
   },
+  "tools": [
+    { "name": "get_index", "description": "Fetch bnti, wti, or mena index snapshot" },
+    { "name": "get_bnti", "description": "Fetch Border Neighbor Threat Index snapshot" },
+    { "name": "list_indices", "description": "List available standing indices" },
+    { "name": "get_site_page", "description": "Fetch a canonical monarchcastle.com page as text" }
+  ],
   "documentation_url": "https://monarchcastle.com/llms.txt"
 }

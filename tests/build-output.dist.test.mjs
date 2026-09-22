@@ -43,9 +43,28 @@ test("build output includes full dashboard subpaths under SDCofA", () => {
   }
 });
 
+test("agent discovery surfaces are published for OAuth and A2A scanners", () => {
+  const authMd = fs.readFileSync(path.join(dist, "auth.md"), "utf8");
+  assert.match(authMd, /^# auth\.md/m);
+  assert.match(authMd, /agent_auth:/);
+  const oauthAs = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "oauth-authorization-server"), "utf8"));
+  assert.equal(oauthAs.issuer, "https://monarchcastle.com");
+  assert.ok(Array.isArray(oauthAs.grant_types_supported));
+  assert.ok(oauthAs.token_endpoint);
+  assert.ok(oauthAs.jwks_uri);
+  const prm = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "oauth-protected-resource"), "utf8"));
+  assert.deepEqual(prm.authorization_servers, ["https://monarchcastle.com"]);
+  assert.equal(prm.resource_documentation, "https://monarchcastle.com/auth.md");
+  assert.ok(fs.existsSync(path.join(dist, ".well-known", "jwks.json")));
+  const card = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "agent-card.json"), "utf8"));
+  assert.equal(card.url, "https://monarchcastle.com/");
+  assert.ok(card.provider.organizationName);
+});
+
 test("root homepage follows the governed shell and links to canonical dashboard paths", () => {
   const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
   assert.match(html, /href="\/sdcofa\/bnti\/"/);
+
   assert.match(html, /href="\/sdcofa\/wti\/"/);
   assert.match(html, /href="\/sdcofa\/mena\/"/);
   assert.match(html, /href="\/styles\/site\.css"/);

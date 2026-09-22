@@ -1,0 +1,10 @@
+{
+  "issuer": "https://monarchcastle.com",
+  "authorization_endpoint": "https://monarchcastle.com/oauth/authorize",
+  "token_endpoint": "https://monarchcastle.com/oauth/token",
+  "jwks_uri": "https://monarchcastle.com/.well-known/jwks.json",
+  "grant_types_supported": [],
+  "response_types_supported": [],
+  "scopes_supported": [],
+  "documentation_uri": "https://monarchcastle.com/auth.md"
+}
