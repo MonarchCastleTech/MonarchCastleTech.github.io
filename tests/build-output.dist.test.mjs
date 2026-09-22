@@ -55,8 +55,10 @@ test("agent discovery surfaces are published for OAuth and A2A scanners", () => 
   assert.ok(oauthAs.agent_auth && typeof oauthAs.agent_auth === "object");
   assert.equal(oauthAs.agent_auth.skill, "https://monarchcastle.com/auth.md");
   assert.equal(oauthAs.agent_auth.register_uri, "https://monarchcastle.com/auth.md");
+  assert.equal(oauthAs.agent_auth.claim_uri, "https://monarchcastle.com/auth.md");
   assert.ok(Array.isArray(oauthAs.agent_auth.identity_types_supported) && oauthAs.agent_auth.identity_types_supported.length > 0);
-  assert.ok(oauthAs.agent_auth.anonymous && Array.isArray(oauthAs.agent_auth.anonymous.credential_types_supported));
+  assert.ok(oauthAs.agent_auth.anonymous && Array.isArray(oauthAs.agent_auth.anonymous.credential_types_supported) && oauthAs.agent_auth.anonymous.credential_types_supported.length > 0);
+  assert.equal(oauthAs.agent_auth.anonymous.claim_uri, "https://monarchcastle.com/auth.md");
   const prm = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "oauth-protected-resource"), "utf8"));
   assert.deepEqual(prm.authorization_servers, ["https://monarchcastle.com"]);
   assert.ok(Array.isArray(prm.scopes_supported) && prm.scopes_supported.length > 0);

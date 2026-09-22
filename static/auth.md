@@ -9,12 +9,14 @@ Agent registration is open and automatic. No register_uri call, API key, or invi
 
 ```yaml
 agent_auth:
-  skill: https://monarchcastle.com/.well-known/agent-skills/monarchcastle-site/SKILL.md
+  skill: https://monarchcastle.com/auth.md
   register_uri: "https://monarchcastle.com/auth.md"
+  claim_uri: "https://monarchcastle.com/auth.md"
   registration_method: anonymous
   identity_types_supported: [anonymous]
+  credential_types_supported: [none]
   anonymous:
-    credential_types_supported: []
+    credential_types_supported: [none]
     claim_uri: "https://monarchcastle.com/auth.md"
   revocation_uri: "https://monarchcastle.com/auth.md"
   authorization_servers: ["https://monarchcastle.com"]

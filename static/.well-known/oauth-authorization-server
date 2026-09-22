@@ -10,11 +10,13 @@
   "agent_auth": {
     "skill": "https://monarchcastle.com/auth.md",
     "register_uri": "https://monarchcastle.com/auth.md",
+    "claim_uri": "https://monarchcastle.com/auth.md",
     "registration_method": "anonymous",
     "registration_methods": ["anonymous"],
     "identity_types_supported": ["anonymous"],
+    "credential_types_supported": ["none"],
     "anonymous": {
-      "credential_types_supported": [],
+      "credential_types_supported": ["none"],
       "claim_uri": "https://monarchcastle.com/auth.md"
     },
     "revocation_uri": "https://monarchcastle.com/auth.md",
