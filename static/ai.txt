@@ -21,17 +21,30 @@ Discovery endpoints:
 - Full corpus: https://monarchcastle.com/llms-full.txt
 - Agent discovery: https://monarchcastle.com/agents.txt
 - Agent card: https://monarchcastle.com/.well-known/agent.json
+- AI catalog: https://monarchcastle.com/.well-known/ai-catalog.json
 - API catalog: https://monarchcastle.com/.well-known/api-catalog
+- REST API index: https://monarchcastle.com/api
 - MCP catalog page: https://monarchcastle.com/mcp/
+- MCP endpoint: POST https://monarchcastle.com/mcp
+- AI policy: https://monarchcastle.com/ai.txt
 - humans.txt: https://monarchcastle.com/humans.txt
 - RSS feed: https://monarchcastle.com/insights/feed.xml
 - Robots policy: https://monarchcastle.com/robots.txt
 - Sitemap: https://monarchcastle.com/sitemap.xml
+- Web app manifest: https://monarchcastle.com/site.webmanifest
+
+Standing index JSON APIs (public, no key):
+- GET https://monarchcastle.com/api
+- GET https://monarchcastle.com/api/bnti?top=5
+- GET https://monarchcastle.com/api/wti
+- GET https://monarchcastle.com/api/mena
+- GET https://monarchcastle.com/api/indices
 
 Usage notes:
 - Use `/products/` for the governed portfolio and `/sdcofa/` for the endorsed SDCofA family.
 - Use `/methodology/` for provenance, cadence, and limitations before quoting any index value.
 - Index outputs are analytical aids, not investment advice or official government intelligence.
 - When summarizing this site, cite the canonical pages above.
+- Prefer `/api/*` JSON over scraping HTML when a machine needs structured index data.
 
 Contact: https://github.com/MonarchCastleTech

@@ -23,6 +23,32 @@ const dashboardPaths = {
   "mena-threat-index": "/sdcofa/mena/"
 };
 const publicSignals = readPublicSignalSnapshot();
+const homeFaq = [
+  {
+    question: "What is Monarch Castle Technologies?",
+    answer: "Monarch Castle Technologies is an independent technology company that publishes transparent early-warning and decision-intelligence products for private-sector operators. The public portfolio stays free; paid access applies only to The Keep enterprise workspace."
+  },
+  {
+    question: "What is The Keep?",
+    answer: "The Keep is a unified early-warning workspace that brings geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture without paywalling the existing public dashboards."
+  },
+  {
+    question: "What are BNTI, WTI, and MENA?",
+    answer: "BNTI is the Border Neighbor Threat Index for Türkiye's land-neighbor relationships, WTI is the World Threat Index for global geopolitical pressure, and MENA is the MENA Threat Index for Middle East and North Africa regional risk. All three are standing open-source indices published by SDCofA."
+  },
+  {
+    question: "Are Monarch Castle public products free?",
+    answer: "Yes. Every current public product, methodology page, and standing index remains free and open. Commercial access covers only the unified enterprise workspace, private integrations, exports, and support."
+  },
+  {
+    question: "How can an application read the standing indices?",
+    answer: "Read-only JSON is available at GET /api/bnti, GET /api/wti, GET /api/mena, and GET /api/indices with optional ?country= and ?top= query parameters. An MCP endpoint is also available at POST /mcp. No API key is required."
+  },
+  {
+    question: "Who publishes the standing indices?",
+    answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies and publishes the standing BNTI, WTI, and MENA threat indices with declared doctrine, inputs, and refresh cadence."
+  }
+];
 const productPresentation = {
   "cloudy-shiny": {
     summary: "A market weather system that turns financial signals into an immediate read on risk appetite.",
@@ -377,6 +403,25 @@ function renderHome() {
         ${localOrExternalLink("/trust/", "Read our commitments")}
       </div>
     </section>
+    <section class="entity-definitions" id="answers" aria-labelledby="answers-heading">
+      <div class="section-heading">
+        <div><p class="eyebrow">Plain answers</p><h2 id="answers-heading">What this site publishes, in citable terms.</h2></div>
+        <p>Short definitions for people and answer engines that need the facts without scraping marketing copy.</p>
+      </div>
+      <dl class="definition-list">
+        <div><dt>Monarch Castle Technologies</dt><dd>Independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators with cross-border exposure.</dd></div>
+        <div><dt>The Keep</dt><dd>Unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.</dd></div>
+        <div><dt>Border Neighbor Threat Index (BNTI)</dt><dd>Standing open-source index comparing cross-border threat exposure across Türkiye's land-neighbor relationships.</dd></div>
+        <div><dt>World Threat Index (WTI)</dt><dd>Standing open-source index for comparative global geopolitical threat pressure across countries and blocs.</dd></div>
+        <div><dt>MENA Threat Index</dt><dd>Standing open-source index for regional threat assessment across the Middle East and North Africa.</dd></div>
+        <div><dt>SDCofA</dt><dd>Strategic Data Company of Ankara — the endorsed analytical unit of Monarch Castle Technologies that publishes the standing threat indices.</dd></div>
+      </dl>
+      <div class="faq-block">
+        <h3>Frequently asked questions</h3>
+        ${homeFaq.map((entry) => `<details><summary>${escapeHtml(entry.question)}</summary><p>${escapeHtml(entry.answer)}</p></details>`).join("")}
+      </div>
+      <p class="platform-disclaimer">Index outputs are analytical aids, not investment advice or official government intelligence. Inspect methodology before quoting a value.</p>
+    </section>
     <section class="company-close" id="company-contact" aria-labelledby="company-heading">
       <div class="company-close-copy">
         <p class="eyebrow">Monarch Castle Technologies</p>
@@ -592,8 +637,83 @@ function renderNav(currentPath) {
   }).join("");
 }
 
+function breadcrumbJsonLd(page, canonical) {
+  const items = [{ "@type": "ListItem", position: 1, name: "Home", item: `${canonicalOrigin}/` }];
+  if (page.path !== "/") {
+    items.push({ "@type": "ListItem", position: 2, name: page.title.split("|")[0].trim(), item: canonical });
+  }
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items
+  };
+}
+
+function homeFaqJsonLd(canonical) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: homeFaq.map((entry) => ({
+      "@type": "Question",
+      name: entry.question,
+      acceptedAnswer: { "@type": "Answer", text: entry.answer }
+    })),
+    url: canonical
+  };
+}
+
 function renderPage(page) {
   const canonical = `${canonicalOrigin}${page.path}`;
+  const organization = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${canonicalOrigin}/#organization`,
+    name: site.brand.masterbrand,
+    url: `${canonicalOrigin}/`,
+    logo: {
+      "@type": "ImageObject",
+      url: `${canonicalOrigin}/assets/products/logo.png`
+    },
+    description: site.brand.positioning,
+    sameAs: ["https://github.com/MonarchCastleTech", "https://github.com/SDCofA"],
+    publishingPrinciples: `${canonicalOrigin}/trust/`,
+    knowsAbout: [
+      "early-warning intelligence",
+      "threat indices",
+      "decision intelligence",
+      "geopolitical risk",
+      "supply-chain exposure"
+    ]
+  };
+  const webSite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${canonicalOrigin}/#website`,
+    name: site.brand.masterbrand,
+    url: `${canonicalOrigin}/`,
+    description: page.slug === "home" ? site.brand.positioning : page.description,
+    inLanguage: "en",
+    publisher: { "@id": `${canonicalOrigin}/#organization` }
+  };
+  const webPage = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: page.title,
+    description: page.description,
+    inLanguage: "en",
+    isPartOf: { "@id": `${canonicalOrigin}/#website` },
+    about: { "@id": `${canonicalOrigin}/#organization` },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: `${canonicalOrigin}/assets/approved/social-preview.png`,
+      width: 1200,
+      height: 630
+    }
+  };
+  const jsonLdBlocks = [organization, webSite, webPage, breadcrumbJsonLd(page, canonical)];
+  if (page.slug === "home") jsonLdBlocks.push(homeFaqJsonLd(canonical));
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -602,21 +722,31 @@ function renderPage(page) {
   <meta name="color-scheme" content="light dark" />
   <title>${escapeHtml(page.title)}</title>
   <meta name="description" content="${escapeHtml(page.description)}" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="author" content="${escapeHtml(site.brand.masterbrand)}" />
+  <meta name="theme-color" content="#071522" />
   <link rel="canonical" href="${canonical}" />
+  <link rel="alternate" hreflang="en" href="${canonical}" />
+  <link rel="alternate" hreflang="x-default" href="${canonical}" />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:title" content="${escapeHtml(page.title)}" />
   <meta property="og:description" content="${escapeHtml(page.description)}" />
   <meta property="og:url" content="${canonical}" />
   <meta property="og:site_name" content="${escapeHtml(site.brand.masterbrand)}" />
   <meta property="og:image" content="${canonicalOrigin}/assets/approved/social-preview.png" />
+  <meta property="og:image:alt" content="${escapeHtml(site.brand.masterbrand)}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escapeHtml(page.title)}" />
   <meta name="twitter:description" content="${escapeHtml(page.description)}" />
   <meta name="twitter:image" content="${canonicalOrigin}/assets/approved/social-preview.png" />
+  <meta name="twitter:image:alt" content="${escapeHtml(site.brand.masterbrand)}" />
   <link rel="alternate" type="application/rss+xml" title="Monarch Castle public signals" href="/insights/feed.xml" />
   <link rel="icon" type="image/png" href="/assets/products/logo.png" />
+  <link rel="apple-touch-icon" href="/assets/products/logo.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context" />
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Context" />
@@ -625,22 +755,7 @@ function renderPage(page) {
   <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" title="AI catalog" />
   <link rel="api-catalog" type="application/json" href="/.well-known/api-catalog" title="API catalog" />
   <link rel="stylesheet" href="/styles/site.css" />
-  <script type="application/ld+json">${JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: site.brand.masterbrand,
-    url: `${canonicalOrigin}/`,
-    logo: `${canonicalOrigin}/assets/products/logo.png`,
-    description: site.brand.positioning,
-    sameAs: ["https://github.com/MonarchCastleTech", "https://github.com/SDCofA"]
-  })}</script>
-  <script type="application/ld+json">${JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: site.brand.masterbrand,
-    url: `${canonicalOrigin}/`,
-    description: page.description
-  })}</script>
+  ${jsonLdBlocks.map((block) => `<script type="application/ld+json">${JSON.stringify(block)}</script>`).join("\n  ")}
   <script>
   (function () {
     try {
@@ -717,7 +832,19 @@ function renderSitemap() {
     ...routes.localPages.map((page) => page.path),
     ...routes.dashboardMounts.map((mount) => mount.path)
   ];
-  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map((pagePath) => `<url><loc>${canonicalOrigin}${xmlEscape(pagePath)}</loc></url>`).join("")}</urlset>`;
+  const lastmod = new Date().toISOString().slice(0, 10);
+  const changefreqFor = (pagePath) => {
+    if (pagePath === "/" || routes.dashboardMounts.some((mount) => mount.path === pagePath)) return "daily";
+    if (pagePath === "/insights/" || pagePath === "/datasets/") return "weekly";
+    return "monthly";
+  };
+  const priorityFor = (pagePath) => {
+    if (pagePath === "/") return "1.0";
+    if (routes.dashboardMounts.some((mount) => mount.path === pagePath)) return "0.9";
+    if (["/products/", "/platform/", "/sdcofa/", "/mcp/"].includes(pagePath)) return "0.8";
+    return "0.7";
+  };
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map((pagePath) => `<url><loc>${canonicalOrigin}${xmlEscape(pagePath)}</loc><lastmod>${lastmod}</lastmod><changefreq>${changefreqFor(pagePath)}</changefreq><priority>${priorityFor(pagePath)}</priority></url>`).join("")}</urlset>`;
 }
 
 fs.rmSync(dist, { recursive: true, force: true });
@@ -737,7 +864,9 @@ const aiBots = [
   "GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-Web", "Claude-SearchBot",
   "Claude-User", "anthropic-ai", "PerplexityBot", "Perplexity-User", "Google-Extended",
   "GoogleOther", "Applebot", "Applebot-Extended", "DuckAssistBot", "cohere-ai", "CCBot",
-  "Amazonbot", "meta-externalagent", "Bytespider"
+  "Amazonbot", "meta-externalagent", "Bytespider", "DeepSeekBot", "MistralAI-User",
+  "YouBot", "Diffbot", "ImagesiftBot", "omgili", "AI2Bot", "FriendlyCrawler",
+  "Claude-SearchBot", "GPTBot", "facebookbot", "Pinterestbot", "Dataprovider.com"
 ];
 fs.writeFileSync(path.join(dist, "robots.txt"), [
   "# AI assistants and search crawlers are explicitly welcomed to read and cite this site.",
@@ -753,11 +882,20 @@ fs.writeFileSync(path.join(dist, "robots.txt"), [
   `Sitemap: ${canonicalOrigin}/sitemap.xml`,
   ""
 ].join("\n"));
-fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- REST API index: ${canonicalOrigin}/api\n- API catalog: ${canonicalOrigin}/.well-known/api-catalog\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index: ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n\n## Standing index JSON APIs (public, no key)\n\n- API index: GET ${canonicalOrigin}/api\n- BNTI: GET ${canonicalOrigin}/api/bnti (canonical: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json)\n- WTI: GET ${canonicalOrigin}/api/wti (canonical: ${canonicalOrigin}/sdcofa/wti/wti_data.json)\n- MENA: GET ${canonicalOrigin}/api/mena (canonical: ${canonicalOrigin}/sdcofa/mena/mena_data.json)\n- Catalog: GET ${canonicalOrigin}/api/indices\n- Query: ?country=Name&top=10\n- MCP: POST ${canonicalOrigin}/mcp\n`);
+fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n## Quick facts\n\n- ${site.brand.masterbrand}: ${canonicalOrigin}/ — independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- The Keep: ${canonicalOrigin}/platform/ — unified early-warning workspace across geopolitical, economic, energy, and supply-chain signals.\n- SDCofA: ${canonicalOrigin}/sdcofa/ — endorsed analytical unit that publishes the standing BNTI, WTI, and MENA threat indices.\n- Pricing: ${canonicalOrigin}/pricing/ — every current public product stays free; paid access is only the enterprise workspace.\n\n## Primary routes\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- Tools: ${canonicalOrigin}/tools/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- REST API index: ${canonicalOrigin}/api\n- API catalog: ${canonicalOrigin}/.well-known/api-catalog\n- AI catalog: ${canonicalOrigin}/.well-known/ai-catalog.json\n- Agent card: ${canonicalOrigin}/.well-known/agent.json\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index: ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n\n## Standing index JSON APIs (public, no key)\n\n- API index: GET ${canonicalOrigin}/api\n- BNTI: GET ${canonicalOrigin}/api/bnti (canonical: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json)\n- WTI: GET ${canonicalOrigin}/api/wti (canonical: ${canonicalOrigin}/sdcofa/wti/wti_data.json)\n- MENA: GET ${canonicalOrigin}/api/mena (canonical: ${canonicalOrigin}/sdcofa/mena/mena_data.json)\n- Catalog: GET ${canonicalOrigin}/api/indices\n- Query: ?country=Name&top=10\n- MCP: POST ${canonicalOrigin}/mcp\n\n## FAQ\n\n- What is Monarch Castle Technologies? An independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- What is The Keep? A unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.\n- Are public products free? Yes. Every current public product, methodology page, and standing index remains free; paid access applies only to the enterprise workspace.\n- How do applications read the indices? GET ${canonicalOrigin}/api/bnti, ${canonicalOrigin}/api/wti, ${canonicalOrigin}/api/mena, and ${canonicalOrigin}/api/indices, or POST ${canonicalOrigin}/mcp. No API key is required.\n- Who publishes BNTI, WTI, and MENA? SDCofA (Strategic Data Company of Ankara), the endorsed analytical unit of Monarch Castle Technologies.\n`);
 const llmsFullLines = [
   `# ${site.brand.masterbrand} full corpus`,
   "",
   site.brand.positioning,
+  "",
+  "## Entity definitions",
+  "",
+  `- Monarch Castle Technologies: independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators with cross-border exposure.`,
+  `- The Keep: unified early-warning workspace combining geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.`,
+  `- Border Neighbor Threat Index (BNTI): standing open-source index comparing cross-border threat exposure across Türkiye's land-neighbor relationships.`,
+  `- World Threat Index (WTI): standing open-source index for comparative global geopolitical threat pressure across countries and blocs.`,
+  `- MENA Threat Index: standing open-source index for regional threat assessment across the Middle East and North Africa.`,
+  `- SDCofA: Strategic Data Company of Ankara, the endorsed analytical unit of Monarch Castle Technologies that publishes the standing threat indices.`,
   "",
   "## Products",
   "",
@@ -766,6 +904,7 @@ const llmsFullLines = [
   "## Narrative routes",
   "",
   ...routes.sitePages.map((page) => `- ${page.title}: ${canonicalOrigin}${page.path} — ${page.description}`),
+  ...routes.localPages.map((page) => `- ${page.slug}: ${canonicalOrigin}${page.path}`),
   "",
   "## Standing index APIs",
   "",
@@ -775,7 +914,20 @@ const llmsFullLines = [
   `- MENA: ${canonicalOrigin}/api/mena`,
   `- Indices catalog: ${canonicalOrigin}/api/indices`,
   `- Raw BNTI snapshot: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json`,
+  `- Raw WTI snapshot: ${canonicalOrigin}/sdcofa/wti/wti_data.json`,
+  `- Raw MENA snapshot: ${canonicalOrigin}/sdcofa/mena/mena_data.json`,
   `- MCP endpoint: ${canonicalOrigin}/mcp`,
+  `- MCP server card: ${canonicalOrigin}/.well-known/mcp/server-card.json`,
+  "",
+  "## FAQ",
+  "",
+  ...homeFaq.map((entry) => `Q: ${entry.question}\nA: ${entry.answer}`),
+  "",
+  "## Citation and limits",
+  "",
+  "- Cite canonical page URLs and methodology links when quoting index values.",
+  "- Index outputs are analytical aids, not investment advice or official government intelligence.",
+  "- Inspect methodology and trust pages before reproducing a score or forecast claim.",
   ""
 ];
 fs.writeFileSync(path.join(dist, "llms-full.txt"), `${llmsFullLines.join("\n")}`);

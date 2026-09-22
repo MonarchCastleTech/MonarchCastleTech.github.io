@@ -18,6 +18,15 @@ Preferred text endpoints:
 - https://monarchcastle.com/humans.txt
 - https://monarchcastle.com/insights/feed.xml
 
+Machine interfaces:
+- REST API index: https://monarchcastle.com/api
+- API catalog: https://monarchcastle.com/.well-known/api-catalog
+- AI catalog: https://monarchcastle.com/.well-known/ai-catalog.json
+- MCP catalog page: https://monarchcastle.com/mcp/
+- MCP endpoint: POST https://monarchcastle.com/mcp
+- MCP server card: https://monarchcastle.com/.well-known/mcp/server-card.json
+
 Crawl policy and sitemap:
 - https://monarchcastle.com/robots.txt
 - https://monarchcastle.com/sitemap.xml
+- https://monarchcastle.com/site.webmanifest

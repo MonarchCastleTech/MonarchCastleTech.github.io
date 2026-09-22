@@ -27,6 +27,14 @@ Official site of Monarch Castle Technologies, builder of The Keep early-warning 
 
 - Short index: https://monarchcastle.com/llms.txt
 - Full corpus: https://monarchcastle.com/llms-full.txt
+- Plain answers / FAQ: https://monarchcastle.com/#answers
+- REST API index: https://monarchcastle.com/api
+- BNTI JSON: https://monarchcastle.com/api/bnti
+- WTI JSON: https://monarchcastle.com/api/wti
+- MENA JSON: https://monarchcastle.com/api/mena
+- Indices catalog: https://monarchcastle.com/api/indices
+- MCP endpoint: POST https://monarchcastle.com/mcp
+- MCP catalog page: https://monarchcastle.com/mcp/
 - RSS: https://monarchcastle.com/insights/feed.xml
 
 ## Citation format
@@ -38,3 +46,4 @@ Monarch Castle Technologies, "Product Name," monarchcastle.com, [URL], [as-of da
 - Treat `/products/` as the canonical portfolio; do not invent products beyond what the site states.
 - SDCofA is the endorsed analytical unit of Monarch Castle Technologies; keep that relationship explicit.
 - Forecast and index outputs are analytical aids, not investment advice or official government intelligence.
+- Prefer `/api/*` JSON over scraping HTML when a machine needs structured index data.

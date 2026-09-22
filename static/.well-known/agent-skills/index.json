@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Navigate and cite monarchcastle.com — the public site of Monarch Castle Technologies with The Keep platform, the product portfolio, and the endorsed SDCofA standing indices (BNTI, WTI, MENA). Use when asked what Monarch Castle publishes, where a threat index lives, or how to cite a product.",
       "url": "/.well-known/agent-skills/monarchcastle-site/SKILL.md",
-      "digest": "sha256:a2d1802c35f424b8bbecd47e7ccb4a16c57a8fd8a0ff7dc440d214ff0eca71e1"
+      "digest": "sha256:7508ad4dcb8cb641e3524ac85b5938a0a28b0ce1eda5468aed86b536f75aad42"
     }
   ]
 }

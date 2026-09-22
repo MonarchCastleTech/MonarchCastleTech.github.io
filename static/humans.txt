@@ -12,12 +12,12 @@ Verified profiles:
 
 # SITE
 
-Last update: 2026/09/22
+Last update: 2026/09/23
 Language: en
-Standards: HTML5, CSS3, JSON-LD (schema.org)
+Standards: HTML5, CSS3, JSON-LD (schema.org), FAQPage, BreadcrumbList
 Platform: Node static renderer, GitHub Pages origin, Cloudflare edge
 Source: https://github.com/MonarchCastleTech/MonarchCastleTech.github.io
-Machine endpoints: /llms.txt, /llms-full.txt, /ai.txt, /agents.txt, /humans.txt
+Machine endpoints: /llms.txt, /llms-full.txt, /ai.txt, /agents.txt, /humans.txt, /api, /mcp, /site.webmanifest
 
 # COLOPHON
 

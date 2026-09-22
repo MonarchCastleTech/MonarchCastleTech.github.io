@@ -1,0 +1,31 @@
+{
+  "name": "Monarch Castle Technologies",
+  "short_name": "Monarch Castle",
+  "description": "Transparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#071522",
+  "theme_color": "#071522",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/assets/products/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "links": [
+    {
+      "rel": "llms",
+      "href": "/llms.txt",
+      "type": "text/plain"
+    },
+    {
+      "rel": "api-catalog",
+      "href": "/.well-known/api-catalog",
+      "type": "application/json"
+    }
+  ]
+}

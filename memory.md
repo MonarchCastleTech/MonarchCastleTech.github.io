@@ -8,7 +8,7 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - Origin: `monarchcastletech.github.io` (GitHub Pages, no CNAME — edge-terminated)
 - Edge: Cloudflare zone `4fb144dbd5e6e2b4ab0a34a25ae97c0b`, worker `monarch-edge`, routes `monarchcastle.com/*` + `www.monarchcastle.com/*`
 - Workers.dev (enabled): `https://monarch-edge.ardakgul4.workers.dev`
-- Zone status: **pending** until user switches Squarespace NS → `earl.ns.cloudflare.com` / `noor.ns.cloudflare.com`
+- Zone status: **active** (NS switched: `earl.ns.cloudflare.com` / `noor.ns.cloudflare.com`); DNSSEC still `pending` (DS published)
 
 ## Key decisions (2026-09-22)
 - canonicalDomain = `monarchcastle.com` (site.routes.json)
@@ -24,6 +24,8 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - SSL mode: full; DNS-AID HTTPS records: `_a2a`, `_mcp`, `_index` `._agents`
 - DNSSEC pending; DS: `monarchcastle.com. 3600 IN DS 2371 13 2 FA2ED8584C599F9460442883A52D013BFD7C04FFB7B9D14F01BE7913A8B97B0D`
 - SITE_BASE_URL / PAGES_HOST intentionally left as github.io (origin health)
+- **SEO/GEO/GenAI overhaul (2026-09-23):** `renderPage` now emits robots/hreflang/og:locale/theme-color/apple-touch-icon/manifest + Organization/WebSite/WebPage/BreadcrumbList JSON-LD (+ FAQPage on home); homepage `#answers` entity definitions + FAQ details; sitemap `lastmod/changefreq/priority`; llms.txt `## Quick facts` + `## FAQ`; llms-full entity definitions + FAQ; ai.txt/agents.txt/ai-catalog/ard/agent.json gain REST/MCP/FAQ discovery; new `static/site.webmanifest`; local pages (tools/mcp/sdcofa) full SEO heads; SKILL.md digest updated `7508ad4d…`; `check-live-site` markers for answers/sitemap/llms/ai-catalog/manifest
+- Worker not changed for SEO (origin static only)
 
 ## CI
 `pages.yml`: sync → build → test → test:dist → verify-dist → upload(hidden) → deploy. Healthy through `45fdf11`.
@@ -34,6 +36,7 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - CF settings PATCH often wants multipart; subdomain enable: `POST .../scripts/{name}/subdomain` with JSON body file
 
 ## User reminders
-- Revoke CF token `cfut_...` when done
+- Revoke CF API token when done (value was pasted in chat only — never store it in the repo)
+- DNSSEC re-check a few hours after DS publish (`dnssec.status` was pending)
 - arda-akgul.com: rescan isitagentready after ~4h; Squarespace A/AAAA + www CNAME to CF still user-side for arda
-- CF token was pasted in chat
+- CF token was pasted in chat (do not commit tokens)

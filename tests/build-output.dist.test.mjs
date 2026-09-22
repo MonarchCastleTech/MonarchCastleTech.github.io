@@ -14,11 +14,15 @@ test("build output uses the edge-terminated public domain without a Pages CNAME"
 });
 
 test("build output publishes autonomous discovery surfaces", () => {
-  for (const relativePath of ["insights/feed.xml", "sitemap.xml", "robots.txt", "llms.txt", "llms-full.txt", ".well-known/api-catalog", ".well-known/ard.json"]) {
+  for (const relativePath of ["insights/feed.xml", "sitemap.xml", "robots.txt", "llms.txt", "llms-full.txt", ".well-known/api-catalog", ".well-known/ard.json", ".well-known/ai-catalog.json", "site.webmanifest", "ai.txt", "agents.txt", "humans.txt"]) {
     assert.equal(fs.existsSync(path.join(dist, relativePath)), true, `${relativePath} exists`);
   }
   assert.match(fs.readFileSync(path.join(dist, "insights", "feed.xml"), "utf8"), /<rss version="2\.0">/);
-  assert.match(fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8"), /\/insights\//);
+  const sitemap = fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8");
+  assert.match(sitemap, /\/insights\//);
+  assert.match(sitemap, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
+  assert.match(sitemap, /<changefreq>/);
+  assert.match(sitemap, /<priority>/);
   assert.match(fs.readFileSync(path.join(dist, "robots.txt"), "utf8"), /Content-Signal: ai-train=yes, search=yes, ai-input=yes/);
   assert.match(fs.readFileSync(path.join(dist, "robots.txt"), "utf8"), /Agentmap: https:\/\/monarchcastle\.com\/\.well-known\/ard\.json/);
   const apiCatalog = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "api-catalog"), "utf8"));
@@ -29,9 +33,16 @@ test("build output publishes autonomous discovery surfaces", () => {
   assert.ok(serviceHrefs.includes("https://monarchcastle.com/api/bnti"), "api-catalog lists BNTI API");
   assert.ok(serviceHrefs.includes("https://monarchcastle.com/api/wti"), "api-catalog lists WTI API");
   assert.ok(serviceHrefs.includes("https://monarchcastle.com/api/mena"), "api-catalog lists MENA API");
+  const aiCatalog = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "ai-catalog.json"), "utf8"));
+  assert.ok(Array.isArray(aiCatalog.entries) && aiCatalog.entries.length >= 4, "ai-catalog lists API/MCP/FAQ entries");
+  const aiUrls = aiCatalog.entries.map((entry) => entry.url);
+  assert.ok(aiUrls.includes("https://monarchcastle.com/api"), "ai-catalog lists REST API");
+  assert.ok(aiUrls.includes("https://monarchcastle.com/mcp"), "ai-catalog lists MCP endpoint");
   const llms = fs.readFileSync(path.join(dist, "llms.txt"), "utf8");
   assert.match(llms, /GET https:\/\/monarchcastle\.com\/api\/bnti/);
   assert.match(llms, /API index: GET https:\/\/monarchcastle\.com\/api/);
+  assert.match(llms, /## FAQ/);
+  assert.match(llms, /## Quick facts/);
 });
 
 test("build output includes every governed narrative route", () => {
@@ -41,9 +52,42 @@ test("build output includes every governed narrative route", () => {
     const html = fs.readFileSync(target, "utf8");
     assert.equal((html.match(/<h1\b/g) ?? []).length, 1, `${route.path} has exactly one h1`);
     assert.match(html, new RegExp(`<link rel="canonical" href="https://${routes.canonicalDomain}${route.path}"`));
+    assert.match(html, /<meta name="robots" content="index, follow/);
     assert.match(html, /<meta property="og:title"/);
     assert.match(html, /<meta property="og:description"/);
     assert.match(html, /<meta property="og:url"/);
+    assert.match(html, /<meta property="og:image"/);
+    assert.match(html, /application\/ld\+json/);
+    assert.match(html, /BreadcrumbList/);
+    assert.match(html, /rel="manifest" href="\/site\.webmanifest"/);
+  }
+});
+
+test("homepage publishes GEO definitions, FAQ markup, and FAQPage JSON-LD", () => {
+  const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+  assert.match(html, /id="answers"/);
+  assert.match(html, /class="entity-definitions"/);
+  assert.match(html, /Border Neighbor Threat Index \(BNTI\)/);
+  assert.match(html, /Frequently asked questions/);
+  assert.match(html, /<details><summary>/);
+  assert.match(html, /"@type":"FAQPage"/);
+  assert.match(html, /What is Monarch Castle Technologies\?/);
+  assert.match(html, /How can an application read the standing indices\?/);
+  const llmsFull = fs.readFileSync(path.join(dist, "llms-full.txt"), "utf8");
+  assert.match(llmsFull, /## Entity definitions/);
+  assert.match(llmsFull, /## FAQ/);
+});
+
+test("local pages publish full SEO heads with canonical, OG, and WebPage JSON-LD", () => {
+  for (const route of routes.localPages) {
+    const html = fs.readFileSync(path.join(dist, route.output), "utf8");
+    assert.match(html, new RegExp(`<link rel="canonical" href="https://${routes.canonicalDomain}${route.path}"`));
+    assert.match(html, /<meta name="robots" content="index, follow/);
+    assert.match(html, /<meta property="og:title"/);
+    assert.match(html, /<meta property="og:url"/);
+    assert.match(html, /application\/ld\+json/);
+    assert.match(html, /"WebPage"/);
+    assert.match(html, /rel="manifest" href="\/site\.webmanifest"/);
   }
 });
 

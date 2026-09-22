@@ -752,6 +752,69 @@ main > section,
   color: var(--paper-ink);
 }
 
+.entity-definitions {
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid var(--line);
+  background: var(--navy-deep);
+}
+
+.definition-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1px;
+  margin: 2rem 0;
+  padding: 0;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.definition-list > div {
+  padding: 1.25rem;
+  background: var(--navy);
+}
+
+.definition-list dt {
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+  font: 0.72rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.definition-list dd {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.faq-block {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.faq-block h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+}
+
+.faq-block details {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  background: rgba(15, 28, 42, 0.55);
+}
+
+.faq-block summary {
+  cursor: pointer;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.faq-block details p {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+}
+
 .company-close {
   min-height: 32rem;
   display: grid;
