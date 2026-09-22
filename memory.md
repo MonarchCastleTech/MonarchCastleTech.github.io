@@ -26,10 +26,10 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - SITE_BASE_URL / PAGES_HOST intentionally left as github.io (origin health)
 - **SEO/GEO/GenAI overhaul (2026-09-23):** `renderPage` now emits robots/hreflang/og:locale/theme-color/apple-touch-icon/manifest + Organization/WebSite/WebPage/BreadcrumbList JSON-LD (+ FAQPage on home); homepage `#answers` entity definitions + FAQ details; sitemap `lastmod/changefreq/priority`; llms.txt `## Quick facts` + `## FAQ`; llms-full entity definitions + FAQ; ai.txt/agents.txt/ai-catalog/ard/agent.json gain REST/MCP/FAQ discovery; new `static/site.webmanifest`; local pages (tools/mcp/sdcofa) full SEO heads; SKILL.md digest updated `7508ad4d…`; `check-live-site` markers for answers/sitemap/llms/ai-catalog/manifest
 - **SEO/GEO/GenAI wave-2 (2026-09-23):** `pageFaqs` map (products/platform/pricing/methodology/trust/developers/impact/pilot/datasets/insights/company/solutions/home) → `renderPageFaq` `#faq` sections; `pageExtraJsonLd` (SoftwareApplication, ItemList, OfferCatalog, CollectionPage+Dataset, Article, Blog, AboutPage+subOrganization SDCofA, Service); `faqJsonLd` generalized; head adds `rel="agent"` + logo preload; robots aiBots further expanded; llms.txt Glossary + full-page answers pointer; llms-full FAQ expanded + Glossary; ai.txt/agents.txt `#answers`+pricing; new `static/404.html` (noindex recovery + machine-readable links); worker LINK gains `agent/manifest/alternate/author`; tests extended (per-page FAQ/typed JSON-LD/404); test 71/71 + test:dist 13/13 + verify-dist pass; edge NS still Squarespace (user-side)
-- Worker not changed for SEO (origin static only)
+- Worker LINK header (wave-2): + `rel="agent"` → agent.json, `rel="manifest"` → site.webmanifest, `rel="alternate"` → ai.txt, `rel="author"` → humans.txt (deployed 2026-09-22T22:42Z, deployment `934aca27`)
 
 ## CI
-`pages.yml`: sync → build → test → test:dist → verify-dist → upload(hidden) → deploy. Healthy through `45fdf11`.
+`pages.yml`: sync → build → test → test:dist → verify-dist → upload(hidden) → deploy. Healthy through `9548b75` (run `35793834079`).
 
 ## Local env gotchas
 - PS5.1: no `??`, no complex `gh --jq`; binary downloads need curl not `>`

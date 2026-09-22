@@ -15,4 +15,4 @@ Move canonical host to monarchcastle.com via Cloudflare worker reverse-proxy of 
 - no dist/CNAME
 
 ## Status
-Built and CI-green through 45fdf11. CF zone pending NS handoff to user.
+Built and CI-green through 9548b75 (SEO wave-2: per-page FAQ, typed JSON-LD, 404, worker LINK agent/manifest). CF zone **regressed to Squarespace NS** — user must re-point registrar NS to Cloudflare; DNSSEC still pending re-check after restore.
