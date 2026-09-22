@@ -19,7 +19,7 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - Worker: Link header (describedby/api-catalog/ai-catalog/oauth-protected-resource/ard), `Accept: text/markdown` HTML→MD, octet-stream→json for extensionless well-known
 - Worker MCP: POST/OPTIONS `/mcp` + `/mcp/` → JSON-RPC streamable-http (initialize/tools/list/tools/call); GET `/mcp` → 302 `/mcp/` HTML docs; tools: get_index, get_bnti, list_indices, get_site_page
 - Agent discovery: `/auth.md`, `/.well-known/oauth-authorization-server` (with `agent_auth` block: skill/register_uri/anonymous registration — empty AS metadata fails isitagentready authMd), `/.well-known/jwks.json`, `/.well-known/agent-card.json` (A2A 0.3.0 + `version` + `supportedInterfaces` each with `url` + `transport` — missing interface `url` fails isitagentready a2aAgentCard), `/.well-known/oauth-protected-resource` (non-empty `scopes_supported: ["read"]`), `/oauth/{authorize,token}/index.html` (static, no tokens issued)
-- isitagentready level 5 Agent-Native (2026-09-22 scan); oauthDiscovery/mcpServerCard/ard/agent-skills/a2aAgentCard PRM pass; authMd needs agent_auth with non-empty credential_types_supported + top-level claim_uri (2026-09-23 pending rescan)
+- isitagentready level 5 Agent-Native (2026-09-22T21:44Z rescan): ALL checks pass (authMd, a2aAgentCard, oauthDiscovery, oauthProtectedResource, mcpServerCard, ard, agent-skills, apiCatalog, webMcp)
 - SSL mode: full; DNS-AID HTTPS records: `_a2a`, `_mcp`, `_index` `._agents`
 - DNSSEC pending; DS: `monarchcastle.com. 3600 IN DS 2371 13 2 FA2ED8584C599F9460442883A52D013BFD7C04FFB7B9D14F01BE7913A8B97B0D`
 - SITE_BASE_URL / PAGES_HOST intentionally left as github.io (origin health)
