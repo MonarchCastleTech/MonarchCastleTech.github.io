@@ -18,6 +18,7 @@ test("GitHub Pages workflow builds and deploys dist artifact", () => {
   assert.match(workflow, /npm run build/);
   assert.match(workflow, /node scripts\/verify-dist\.mjs/);
   assert.match(workflow, /actions\/upload-pages-artifact@v5/);
+  assert.match(workflow, /include-hidden-files: true/);
   assert.match(workflow, /actions\/deploy-pages@v5/);
   assert.match(workflow, /path: dist/);
 });
