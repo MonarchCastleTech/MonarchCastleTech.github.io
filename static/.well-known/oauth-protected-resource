@@ -1,7 +1,7 @@
 {
   "resource": "https://monarchcastle.com/",
   "authorization_servers": ["https://monarchcastle.com"],
-  "scopes_supported": [],
+  "scopes_supported": ["read"],
   "bearer_methods_supported": ["header"],
   "resource_documentation": "https://monarchcastle.com/auth.md"
 }

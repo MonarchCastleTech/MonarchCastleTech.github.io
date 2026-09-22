@@ -1,5 +1,6 @@
 {
   "protocolVersion": "0.3.0",
+  "version": "1.0.0",
   "name": "monarchcastle.com",
   "description": "Public agent surface for Monarch Castle Technologies: standing indices (BNTI, WTI, MENA), product pages, and methodology.",
   "url": "https://monarchcastle.com/",
@@ -13,6 +14,20 @@
     "pushNotifications": false,
     "stateTransitionHistory": false
   },
+  "supportedInterfaces": [
+    {
+      "protocol": "agent-to-agent",
+      "version": "0.3.0",
+      "endpoint": "https://monarchcastle.com/",
+      "transport": "https"
+    },
+    {
+      "protocol": "mcp",
+      "version": "2025-06-18",
+      "endpoint": "https://monarchcastle.com/mcp",
+      "transport": "streamable-http"
+    }
+  ],
   "skills": [
     {
       "id": "site-navigation",

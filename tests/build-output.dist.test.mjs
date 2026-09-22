@@ -54,11 +54,14 @@ test("agent discovery surfaces are published for OAuth and A2A scanners", () => 
   assert.ok(oauthAs.jwks_uri);
   const prm = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "oauth-protected-resource"), "utf8"));
   assert.deepEqual(prm.authorization_servers, ["https://monarchcastle.com"]);
+  assert.ok(Array.isArray(prm.scopes_supported) && prm.scopes_supported.length > 0);
   assert.equal(prm.resource_documentation, "https://monarchcastle.com/auth.md");
   assert.ok(fs.existsSync(path.join(dist, ".well-known", "jwks.json")));
   const card = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "agent-card.json"), "utf8"));
   assert.equal(card.url, "https://monarchcastle.com/");
   assert.ok(card.provider.organizationName);
+  assert.ok(card.version);
+  assert.ok(Array.isArray(card.supportedInterfaces) && card.supportedInterfaces.length > 0);
 });
 
 test("root homepage follows the governed shell and links to canonical dashboard paths", () => {
