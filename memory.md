@@ -17,6 +17,8 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - **No Pages CNAME** — `verify-dist` asserts CNAME never exists
 - `upload-pages-artifact@v5` needs `include-hidden-files: true` (dotfiles: `.well-known`, `.nojekyll`) — locked in workflow test
 - Worker: Link header (describedby/api-catalog/ai-catalog/oauth-protected-resource/ard), `Accept: text/markdown` HTML→MD, octet-stream→json for extensionless well-known
+- Worker MCP: POST/OPTIONS `/mcp` + `/mcp/` → JSON-RPC streamable-http (initialize/tools/list/tools/call); GET `/mcp` → 302 `/mcp/` HTML docs; tools: get_index, get_bnti, list_indices, get_site_page
+- Agent discovery: `/auth.md`, `/.well-known/oauth-authorization-server`, `/.well-known/jwks.json`, `/.well-known/agent-card.json`, `/oauth/{authorize,token}/index.html` (static, no tokens issued)
 - SSL mode: full; DNS-AID HTTPS records: `_a2a`, `_mcp`, `_index` `._agents`
 - DNSSEC pending; DS: `monarchcastle.com. 3600 IN DS 2371 13 2 FA2ED8584C599F9460442883A52D013BFD7C04FFB7B9D14F01BE7913A8B97B0D`
 - SITE_BASE_URL / PAGES_HOST intentionally left as github.io (origin health)
