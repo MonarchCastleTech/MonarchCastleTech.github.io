@@ -8,7 +8,7 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - Origin: `monarchcastletech.github.io` (GitHub Pages, no CNAME — edge-terminated)
 - Edge: Cloudflare zone `4fb144dbd5e6e2b4ab0a34a25ae97c0b`, worker `monarch-edge`, routes `monarchcastle.com/*` + `www.monarchcastle.com/*`
 - Workers.dev (enabled): `https://monarch-edge.ardakgul4.workers.dev`
-- Zone status: **active** (NS switched: `earl.ns.cloudflare.com` / `noor.ns.cloudflare.com`); DNSSEC still `pending` (DS published)
+- Zone status: **regressed 2026-09-23T22:25Z** — authoritative NS now `nsd1-4.squarespacedns.com` (was Cloudflare `earl`/`noor.ns.cloudflare.com`); apex A = Squarespace parking IPs; `www` CNAME `ext-sq.squarespace.com`; edge returns Squarespace “Yakında” page (`llms.txt` 404, `sitemap.xml` 401). **Origin `monarchcastletech.github.io` healthy with new SEO content.** User must re-switch Squarespace NS → Cloudflare at registrar.
 
 ## Key decisions (2026-09-22)
 - canonicalDomain = `monarchcastle.com` (site.routes.json)
