@@ -753,7 +753,7 @@ fs.writeFileSync(path.join(dist, "robots.txt"), [
   `Sitemap: ${canonicalOrigin}/sitemap.xml`,
   ""
 ].join("\n"));
-fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index: ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n`);
+fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- REST API index: ${canonicalOrigin}/api\n- API catalog: ${canonicalOrigin}/.well-known/api-catalog\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index: ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n\n## Standing index JSON APIs (public, no key)\n\n- API index: GET ${canonicalOrigin}/api\n- BNTI: GET ${canonicalOrigin}/api/bnti (canonical: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json)\n- WTI: GET ${canonicalOrigin}/api/wti (canonical: ${canonicalOrigin}/sdcofa/wti/wti_data.json)\n- MENA: GET ${canonicalOrigin}/api/mena (canonical: ${canonicalOrigin}/sdcofa/mena/mena_data.json)\n- Catalog: GET ${canonicalOrigin}/api/indices\n- Query: ?country=Name&top=10\n- MCP: POST ${canonicalOrigin}/mcp\n`);
 const llmsFullLines = [
   `# ${site.brand.masterbrand} full corpus`,
   "",
@@ -766,6 +766,16 @@ const llmsFullLines = [
   "## Narrative routes",
   "",
   ...routes.sitePages.map((page) => `- ${page.title}: ${canonicalOrigin}${page.path} — ${page.description}`),
+  "",
+  "## Standing index APIs",
+  "",
+  `- API index: ${canonicalOrigin}/api`,
+  `- BNTI: ${canonicalOrigin}/api/bnti`,
+  `- WTI: ${canonicalOrigin}/api/wti`,
+  `- MENA: ${canonicalOrigin}/api/mena`,
+  `- Indices catalog: ${canonicalOrigin}/api/indices`,
+  `- Raw BNTI snapshot: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json`,
+  `- MCP endpoint: ${canonicalOrigin}/mcp`,
   ""
 ];
 fs.writeFileSync(path.join(dist, "llms-full.txt"), `${llmsFullLines.join("\n")}`);

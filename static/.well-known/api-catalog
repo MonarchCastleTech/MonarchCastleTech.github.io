@@ -6,6 +6,26 @@
         {
           "href": "https://monarchcastle.com/sitemap.xml",
           "type": "application/xml"
+        },
+        {
+          "href": "https://monarchcastle.com/api/bnti",
+          "type": "application/json",
+          "title": "BNTI API"
+        },
+        {
+          "href": "https://monarchcastle.com/api/wti",
+          "type": "application/json",
+          "title": "WTI API"
+        },
+        {
+          "href": "https://monarchcastle.com/api/mena",
+          "type": "application/json",
+          "title": "MENA API"
+        },
+        {
+          "href": "https://monarchcastle.com/api/indices",
+          "type": "application/json",
+          "title": "Standing indices catalog"
         }
       ],
       "service-doc": [
@@ -20,12 +40,34 @@
         {
           "href": "https://monarchcastle.com/methodology/",
           "type": "text/html"
+        },
+        {
+          "href": "https://monarchcastle.com/mcp/",
+          "type": "text/html",
+          "title": "MCP and REST API docs"
         }
       ],
       "service-meta": [
         {
           "href": "https://monarchcastle.com/ai.txt",
           "type": "text/plain"
+        }
+      ]
+    },
+    {
+      "anchor": "https://monarchcastle.com/api/bnti",
+      "service-desc": [
+        {
+          "href": "https://monarchcastle.com/sdcofa/bnti/bnti_data.json",
+          "type": "application/json",
+          "title": "Canonical BNTI snapshot"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://monarchcastle.com/api",
+          "type": "application/json",
+          "title": "API index"
         }
       ]
     }

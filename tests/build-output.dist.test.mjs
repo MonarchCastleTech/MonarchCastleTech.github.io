@@ -21,6 +21,17 @@ test("build output publishes autonomous discovery surfaces", () => {
   assert.match(fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8"), /\/insights\//);
   assert.match(fs.readFileSync(path.join(dist, "robots.txt"), "utf8"), /Content-Signal: ai-train=yes, search=yes, ai-input=yes/);
   assert.match(fs.readFileSync(path.join(dist, "robots.txt"), "utf8"), /Agentmap: https:\/\/monarchcastle\.com\/\.well-known\/ard\.json/);
+  const apiCatalog = JSON.parse(fs.readFileSync(path.join(dist, ".well-known", "api-catalog"), "utf8"));
+  const linkset = apiCatalog.linkset?.[0];
+  const serviceDesc = linkset?.["service-desc"];
+  assert.ok(Array.isArray(serviceDesc) && serviceDesc.length >= 4, "api-catalog lists discovery services");
+  const serviceHrefs = serviceDesc.map((entry) => entry.href);
+  assert.ok(serviceHrefs.includes("https://monarchcastle.com/api/bnti"), "api-catalog lists BNTI API");
+  assert.ok(serviceHrefs.includes("https://monarchcastle.com/api/wti"), "api-catalog lists WTI API");
+  assert.ok(serviceHrefs.includes("https://monarchcastle.com/api/mena"), "api-catalog lists MENA API");
+  const llms = fs.readFileSync(path.join(dist, "llms.txt"), "utf8");
+  assert.match(llms, /GET https:\/\/monarchcastle\.com\/api\/bnti/);
+  assert.match(llms, /API index: GET https:\/\/monarchcastle\.com\/api/);
 });
 
 test("build output includes every governed narrative route", () => {

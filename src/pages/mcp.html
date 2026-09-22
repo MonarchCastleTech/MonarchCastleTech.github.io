@@ -37,6 +37,21 @@
         </div>
       </section>
       <section class="section">
+        <h2>REST JSON API</h2>
+        <p>Public read-only standing-index JSON. No API key. CORS allows any origin.</p>
+        <pre><code>curl -sS "https://monarchcastle.com/api/bnti?top=5"
+curl -sS "https://monarchcastle.com/api/bnti?country=Turkey"
+curl -sS "https://monarchcastle.com/api/indices"</code></pre>
+        <ul>
+          <li><code>GET /api</code> — API index</li>
+          <li><code>GET /api/bnti</code> — Border Neighbor Threat Index (<code>?country=</code>, <code>?top=</code>)</li>
+          <li><code>GET /api/wti</code> — World Threat Index</li>
+          <li><code>GET /api/mena</code> — MENA Threat Index</li>
+          <li><code>GET /api/indices</code> — all indices with meta summaries</li>
+          <li>Canonical snapshots: <code>/sdcofa/bnti/bnti_data.json</code>, <code>/sdcofa/wti/wti_data.json</code>, <code>/sdcofa/mena/mena_data.json</code></li>
+        </ul>
+      </section>
+      <section class="section">
         <h2>Connect</h2>
         <pre><code>{
   "mcpServers": {
