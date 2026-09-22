@@ -1,0 +1,5 @@
+Contact: https://github.com/MonarchCastleTech/.github/security/policy
+Preferred-Languages: en
+Canonical: https://monarchcastle.com/.well-known/security.txt
+Expires: 2027-12-31T23:59:00.000Z
+Policy: https://github.com/MonarchCastleTech/.github/blob/main/SECURITY.md

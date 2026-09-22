@@ -8,17 +8,19 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const dist = path.join(root, "dist");
 const routes = JSON.parse(fs.readFileSync(path.join(root, "site.routes.json"), "utf8"));
 
-test("build output uses the reliable GitHub Pages host", () => {
+test("build output uses the edge-terminated public domain without a Pages CNAME", () => {
   assert.equal(fs.existsSync(path.join(dist, "CNAME")), false);
   assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true);
 });
 
 test("build output publishes autonomous discovery surfaces", () => {
-  for (const relativePath of ["insights/feed.xml", "sitemap.xml", "robots.txt", "llms.txt"]) {
+  for (const relativePath of ["insights/feed.xml", "sitemap.xml", "robots.txt", "llms.txt", "llms-full.txt", ".well-known/api-catalog", ".well-known/ard.json"]) {
     assert.equal(fs.existsSync(path.join(dist, relativePath)), true, `${relativePath} exists`);
   }
   assert.match(fs.readFileSync(path.join(dist, "insights", "feed.xml"), "utf8"), /<rss version="2\.0">/);
   assert.match(fs.readFileSync(path.join(dist, "sitemap.xml"), "utf8"), /\/insights\//);
+  assert.match(fs.readFileSync(path.join(dist, "robots.txt"), "utf8"), /Content-Signal: ai-train=yes, search=yes, ai-input=yes/);
+  assert.match(fs.readFileSync(path.join(dist, "robots.txt"), "utf8"), /Agentmap: https:\/\/monarchcastle\.com\/\.well-known\/ard\.json/);
 });
 
 test("build output includes every governed narrative route", () => {
@@ -34,18 +36,18 @@ test("build output includes every governed narrative route", () => {
   }
 });
 
-test("build output includes full dashboard subpaths", () => {
+test("build output includes full dashboard subpaths under SDCofA", () => {
   for (const [slug, dataFile] of [["bnti", "bnti_data.json"], ["wti", "wti_data.json"], ["mena", "mena_data.json"]]) {
-    assert.equal(fs.existsSync(path.join(dist, slug, "index.html")), true, `${slug}/index.html exists`);
-    assert.equal(fs.existsSync(path.join(dist, slug, dataFile)), true, `${slug}/${dataFile} exists`);
+    assert.equal(fs.existsSync(path.join(dist, "sdcofa", slug, "index.html")), true, `sdcofa/${slug}/index.html exists`);
+    assert.equal(fs.existsSync(path.join(dist, "sdcofa", slug, dataFile)), true, `sdcofa/${slug}/${dataFile} exists`);
   }
 });
 
 test("root homepage follows the governed shell and links to canonical dashboard paths", () => {
   const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
-  assert.match(html, /href="\/bnti\/"/);
-  assert.match(html, /href="\/wti\/"/);
-  assert.match(html, /href="\/mena\/"/);
+  assert.match(html, /href="\/sdcofa\/bnti\/"/);
+  assert.match(html, /href="\/sdcofa\/wti\/"/);
+  assert.match(html, /href="\/sdcofa\/mena\/"/);
   assert.match(html, /href="\/styles\/site\.css"/);
   assert.match(html, /See disruption before it reaches your operation/);
   assert.match(html, /Every current public product stays open/);
@@ -87,11 +89,12 @@ test("built narrative pages contain end-user copy only", () => {
 
 test("dashboard entrypoints do not leak root-relative paths or redirect shims", () => {
   const redirectPattern = /<meta[^>]+http-equiv=["']refresh["']|window\.location|location\.href/i;
-  const rootRelativeLeakPattern = /(?:href|src)=["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|fetch\(\s*["']\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))|url\(\s*["']?\/(?!bnti(?:\/|$)|wti(?:\/|$)|mena(?:\/|$))/i;
+  const allowedPrefix = "sdcofa/(?:bnti|wti|mena)";
+  const rootRelativeLeakPattern = new RegExp(`(?:href|src)=["']\\/(?!${allowedPrefix}(?:\\/|$))|fetch\\(\\s*["']\\/(?!${allowedPrefix}(?:\\/|$))|url\\(\\s*["']?\\/(?!${allowedPrefix}(?:\\/|$))`, "i");
 
   for (const slug of ["bnti", "wti", "mena"]) {
-    const html = fs.readFileSync(path.join(dist, slug, "index.html"), "utf8");
-    assert.doesNotMatch(html, redirectPattern, `${slug}/index.html has no redirect shim`);
-    assert.doesNotMatch(html, rootRelativeLeakPattern, `${slug}/index.html has no root-relative leak`);
+    const html = fs.readFileSync(path.join(dist, "sdcofa", slug, "index.html"), "utf8");
+    assert.doesNotMatch(html, redirectPattern, `sdcofa/${slug}/index.html has no redirect shim`);
+    assert.doesNotMatch(html, rootRelativeLeakPattern, `sdcofa/${slug}/index.html has no root-relative leak`);
   }
 });

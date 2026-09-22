@@ -59,7 +59,9 @@
       "sanctions-exposure-index",
       "border-neighbor-threat-index",
       "mena-threat-index",
-      "world-threat-index"
+      "world-threat-index",
+      "election",
+      "georisk"
     ]
   },
   "products": [
@@ -76,7 +78,7 @@
         "label": "Caspian & Black Sea Monitor",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/caspian-black-sea-monitor/",
+      "canonicalUrl": "https://monarchcastle.com/caspian-black-sea-monitor/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -94,7 +96,7 @@
         "label": "Climate Security Index",
         "status": "review-required"
       },
-      "canonicalUrl": "https://sdcofa.github.io/climate-security-index/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/climate-security-index/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
@@ -114,7 +116,7 @@
         "sha256": "570096f66a606d8a861e585a7fa7ec7ae530d0218f2fcf295d2879f9433b1444",
         "alt": "Cloudy&Shiny Index product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/Cloudy-Shiny/",
+      "canonicalUrl": "https://monarchcastle.com/Cloudy-Shiny/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -132,7 +134,7 @@
         "label": "Conflict Early Warning System",
         "status": "review-required"
       },
-      "canonicalUrl": "https://sdcofa.github.io/conflict-early-warning/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/conflict-early-warning/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
@@ -150,7 +152,7 @@
         "label": "Cyber Threat Exposure Map",
         "status": "review-required"
       },
-      "canonicalUrl": "https://sdcofa.github.io/cyber-exposure-map/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/cyber-exposure-map/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
@@ -168,7 +170,7 @@
         "label": "Defense Procurement Intelligence",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/defense-procurement/",
+      "canonicalUrl": "https://monarchcastle.com/defense-procurement/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -188,7 +190,7 @@
         "sha256": "629613546a1c014085ce4f8a668a0e0a2f3600858c08442d055098e3cb476db1",
         "alt": "EconMap product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/econmap/",
+      "canonicalUrl": "https://monarchcastle.com/econmap/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -208,7 +210,7 @@
         "sha256": "52129544e21310234b24bff1d98ceb9270dddf83aaaeab11f714aa29145bf37f",
         "alt": "ESGMap product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/esgmap/",
+      "canonicalUrl": "https://monarchcastle.com/esgmap/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -228,7 +230,7 @@
         "sha256": "79e875086ad5f496c042f693a443df5d7dc58d330271e07e233af79e75fbe295",
         "alt": "MacroIntel product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/macrointel/",
+      "canonicalUrl": "https://monarchcastle.com/macrointel/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -246,7 +248,7 @@
         "label": "MENA Energy Flow Tracker",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/mena-energy-flow/",
+      "canonicalUrl": "https://monarchcastle.com/mena-energy-flow/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -266,7 +268,7 @@
         "sha256": "9dfeaad8d391b9d0dc6a2d76e049d47e578f17000b7469575a8e5cb7ba7a54f5",
         "alt": "MILCODEC Receiver product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/milcodec-receiver/",
+      "canonicalUrl": "https://monarchcastle.com/milcodec-receiver/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -286,7 +288,7 @@
         "sha256": "5822e425d9b32e58c132737f52d83d6b1f583d51c46dba4f8c103db9b05b9d85",
         "alt": "Nuclear Energy Intelligence product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/NuclearEnergyIntelligence/",
+      "canonicalUrl": "https://monarchcastle.com/NuclearEnergyIntelligence/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -304,7 +306,7 @@
         "label": "Nuclear Proliferation Watch",
         "status": "review-required"
       },
-      "canonicalUrl": "https://sdcofa.github.io/nuclear-proliferation-watch/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/nuclear-proliferation-watch/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
@@ -322,7 +324,7 @@
         "label": "Port Congestion Pulse",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/port-congestion-pulse/",
+      "canonicalUrl": "https://monarchcastle.com/port-congestion-pulse/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -342,7 +344,7 @@
         "sha256": "5e3e3ce1b2573f8c166cf6227574f46c0f8cfbcc396a39ffa55dd5d2ccb53e3e",
         "alt": "PrepTurk product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/prepturk/",
+      "canonicalUrl": "https://monarchcastle.com/prepturk/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; approved-product-logo-and-MCT-endorsement-visible",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -360,7 +362,7 @@
         "label": "Sanctions Exposure Index",
         "status": "review-required"
       },
-      "canonicalUrl": "https://sdcofa.github.io/sanctions-exposure-index/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/sanctions-exposure-index/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
@@ -380,7 +382,7 @@
         "sha256": "abb05f39f892a280778bf9f56a5f6a7b67815cc8d107c61fa067fa416ffd8dba",
         "alt": "Süper Lig Forecast product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/superlig-forecast/",
+      "canonicalUrl": "https://monarchcastle.com/superlig-forecast/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "public-release-verified; 20-season-expanding-window-backtest; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -400,7 +402,7 @@
         "sha256": "35dd5ba80c2768aec9942e1af64910871328bf24d55a04afbfba1c0f8146e01b",
         "alt": "Supply Chain Intelligence product logo"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/supplychain/",
+      "canonicalUrl": "https://monarchcastle.com/supplychain/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -418,7 +420,7 @@
         "label": "T?rkiye Economic Sentiment Radar",
         "status": "review-required"
       },
-      "canonicalUrl": "https://monarchcastletech.github.io/tr-economic-sentiment/",
+      "canonicalUrl": "https://monarchcastle.com/tr-economic-sentiment/",
       "owner": "MonarchCastleTech",
       "forecastEvidenceStatus": "github-pages-and-actions-verified; logo-review-required",
       "endorsementLabel": "Part of Monarch Castle Technologies"
@@ -438,7 +440,7 @@
         "sha256": "66b9df64645c05adb76c3bfe81aa1a883c81ed17ba231dcc5810af5a03fad47f",
         "alt": "Border Neighbor Threat Index product logo"
       },
-      "canonicalUrl": "https://sdcofa.github.io/border-neighbor-threat-index/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/bnti/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
@@ -458,7 +460,7 @@
         "sha256": "d3c353b76180200868d240d5d0173d9706e1ff689f9e47ab7654c9e2c2d77863",
         "alt": "MENA Threat Index product logo"
       },
-      "canonicalUrl": "https://sdcofa.github.io/mena-threat-index/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/mena/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "pilot-candidate-verified-from-178-timestamped-model-vs-naive-evaluations",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
@@ -478,9 +480,45 @@
         "sha256": "753515aced48f9b8938624a125ee85808ba138daa8c23e1af01821f1789291b1",
         "alt": "World Threat Index product logo"
       },
-      "canonicalUrl": "https://sdcofa.github.io/world-threat-index/",
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/wti/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "local-release-and-github-metadata-verified",
+      "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
+    },
+    {
+      "id": "election",
+      "name": "Election Monitor",
+      "family": "threat-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/SDCofA/election/blob/main/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "Election Monitor",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/election/",
+      "owner": "SDCofA",
+      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
+      "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
+    },
+    {
+      "id": "georisk",
+      "name": "GeoRisk",
+      "family": "threat-intelligence",
+      "lifecycle": "review-required",
+      "regions": [],
+      "methodologyUrl": "https://github.com/SDCofA/georisk/blob/main/README.md",
+      "updateFrequency": "review-required",
+      "logo": {
+        "kind": "governed-text",
+        "label": "GeoRisk",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastle.com/sdcofa/georisk/",
+      "owner": "SDCofA",
+      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     }
   ]

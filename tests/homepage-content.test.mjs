@@ -35,7 +35,7 @@ test("site content is a complete local projection of every public product", () =
   for (const product of site.products) {
     assert.deepEqual(Object.keys(product).sort(), projectedFields.sort());
     assert.match(product.methodologyUrl, /^https:\/\/github\.com\//);
-    assert.match(product.canonicalUrl, /^https:\/\/(?:monarchcastletech|sdcofa)\.github\.io\//);
+    assert.match(product.canonicalUrl, /^https:\/\/(?:monarchcastle\.com|(?:monarchcastletech|sdcofa)\.github\.io)\//);
     assert.ok(product.name && product.family && product.owner);
     assert.match(product.endorsementLabel, /Monarch Castle Technologies/);
   }
@@ -52,7 +52,7 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   }
   assert.match(indexHtml, /SDCofA/);
   assert.match(indexHtml, /endorsed analytical unit/i);
-  for (const path of ["/bnti/", "/wti/", "/mena/"]) {
+  for (const path of ["/sdcofa/bnti/", "/sdcofa/wti/", "/sdcofa/mena/"]) {
     assert.match(indexHtml, new RegExp(`href="${path}"`));
   }
 });
@@ -63,7 +63,7 @@ test("homepage presents the private-sector platform and BNTI first", () => {
   assert.match(indexHtml, /See disruption before it reaches your operation/);
   assert.match(indexHtml, /class="mission-hero-visual bnti-first"/);
   assert.match(indexHtml, /src="\/assets\/products\/bnti-hero\.png"/);
-  assert.match(indexHtml, /href="\/bnti\/">Open free BNTI/);
+  assert.match(indexHtml, /href="\/sdcofa\/bnti\/">Open free BNTI/);
   assert.ok(indexHtml.indexOf('data-product-id="border-neighbor-threat-index"') < indexHtml.indexOf('data-product-id="world-threat-index"'));
 });
 
@@ -136,7 +136,7 @@ test("homepage publishes the Süper Lig Forecast as a daily public product", () 
   assert.ok(forecast);
   assert.equal(
     forecast.canonicalUrl,
-    "https://monarchcastletech.github.io/superlig-forecast/",
+    "https://monarchcastle.com/superlig-forecast/",
   );
   assert.equal(forecast.updateFrequency, "daily");
   assert.match(indexHtml, /data-product-id="superlig-forecast"/);

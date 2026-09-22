@@ -1,0 +1,23 @@
+# Agent Discovery
+
+Primary machine-readable card:
+- https://monarchcastle.com/.well-known/agent.json
+
+Primary authority pages:
+- https://monarchcastle.com/products/
+- https://monarchcastle.com/platform/
+- https://monarchcastle.com/methodology/
+- https://monarchcastle.com/sdcofa/
+- https://monarchcastle.com/trust/
+- https://monarchcastle.com/company/
+
+Preferred text endpoints:
+- https://monarchcastle.com/llms.txt
+- https://monarchcastle.com/llms-full.txt
+- https://monarchcastle.com/ai.txt
+- https://monarchcastle.com/humans.txt
+- https://monarchcastle.com/insights/feed.xml
+
+Crawl policy and sitemap:
+- https://monarchcastle.com/robots.txt
+- https://monarchcastle.com/sitemap.xml

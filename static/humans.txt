@@ -1,0 +1,25 @@
+# TEAM
+
+Site: https://monarchcastle.com
+Owner: Monarch Castle Technologies
+Role: Decision intelligence and early-warning systems
+Location: Ankara, Türkiye
+Contact: https://github.com/MonarchCastleTech
+
+Verified profiles:
+- https://github.com/MonarchCastleTech
+- https://github.com/SDCofA
+
+# SITE
+
+Last update: 2026/09/22
+Language: en
+Standards: HTML5, CSS3, JSON-LD (schema.org)
+Platform: Node static renderer, GitHub Pages origin, Cloudflare edge
+Source: https://github.com/MonarchCastleTech/MonarchCastleTech.github.io
+Machine endpoints: /llms.txt, /llms-full.txt, /ai.txt, /agents.txt, /humans.txt
+
+# COLOPHON
+
+Endorsed analytical unit: SDCofA
+Legal: /trust/, /methodology/

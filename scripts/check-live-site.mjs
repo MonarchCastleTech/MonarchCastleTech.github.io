@@ -16,15 +16,15 @@ const routeChecks = [
   { path: "/tools/", markers: ["Tools", "Calculators"] },
   { path: "/mcp/", markers: ["MCP", "catalog"] },
   { path: "/sdcofa/", markers: ["Strategic Data Company of Ankara", "BNTI", "WTI", "MENA"] },
-  { path: "/bnti/", markers: ["BNTI", "Threat Index"] },
-  { path: "/wti/", markers: ["WTI", "Threat Index"] },
-  { path: "/mena/", markers: ["MENA", "Threat Index"] },
+  { path: "/sdcofa/bnti/", markers: ["BNTI", "Threat Index"] },
+  { path: "/sdcofa/wti/", markers: ["WTI", "Threat Index"] },
+  { path: "/sdcofa/mena/", markers: ["MENA", "Threat Index"] },
 ];
 
 const dataChecks = [
-  { label: "BNTI", path: "/bnti/bnti_data.json", maxAgeHours },
-  { label: "WTI", path: "/wti/wti_data.json", maxAgeHours },
-  { label: "MENA", path: "/mena/mena_data.json", maxAgeHours },
+  { label: "BNTI", path: "/sdcofa/bnti/bnti_data.json", maxAgeHours },
+  { label: "WTI", path: "/sdcofa/wti/wti_data.json", maxAgeHours },
+  { label: "MENA", path: "/sdcofa/mena/mena_data.json", maxAgeHours },
 ];
 
 function siteUrl(path) {

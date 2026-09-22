@@ -17,9 +17,9 @@ const narrativeRoutes = [
   "/company/"
 ];
 const dashboardExpectations = {
-  "/bnti/": { text: /Border Neighbor Threat Index/i, selector: "#map-svg" },
-  "/wti/": { text: /World Threat Index/i, selector: "#world-map" },
-  "/mena/": { text: /MENA Threat Index/i, selector: "text=Regional threat map" }
+  "/sdcofa/bnti/": { text: /Border Neighbor Threat Index/i, selector: "#map-svg" },
+  "/sdcofa/wti/": { text: /World Threat Index/i, selector: "#world-map" },
+  "/sdcofa/mena/": { text: /MENA Threat Index/i, selector: "text=Regional threat map" }
 };
 
 for (const route of [...narrativeRoutes, ...Object.keys(dashboardExpectations), "/tools/", "/mcp/", "/sdcofa/"]) {

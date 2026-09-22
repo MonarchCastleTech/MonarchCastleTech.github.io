@@ -1,0 +1,35 @@
+{
+  "specVersion": "0.91",
+  "host": {
+    "domain": "monarchcastle.com",
+    "canonical": "https://monarchcastle.com/",
+    "authority": "https://monarchcastle.com/.well-known/ard.json"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:monarchcastle.com:skill:monarchcastle-site",
+      "displayName": "monarchcastle.com navigation skill",
+      "type": "application/ai-skill+md",
+      "url": "https://monarchcastle.com/.well-known/agent-skills/monarchcastle-site/SKILL.md",
+      "description": "How to navigate and cite monarchcastle.com: public products, standing indices, methodology, and machine-readable endpoints.",
+      "capabilities": ["site-navigation", "citation"],
+      "representativeQueries": [
+        "what products does Monarch Castle Technologies publish",
+        "where is the Border Neighbor Threat Index",
+        "how do I cite a Monarch Castle forecast product"
+      ]
+    },
+    {
+      "identifier": "urn:air:monarchcastle.com:corpus:llms-full",
+      "displayName": "monarchcastle.com full LLM corpus",
+      "type": "text/plain",
+      "url": "https://monarchcastle.com/llms-full.txt",
+      "description": "First-party long-form corpus: products, narrative routes, and methodology summaries.",
+      "capabilities": ["context-export"],
+      "representativeQueries": [
+        "summarize the Monarch Castle Technologies portfolio",
+        "give me the full product list with methodology links"
+      ]
+    }
+  ]
+}

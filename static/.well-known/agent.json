@@ -1,0 +1,52 @@
+{
+  "name": "Monarch Castle Technologies",
+  "description": "Official website of Monarch Castle Technologies: transparent early-warning products, standing SDCofA threat indices, and The Keep platform.",
+  "url": "https://monarchcastle.com/",
+  "sameAs": [
+    "https://github.com/MonarchCastleTech",
+    "https://github.com/SDCofA"
+  ],
+  "provider": {
+    "organization": "Monarch Castle Technologies",
+    "url": "https://monarchcastle.com/"
+  },
+  "version": "1.0.0",
+  "discovery": {
+    "products": "https://monarchcastle.com/products/",
+    "platform": "https://monarchcastle.com/platform/",
+    "sdcofa": "https://monarchcastle.com/sdcofa/",
+    "llms": "https://monarchcastle.com/llms.txt",
+    "llms_full": "https://monarchcastle.com/llms-full.txt",
+    "ai": "https://monarchcastle.com/ai.txt",
+    "agents": "https://monarchcastle.com/agents.txt",
+    "rss": "https://monarchcastle.com/insights/feed.xml",
+    "robots": "https://monarchcastle.com/robots.txt",
+    "sitemap": "https://monarchcastle.com/sitemap.xml"
+  },
+  "skills": [
+    {
+      "id": "products",
+      "name": "Product portfolio",
+      "description": "Full product catalogue across Monarch Castle Technologies and the endorsed SDCofA unit.",
+      "uri": "https://monarchcastle.com/products/"
+    },
+    {
+      "id": "sdcofa",
+      "name": "SDCofA standing indices",
+      "description": "BNTI, WTI, MENA, election, and GeoRisk dashboards published by SDCofA.",
+      "uri": "https://monarchcastle.com/sdcofa/"
+    },
+    {
+      "id": "methodology",
+      "name": "Methodology and limits",
+      "description": "Provenance, cadence, evidence status, and forecast evaluation rules.",
+      "uri": "https://monarchcastle.com/methodology/"
+    },
+    {
+      "id": "llms_context",
+      "name": "Full LLM corpus",
+      "description": "Expanded first-party text export for deeper ingestion.",
+      "uri": "https://monarchcastle.com/llms-full.txt"
+    }
+  ]
+}

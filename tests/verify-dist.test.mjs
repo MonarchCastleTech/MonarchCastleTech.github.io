@@ -39,7 +39,6 @@ function writeBaseProject(root, mounts) {
     dashboardMounts: mounts,
     assets: []
   }, null, 2));
-  writeFile(root, "dist/CNAME", "example.com\n");
   writeFile(root, "dist/.nojekyll", "");
 }
 
@@ -59,7 +58,6 @@ test("verify-dist rejects broken local links in generated narrative routes", () 
     dashboardMounts: [],
     assets: []
   }, null, 2));
-  writeFile(root, "dist/CNAME", "example.com\n");
   writeFile(root, "dist/.nojekyll", "");
   writeFile(root, "dist/index.html", [
     "<!doctype html><html><head>",

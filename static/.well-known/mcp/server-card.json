@@ -1,0 +1,17 @@
+{
+  "serverInfo": {
+    "name": "monarchcastle.com",
+    "version": "1.0.0"
+  },
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://monarchcastle.com/mcp"
+  },
+  "endpoint": "https://monarchcastle.com/mcp",
+  "capabilities": {
+    "tools": { "listChanged": false },
+    "resources": {},
+    "prompts": {}
+  },
+  "documentation_url": "https://monarchcastle.com/llms.txt"
+}

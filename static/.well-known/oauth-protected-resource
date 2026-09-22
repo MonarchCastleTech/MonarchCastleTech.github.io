@@ -1,0 +1,6 @@
+{
+  "resource": "https://monarchcastle.com/",
+  "scopes_supported": [],
+  "bearer_methods_supported": ["header"],
+  "resource_documentation": "https://monarchcastle.com/trust/"
+}

@@ -1,0 +1,33 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://monarchcastle.com/",
+      "service-desc": [
+        {
+          "href": "https://monarchcastle.com/sitemap.xml",
+          "type": "application/xml"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://monarchcastle.com/llms.txt",
+          "type": "text/plain"
+        },
+        {
+          "href": "https://monarchcastle.com/llms-full.txt",
+          "type": "text/plain"
+        },
+        {
+          "href": "https://monarchcastle.com/methodology/",
+          "type": "text/html"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://monarchcastle.com/ai.txt",
+          "type": "text/plain"
+        }
+      ]
+    }
+  ]
+}

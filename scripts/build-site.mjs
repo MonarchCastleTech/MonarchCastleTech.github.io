@@ -18,9 +18,9 @@ const endorsedProducts = (site.ownerViews?.SDCofA ?? [])
   .map((id) => productById.get(id))
   .filter(Boolean);
 const dashboardPaths = {
-  "border-neighbor-threat-index": "/bnti/",
-  "world-threat-index": "/wti/",
-  "mena-threat-index": "/mena/"
+  "border-neighbor-threat-index": "/sdcofa/bnti/",
+  "world-threat-index": "/sdcofa/wti/",
+  "mena-threat-index": "/sdcofa/mena/"
 };
 const publicSignals = readPublicSignalSnapshot();
 const productPresentation = {
@@ -302,13 +302,13 @@ function renderHome() {
         <p class="lede">The Keep brings geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture for companies exposed to a changing world.</p>
         <div class="hero-actions">
           ${localOrExternalLink("/platform/", "Explore The Keep", "button-link")}
-          ${localOrExternalLink("/bnti/", "Open free BNTI", "button-link button-secondary")}
+          ${localOrExternalLink("/sdcofa/bnti/", "Open free BNTI", "button-link button-secondary")}
         </div>
         <p class="public-commitment">Every current public product stays open. Commercial access applies only to the unified enterprise workspace.</p>
       </div>
       <aside class="mission-hero-visual bnti-first" aria-label="Border Neighbor Threat Index">
         <div class="instrument-heading"><p class="eyebrow">Live public instrument</p><span class="live-chip"><i></i> Autonomous</span></div>
-        <a class="hero-product-link" href="/bnti/">
+        <a class="hero-product-link" href="/sdcofa/bnti/">
           <img src="/assets/products/bnti-hero.png" alt="Border Neighbor Threat Index" />
           <span><strong>BNTI</strong><small>Border Neighbor Threat Index</small></span>
         </a>
@@ -617,7 +617,57 @@ function renderPage(page) {
   <meta name="twitter:image" content="${canonicalOrigin}/assets/approved/social-preview.png" />
   <link rel="alternate" type="application/rss+xml" title="Monarch Castle public signals" href="/insights/feed.xml" />
   <link rel="icon" type="image/png" href="/assets/products/logo.png" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context" />
+  <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Full LLM Context" />
+  <link rel="describedby" type="text/plain" href="/llms.txt" title="LLM Context" />
+  <link rel="ard" type="application/json" href="/.well-known/ard.json" title="ARD manifest" />
+  <link rel="ai-catalog" type="application/json" href="/.well-known/ai-catalog.json" title="AI catalog" />
+  <link rel="api-catalog" type="application/json" href="/.well-known/api-catalog" title="API catalog" />
   <link rel="stylesheet" href="/styles/site.css" />
+  <script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: site.brand.masterbrand,
+    url: `${canonicalOrigin}/`,
+    logo: `${canonicalOrigin}/assets/products/logo.png`,
+    description: site.brand.positioning,
+    sameAs: ["https://github.com/MonarchCastleTech", "https://github.com/SDCofA"]
+  })}</script>
+  <script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.brand.masterbrand,
+    url: `${canonicalOrigin}/`,
+    description: page.description
+  })}</script>
+  <script>
+  (function () {
+    try {
+      if (navigator.modelContext && navigator.modelContext.provideContext) {
+        navigator.modelContext.provideContext({
+          tools: [
+            {
+              name: "open_monarchcastle_page",
+              description: "Open a canonical page of monarchcastle.com by short name: products, platform, insights, methodology, trust, company, developers, sdcofa, bnti, wti, mena.",
+              inputSchema: {
+                type: "object",
+                properties: { page: { type: "string", enum: ["products", "platform", "insights", "methodology", "trust", "company", "developers", "sdcofa", "bnti", "wti", "mena"] } },
+                required: ["page"]
+              },
+              execute: function (input) {
+                var map = { products: "/products/", platform: "/platform/", insights: "/insights/", methodology: "/methodology/", trust: "/trust/", company: "/company/", developers: "/developers/", sdcofa: "/sdcofa/", bnti: "/sdcofa/bnti/", wti: "/sdcofa/wti/", mena: "/sdcofa/mena/" };
+                var path = map[input.page] || "/products/";
+                window.location.href = path;
+                return { opened: path };
+              }
+            }
+          ]
+        });
+      }
+    } catch (e) {}
+  })();
+  </script>
 </head>
 <body data-page="${escapeHtml(page.slug)}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -683,8 +733,42 @@ for (const page of routes.sitePages) {
 ensureParent(path.join(dist, "insights", "feed.xml"));
 fs.writeFileSync(path.join(dist, "insights", "feed.xml"), renderRssFeed());
 fs.writeFileSync(path.join(dist, "sitemap.xml"), renderSitemap());
-fs.writeFileSync(path.join(dist, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${canonicalOrigin}/sitemap.xml\n`);
-fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods.\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n`);
+const aiBots = [
+  "GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-Web", "Claude-SearchBot",
+  "Claude-User", "anthropic-ai", "PerplexityBot", "Perplexity-User", "Google-Extended",
+  "GoogleOther", "Applebot", "Applebot-Extended", "DuckAssistBot", "cohere-ai", "CCBot",
+  "Amazonbot", "meta-externalagent", "Bytespider"
+];
+fs.writeFileSync(path.join(dist, "robots.txt"), [
+  "# AI assistants and search crawlers are explicitly welcomed to read and cite this site.",
+  "Content-Signal: ai-train=yes, search=yes, ai-input=yes",
+  `Agentmap: ${canonicalOrigin}/.well-known/ard.json`,
+  ...aiBots.map((bot) => `User-agent: ${bot}`),
+  "Allow: /",
+  "",
+  "User-agent: *",
+  "Content-Signal: ai-train=yes, search=yes, ai-input=yes",
+  "Allow: /",
+  "",
+  `Sitemap: ${canonicalOrigin}/sitemap.xml`,
+  ""
+].join("\n"));
+fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index: ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n`);
+const llmsFullLines = [
+  `# ${site.brand.masterbrand} full corpus`,
+  "",
+  site.brand.positioning,
+  "",
+  "## Products",
+  "",
+  ...site.products.map((product) => `- ${product.name} (${product.owner}): ${product.canonicalUrl} — ${presentationFor(product).summary} Method: ${product.methodologyUrl}. Cadence: ${product.updateFrequency}.`),
+  "",
+  "## Narrative routes",
+  "",
+  ...routes.sitePages.map((page) => `- ${page.title}: ${canonicalOrigin}${page.path} — ${page.description}`),
+  ""
+];
+fs.writeFileSync(path.join(dist, "llms-full.txt"), `${llmsFullLines.join("\n")}`);
 
 for (const page of routes.localPages) {
   copyFile(path.join(root, page.source), path.join(dist, page.output));
@@ -704,9 +788,27 @@ for (const asset of routes.assets) {
 
 for (const mount of routes.dashboardMounts) {
   const upstreamRoot = path.join(cacheRoot, mount.repoKey);
-  const targetRoot = path.join(dist, mount.slug);
+  const targetRoot = path.join(dist, ...mount.path.split("/").filter(Boolean));
   if (!fs.existsSync(upstreamRoot)) {
     throw new Error(`Missing upstream checkout for ${mount.repoKey}; run npm run sync`);
   }
   copyDirectory(upstreamRoot, targetRoot, (content) => rewriteStaticContent(content, mount.path));
+}
+
+function copyStaticTree(sourceRoot, targetRoot) {
+  for (const entry of fs.readdirSync(sourceRoot, { withFileTypes: true })) {
+    const source = path.join(sourceRoot, entry.name);
+    const target = path.join(targetRoot, entry.name);
+    if (entry.isDirectory()) {
+      copyStaticTree(source, target);
+      continue;
+    }
+    ensureParent(target);
+    fs.copyFileSync(source, target);
+  }
+}
+
+const staticRoot = path.join(root, "static");
+if (fs.existsSync(staticRoot)) {
+  copyStaticTree(staticRoot, dist);
 }

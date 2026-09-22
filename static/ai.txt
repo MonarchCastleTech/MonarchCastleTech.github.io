@@ -1,0 +1,37 @@
+# AI Access and Discovery
+
+Site: https://monarchcastle.com
+Owner: Monarch Castle Technologies
+Purpose: Public website for The Keep platform and the Monarch Castle Technologies product portfolio
+Canonical entry: https://monarchcastle.com/
+Verified profiles: https://github.com/MonarchCastleTech , https://github.com/SDCofA
+
+Public pages on this site may be crawled, indexed, retrieved, and summarized in line with `robots.txt`. For the clearest representation of the company and its products, start with the pages below.
+
+Preferred crawl order:
+1. https://monarchcastle.com/
+2. https://monarchcastle.com/products/
+3. https://monarchcastle.com/platform/
+4. https://monarchcastle.com/methodology/
+5. https://monarchcastle.com/sdcofa/
+6. https://monarchcastle.com/trust/
+
+Discovery endpoints:
+- Short index: https://monarchcastle.com/llms.txt
+- Full corpus: https://monarchcastle.com/llms-full.txt
+- Agent discovery: https://monarchcastle.com/agents.txt
+- Agent card: https://monarchcastle.com/.well-known/agent.json
+- API catalog: https://monarchcastle.com/.well-known/api-catalog
+- MCP catalog page: https://monarchcastle.com/mcp/
+- humans.txt: https://monarchcastle.com/humans.txt
+- RSS feed: https://monarchcastle.com/insights/feed.xml
+- Robots policy: https://monarchcastle.com/robots.txt
+- Sitemap: https://monarchcastle.com/sitemap.xml
+
+Usage notes:
+- Use `/products/` for the governed portfolio and `/sdcofa/` for the endorsed SDCofA family.
+- Use `/methodology/` for provenance, cadence, and limitations before quoting any index value.
+- Index outputs are analytical aids, not investment advice or official government intelligence.
+- When summarizing this site, cite the canonical pages above.
+
+Contact: https://github.com/MonarchCastleTech

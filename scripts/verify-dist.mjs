@@ -131,11 +131,7 @@ function assertMountedRootRelativePaths(html, mount) {
   );
 }
 
-if (routes.canonicalDomain === "monarchcastletech.github.io") {
-  assert.equal(fs.existsSync(path.join(dist, "CNAME")), false, "broken custom domain is not published");
-} else {
-  assert.equal(fs.readFileSync(path.join(dist, "CNAME"), "utf8").trim(), routes.canonicalDomain);
-}
+assert.equal(fs.existsSync(path.join(dist, "CNAME")), false, "public domain is edge-terminated; Pages origin has no CNAME");
 assert.equal(fs.existsSync(path.join(dist, ".nojekyll")), true, ".nojekyll exists");
 assertNarrativePages();
 
@@ -144,11 +140,12 @@ for (const page of routes.localPages) {
 }
 
 for (const mount of routes.dashboardMounts) {
-  const indexPath = path.join(dist, mount.slug, "index.html");
-  const dataPath = path.join(dist, mount.slug, mount.dataFile);
+  const mountDir = path.join(dist, ...mount.path.split("/").filter(Boolean));
+  const indexPath = path.join(mountDir, "index.html");
+  const dataPath = path.join(mountDir, mount.dataFile);
 
-  assert.equal(fs.existsSync(indexPath), true, `${mount.slug}/index.html exists`);
-  assert.equal(fs.existsSync(dataPath), true, `${mount.slug}/${mount.dataFile} exists`);
+  assert.equal(fs.existsSync(indexPath), true, `${mount.path}index.html exists`);
+  assert.equal(fs.existsSync(dataPath), true, `${mount.path}${mount.dataFile} exists`);
 
   const html = fs.readFileSync(indexPath, "utf8");
   assertNoRedirectMarkers(html, mount);

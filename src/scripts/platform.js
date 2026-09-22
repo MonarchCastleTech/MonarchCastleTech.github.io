@@ -1,7 +1,7 @@
 const feeds = [
-  { id: "bnti", label: "BNTI", url: "/bnti/bnti_data.json" },
-  { id: "wti", label: "WTI", url: "/wti/wti_data.json" },
-  { id: "mena", label: "MENA", url: "/mena/mena_data.json" }
+  { id: "bnti", label: "BNTI", url: "/sdcofa/bnti/bnti_data.json" },
+  { id: "wti", label: "WTI", url: "/sdcofa/wti/wti_data.json" },
+  { id: "mena", label: "MENA", url: "/sdcofa/mena/mena_data.json" }
 ];
 
 const number = new Intl.NumberFormat("en", { maximumFractionDigits: 2, minimumFractionDigits: 2 });

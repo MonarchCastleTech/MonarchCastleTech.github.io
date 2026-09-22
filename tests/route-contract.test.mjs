@@ -18,8 +18,8 @@ const requiredNarrativePaths = [
   "/company/"
 ];
 
-test("canonical domain stays on the reliable GitHub Pages host", () => {
-  assert.equal(routes.canonicalDomain, "monarchcastletech.github.io");
+test("canonical domain targets the public custom domain", () => {
+  assert.equal(routes.canonicalDomain, "monarchcastle.com");
 });
 
 test("the route manifest declares the homepage and all narrative routes", () => {
@@ -48,12 +48,12 @@ test("the flagship shell is self-contained and no longer depends on the unavaila
   assert.ok(routes.assets.some((asset) => asset.fromLocal === "src/assets/approved" && asset.to === "assets/approved"));
 });
 
-test("full dashboards remain mounted at their canonical subpaths", () => {
+test("full dashboards remain mounted under the endorsed SDCofA prefix", () => {
   const mounts = Object.fromEntries(routes.dashboardMounts.map((route) => [route.slug, route]));
   assert.deepEqual(Object.keys(mounts).sort(), ["bnti", "mena", "wti"]);
-  assert.equal(mounts.bnti.path, "/bnti/");
-  assert.equal(mounts.wti.path, "/wti/");
-  assert.equal(mounts.mena.path, "/mena/");
+  assert.equal(mounts.bnti.path, "/sdcofa/bnti/");
+  assert.equal(mounts.wti.path, "/sdcofa/wti/");
+  assert.equal(mounts.mena.path, "/sdcofa/mena/");
   assert.equal(mounts.bnti.dataFile, "bnti_data.json");
   assert.equal(mounts.wti.dataFile, "wti_data.json");
   assert.equal(mounts.mena.dataFile, "mena_data.json");

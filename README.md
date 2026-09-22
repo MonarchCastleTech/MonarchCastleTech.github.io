@@ -18,10 +18,10 @@ Lifecycle: **Active**. The badge and this statement describe maintenance status,
 
 ## Public access
 
-The canonical production route is [monarchcastletech.github.io](https://monarchcastletech.github.io/). The site is served on the GitHub Pages host; no retired custom-domain certificate or DNS configuration is required.
+The canonical production route is [monarchcastle.com](https://monarchcastle.com/). The site origin remains the GitHub Pages host; the public custom domain is terminated at the Cloudflare edge, so no Pages CNAME is published.
 
 The public portfolio includes the
-[Süper Lig Forecast](https://monarchcastletech.github.io/superlig-forecast/),
+[Süper Lig Forecast](https://monarchcastle.com/superlig-forecast/),
 a daily five-million-path title, table, and match-outcome forecast with a
 published 20-season expanding-window backtest.
 
