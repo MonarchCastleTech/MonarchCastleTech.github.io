@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 156" role="img" aria-label="Cyber Threat Exposure Map product logo">
+  <title>Cyber Threat Exposure Map product logo</title>
+  <desc>Connected exposure nodes sit inside a measured shield outline.</desc>
+  <style>
+    :root { --logo-blue: #2f7de1; --logo-cyan: #38b8d6; --logo-amber: #d7b46a; --logo-ink: #f3efe4; }
+    .blue, .cyan, .amber { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; }
+    .blue { stroke: var(--logo-blue); }
+    .cyan { stroke: var(--logo-cyan); }
+    .amber { stroke: var(--logo-amber); }
+    .blue-fill { fill: var(--logo-blue); }
+    .cyan-fill { fill: var(--logo-cyan); }
+    .amber-fill { fill: var(--logo-amber); }
+    .wordmark { fill: var(--logo-blue); font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, sans-serif; font-weight: 700; letter-spacing: -0.8px; }
+  </style>
+  <g aria-hidden="true"><path class="blue" d="M66 31 103 45v27c0 26-17 42-37 53-20-11-37-27-37-53V45z"/><path class="cyan" d="m47 72 17-14 21 18-20 20-18-24 38 4"/><circle class="amber-fill" cx="64" cy="58" r="6"/><circle class="blue-fill" cx="47" cy="72" r="5"/><circle class="blue-fill" cx="85" cy="76" r="5"/><circle class="blue-fill" cx="65" cy="96" r="5"/></g>
+  <text class="wordmark" x="145" y="65" font-size="40">Cyber Threat</text>
+  <text class="wordmark" x="145" y="111" font-size="40">Exposure Map</text>
+</svg>

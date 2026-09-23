@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 156" role="img" aria-label="Türkiye Economic Sentiment Radar product logo">
+  <title>Türkiye Economic Sentiment Radar product logo</title>
+  <desc>A calibrated sentiment dial points toward a changing economic signal.</desc>
+  <style>
+    :root { --logo-blue: #2f7de1; --logo-cyan: #38b8d6; --logo-amber: #d7b46a; --logo-ink: #f3efe4; }
+    .blue, .cyan, .amber { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; }
+    .blue { stroke: var(--logo-blue); }
+    .cyan { stroke: var(--logo-cyan); }
+    .amber { stroke: var(--logo-amber); }
+    .blue-fill { fill: var(--logo-blue); }
+    .cyan-fill { fill: var(--logo-cyan); }
+    .amber-fill { fill: var(--logo-amber); }
+    .wordmark { fill: var(--logo-blue); font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, sans-serif; font-weight: 700; letter-spacing: -0.8px; }
+  </style>
+  <g aria-hidden="true"><path class="blue" d="M24 101a42 42 0 0 1 84 0"/><path class="cyan" d="M38 101a28 28 0 0 1 56 0M52 101a14 14 0 0 1 28 0"/><path class="amber" d="m66 101 23-31"/><circle class="amber-fill" cx="66" cy="101" r="6"/><path class="blue" d="M27 108h78"/></g>
+  <text class="wordmark" x="145" y="65" font-size="35">Türkiye Economic</text>
+  <text class="wordmark" x="145" y="111" font-size="35">Sentiment Radar</text>
+</svg>

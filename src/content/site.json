@@ -9,7 +9,7 @@
       "claims": "claims/claims-register.json",
       "forecastBenchmark": "forecasting/benchmark-manifest.json"
     },
-    "sha256": "5e831681f62333173489ce77c9417dc19cad1bb37f717644c2550ece0bf312a6"
+    "sha256": "a846587664ed9c893a8d763fd3ce9608a3a7580a4ac3d44172051ac5f0080bff"
   },
   "brand": {
     "masterbrand": "Monarch Castle Technologies",
@@ -74,9 +74,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/caspian-black-sea-monitor/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Caspian & Black Sea Monitor",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/caspian-black-sea-monitor-logo.svg",
+        "publicPath": "/assets/products/caspian-black-sea-monitor-logo.svg",
+        "sha256": "2367ba28a061947a59cfb2143452312920231356403e6542b795089ec7424488",
+        "alt": "Caspian & Black Sea Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/caspian-black-sea-monitor/",
       "owner": "MonarchCastleTech",
@@ -92,9 +94,11 @@
       "methodologyUrl": "https://github.com/SDCofA/climate-security-index/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Climate Security Index",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/climate-security-index-logo.svg",
+        "publicPath": "/assets/products/climate-security-index-logo.svg",
+        "sha256": "a64e2cb3491bf34359498a0d25d8f5a6c079337eeda09b8410d6632ff28dd03c",
+        "alt": "Climate Security Index product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/climate-security-index/",
       "owner": "SDCofA",
@@ -130,9 +134,11 @@
       "methodologyUrl": "https://github.com/SDCofA/conflict-early-warning/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Conflict Early Warning System",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/conflict-early-warning-logo.svg",
+        "publicPath": "/assets/products/conflict-early-warning-logo.svg",
+        "sha256": "33ab45cf756101dd7dd167aecaf6b8ce5796f71fb41e9d9c31a698c319530302",
+        "alt": "Conflict Early Warning System product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/conflict-early-warning/",
       "owner": "SDCofA",
@@ -148,9 +154,11 @@
       "methodologyUrl": "https://github.com/SDCofA/cyber-exposure-map/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Cyber Threat Exposure Map",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/cyber-exposure-map-logo.svg",
+        "publicPath": "/assets/products/cyber-exposure-map-logo.svg",
+        "sha256": "0c8e582e43fa8532d86ca758ba0b52999b7037e2c758820aed5e158dceeebea3",
+        "alt": "Cyber Threat Exposure Map product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/cyber-exposure-map/",
       "owner": "SDCofA",
@@ -166,9 +174,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/defense-procurement/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Defense Procurement Intelligence",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/defense-procurement-logo.svg",
+        "publicPath": "/assets/products/defense-procurement-logo.svg",
+        "sha256": "6cc2ee27a89f8d6cae0e636e34e0aee5a10fbe03c2432ffbc15781844d9b5419",
+        "alt": "Defense Procurement Intelligence product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/defense-procurement/",
       "owner": "MonarchCastleTech",
@@ -244,9 +254,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/mena-energy-flow/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "MENA Energy Flow Tracker",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/mena-energy-flow-logo.svg",
+        "publicPath": "/assets/products/mena-energy-flow-logo.svg",
+        "sha256": "a9240b2f536f7d009048e132290e15b39383893236ac6ba8c403564e3cb65041",
+        "alt": "MENA Energy Flow Tracker product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/mena-energy-flow/",
       "owner": "MonarchCastleTech",
@@ -302,9 +314,11 @@
       "methodologyUrl": "https://github.com/SDCofA/nuclear-proliferation-watch/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Nuclear Proliferation Watch",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/nuclear-proliferation-watch-logo.svg",
+        "publicPath": "/assets/products/nuclear-proliferation-watch-logo.svg",
+        "sha256": "ef190c3d4f5f2949fe4634650243f7a68686f43effbbc8d8e48489de6850e4f5",
+        "alt": "Nuclear Proliferation Watch product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/nuclear-proliferation-watch/",
       "owner": "SDCofA",
@@ -320,9 +334,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/port-congestion-pulse/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Port Congestion Pulse",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/port-congestion-pulse-logo.svg",
+        "publicPath": "/assets/products/port-congestion-pulse-logo.svg",
+        "sha256": "d1ebc573fc236cea027b5e4c4868e82fcf22c90c029f0ef280818dde9d8326c5",
+        "alt": "Port Congestion Pulse product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/port-congestion-pulse/",
       "owner": "MonarchCastleTech",
@@ -358,9 +374,11 @@
       "methodologyUrl": "https://github.com/SDCofA/sanctions-exposure-index/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "Sanctions Exposure Index",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/sanctions-exposure-index-logo.svg",
+        "publicPath": "/assets/products/sanctions-exposure-index-logo.svg",
+        "sha256": "3d83f3d4e0210c0f2a9dbda799d9f79a50b2506820b89e99917e2d4142796c5a",
+        "alt": "Sanctions Exposure Index product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/sanctions-exposure-index/",
       "owner": "SDCofA",
@@ -416,9 +434,11 @@
       "methodologyUrl": "https://github.com/MonarchCastleTech/tr-economic-sentiment/blob/main/README.md",
       "updateFrequency": "every 6 hours",
       "logo": {
-        "kind": "governed-text",
-        "label": "T?rkiye Economic Sentiment Radar",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/tr-economic-sentiment-logo.svg",
+        "publicPath": "/assets/products/tr-economic-sentiment-logo.svg",
+        "sha256": "119946f44f551ffd3a6d171479ff4dbaa9b8f54078ea7d0479ce1d168fafa271",
+        "alt": "T?rkiye Economic Sentiment Radar product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/tr-economic-sentiment/",
       "owner": "MonarchCastleTech",
@@ -494,9 +514,11 @@
       "methodologyUrl": "https://github.com/SDCofA/election/blob/main/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "Election Monitor",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/election-logo.svg",
+        "publicPath": "/assets/products/election-logo.svg",
+        "sha256": "d74527016624a81bd87bbe5b9800ac8411a3926b5caa254b0bb16e429662c51f",
+        "alt": "Election Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/election/",
       "owner": "SDCofA",
@@ -512,9 +534,11 @@
       "methodologyUrl": "https://github.com/SDCofA/georisk/blob/main/README.md",
       "updateFrequency": "review-required",
       "logo": {
-        "kind": "governed-text",
-        "label": "GeoRisk",
-        "status": "review-required"
+        "kind": "approved-image",
+        "sourcePath": "assets/products/georisk-logo.svg",
+        "publicPath": "/assets/products/georisk-logo.svg",
+        "sha256": "358a54c94abc9e6b7f664fef4b73a0b482ac1b17b8d7f06101def602af3d01e2",
+        "alt": "GeoRisk product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/georisk/",
       "owner": "SDCofA",
