@@ -101,18 +101,30 @@ test("product logos use approved dark assets without runtime color filters", () 
 
 test("every public product uses approved imagery or governed text branding", () => {
   const expectedLogoPaths = [
+    "/assets/products/caspian-black-sea-monitor-logo.svg",
+    "/assets/products/climate-security-index-logo.svg",
     "/assets/products/cloudy-shiny-logo.png",
+    "/assets/products/conflict-early-warning-logo.svg",
+    "/assets/products/cyber-exposure-map-logo.svg",
+    "/assets/products/defense-procurement-logo.svg",
     "/assets/products/econmap-logo.png",
     "/assets/products/esgmap-logo.png",
     "/assets/products/macrointel-logo.png",
+    "/assets/products/mena-energy-flow-logo.svg",
     "/assets/products/milcodec-logo.png",
     "/assets/products/nuclear-logo.png",
+    "/assets/products/nuclear-proliferation-watch-logo.svg",
+    "/assets/products/port-congestion-pulse-logo.svg",
     "/assets/products/prepturk-logo.png",
+    "/assets/products/sanctions-exposure-index-logo.svg",
     "/assets/products/superlig-forecast-logo.png",
     "/assets/products/supplychain-logo.png",
+    "/assets/products/tr-economic-sentiment-logo.svg",
     "/assets/products/bnti-icon.png",
     "/assets/approved/mena-threat-index.png",
-    "/assets/approved/world-threat-index.png"
+    "/assets/approved/world-threat-index.png",
+    "/assets/products/election-logo.svg",
+    "/assets/products/georisk-logo.svg"
   ];
 
   assert.deepEqual(
