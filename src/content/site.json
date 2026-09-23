@@ -392,7 +392,7 @@
       "lifecycle": "review-required",
       "regions": [],
       "methodologyUrl": "https://github.com/MonarchCastleTech/superlig-forecast/blob/main/README.md",
-      "updateFrequency": "publication paused",
+      "updateFrequency": "every 6 hours",
       "logo": {
         "kind": "approved-image",
         "sourcePath": "assets/products/superlig-forecast-logo.png",
@@ -402,7 +402,7 @@
       },
       "canonicalUrl": "https://monarchcastle.com/superlig-forecast/",
       "owner": "MonarchCastleTech",
-      "forecastEvidenceStatus": "Current-season forecast withheld: zero completed official fixtures and incomplete team matching in last release",
+      "forecastEvidenceStatus": "Official TFF season results and all 18 clubs; structural-only forecast with no current squad-value input",
       "endorsementLabel": "Part of Monarch Castle Technologies"
     },
     {

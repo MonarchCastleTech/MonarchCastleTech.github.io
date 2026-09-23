@@ -145,18 +145,18 @@ test("every public product uses approved imagery or governed text branding", () 
   }
 });
 
-test("products page discloses the paused Süper Lig forecast", () => {
+test("products page discloses the official-results-only Süper Lig forecast", () => {
   const forecast = site.products.find(({ id }) => id === "superlig-forecast");
   assert.ok(forecast);
   assert.equal(
     forecast.canonicalUrl,
     "https://monarchcastle.com/superlig-forecast/",
   );
-  assert.equal(forecast.updateFrequency, "publication paused");
+  assert.equal(forecast.updateFrequency, "every 6 hours");
   assert.match(productsHtml, /data-product-id="superlig-forecast"/);
   assert.match(
     productsHtml,
-    /Season probabilities are temporarily withheld because the last release lacked completed official fixtures and full team matching\./,
+    /Current-season probabilities use all 18 official TFF clubs and completed results in a historically evaluated structural model\. No current squad values are imputed\./,
   );
 });
 

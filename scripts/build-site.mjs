@@ -338,7 +338,7 @@ const productPresentation = {
     signal: "Preparedness"
   },
   "superlig-forecast": {
-    summary: "Season probabilities are temporarily withheld because the last release lacked completed official fixtures and full team matching.",
+    summary: "Current-season probabilities use all 18 official TFF clubs and completed results in a historically evaluated structural model. No current squad values are imputed.",
     signal: "Football forecasting"
   },
   supplychain: {
