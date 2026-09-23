@@ -15,4 +15,4 @@ Move canonical host to monarchcastle.com via Cloudflare worker reverse-proxy of 
 - no dist/CNAME
 
 ## Status
-Built and CI-green through 9548b75 (SEO wave-2: per-page FAQ, typed JSON-LD, 404, worker LINK agent/manifest). CF zone **regressed to Squarespace NS** — user must re-point registrar NS to Cloudflare; DNSSEC still pending re-check after restore.
+Built and CI-green through `4f7be4c` (SEO wave-2). Edge restored: zone active, DNSSEC active, isitagentready level 5 @ 2026-09-23T00:04Z. Remaining user: revoke CF token; local UDP/53 still TT middlebox→Squarespace (probes need DoH).
