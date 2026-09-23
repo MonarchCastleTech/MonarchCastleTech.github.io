@@ -322,8 +322,8 @@ const productPresentation = {
     signal: "Technical demonstration"
   },
   "nuclear-energy-intelligence": {
-    summary: "OWID-derived electricity data alongside analyst-curated reactor and project references, with separate update paths.",
-    signal: "Energy systems"
+    summary: "OWID-derived nuclear electricity shares for 23 selected countries, with observation years. Unsourced facility and project modules are withheld pending record-level verification.",
+    signal: "Nuclear electricity"
   },
   "nuclear-proliferation-watch": {
     summary: "Source-linked nuclear policy headlines. No facility-level or proliferation-risk estimate is published.",

@@ -292,7 +292,7 @@
       "lifecycle": "review-required",
       "regions": [],
       "methodologyUrl": "https://github.com/MonarchCastleTech/NuclearEnergyIntelligence/blob/main/README.md",
-      "updateFrequency": "review-required",
+      "updateFrequency": "weekly source check",
       "logo": {
         "kind": "approved-image",
         "sourcePath": "assets/products/nuclear-logo.png",
@@ -302,7 +302,7 @@
       },
       "canonicalUrl": "https://monarchcastle.com/NuclearEnergyIntelligence/",
       "owner": "MonarchCastleTech",
-      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "forecastEvidenceStatus": "OWID annual electricity-share series; facility and project claims withheld",
       "endorsementLabel": "Part of Monarch Castle Technologies"
     },
     {
