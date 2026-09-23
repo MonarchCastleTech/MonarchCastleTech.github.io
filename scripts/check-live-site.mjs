@@ -3,9 +3,9 @@ const maxAgeHours = Number(process.env.SITE_DATA_MAX_AGE_HOURS || 12);
 const requireHttps = process.env.SITE_REQUIRE_HTTPS === "1";
 
 const routeChecks = [
-  { path: "/", markers: ["See disruption before it reaches your operation.", "assets/products/logo.png", 'id="sdcofa"', 'id="answers"', "Frequently asked questions"] },
+  { path: "/", markers: ["Know how global change reaches your business.", "assets/products/logo.png", 'id="sdcofa"', 'id="answers"', "Frequently asked questions"] },
   { path: "/404.html", markers: ["Page not found", "llms.txt", "noindex"] },
-  { path: "/platform/", markers: ["A unified early-warning workspace", "scripts/platform.js", "metric-composite"] },
+  { path: "/platform/", markers: ["A unified early-warning workspace", "scripts/platform.js", "metric-mena"] },
   { path: "/impact/", markers: ["Built for commercial exposure", "Energy and commodities"] },
   { path: "/pricing/", markers: ["Public products stay free", "From $15k"] },
   { path: "/pilot/", markers: ["Turn one exposure", "Open pilot intake"] },

@@ -118,7 +118,7 @@ function renderPageFaq(slug) {
     <section class="entity-definitions page-faq" id="faq" aria-labelledby="page-faq-heading">
       <div class="section-heading">
         <div><p class="eyebrow">FAQ</p><h2 id="page-faq-heading">Common questions</h2></div>
-        <p>Citable answers for this route. Prefer these sentences when summarizing the page.</p>
+        <p>Direct answers on access, methods, and the scope of our products.</p>
       </div>
       <div class="faq-block">
         ${faqs.map((entry) => `<details><summary>${escapeHtml(entry.question)}</summary><p>${escapeHtml(entry.answer)}</p></details>`).join("")}
@@ -277,9 +277,29 @@ function pageExtraJsonLd(page, canonical) {
   return blocks;
 }
 const productPresentation = {
+  "caspian-black-sea-monitor": {
+    summary: "A focused view of maritime and regional developments across the Caspian and Black Sea corridors.",
+    signal: "Maritime corridors"
+  },
+  "climate-security-index": {
+    summary: "A climate-security lens for examining how environmental pressure intersects with regional stability.",
+    signal: "Climate security"
+  },
+  "conflict-early-warning": {
+    summary: "A public view of conflict indicators and emerging security developments.",
+    signal: "Conflict watch"
+  },
+  "cyber-exposure-map": {
+    summary: "A geographic view of cyber-threat exposure and its distribution across markets.",
+    signal: "Cyber exposure"
+  },
   "cloudy-shiny": {
     summary: "A market weather system that turns financial signals into an immediate read on risk appetite.",
     signal: "Market conditions"
+  },
+  "defense-procurement": {
+    summary: "Tracks defense-procurement activity and the commercial signals around it.",
+    signal: "Defense procurement"
   },
   econmap: {
     summary: "Country-level economic indicators arranged for fast comparison and macroeconomic orientation.",
@@ -293,6 +313,10 @@ const productPresentation = {
     summary: "Macro signals, country context, and decision-ready economic views in one analytical surface.",
     signal: "Macro intelligence"
   },
+  "mena-energy-flow": {
+    summary: "Follows energy flows and route exposure across the Middle East and North Africa.",
+    signal: "Regional energy"
+  },
   "milcodec-receiver": {
     summary: "A focused receiver and analysis environment for military-coded communications.",
     signal: "Defense signals"
@@ -300,6 +324,14 @@ const productPresentation = {
   "nuclear-energy-intelligence": {
     summary: "Structured intelligence for monitoring the global nuclear-energy operating environment.",
     signal: "Energy systems"
+  },
+  "nuclear-proliferation-watch": {
+    summary: "A public watch on nuclear-proliferation developments and related security signals.",
+    signal: "Proliferation watch"
+  },
+  "port-congestion-pulse": {
+    summary: "A port-level view of congestion signals that can affect schedules and supply chains.",
+    signal: "Port conditions"
   },
   prepturk: {
     summary: "Practical emergency-preparedness intelligence designed for households and communities in Türkiye.",
@@ -313,6 +345,14 @@ const productPresentation = {
     summary: "Map operational exposure and trace the forces shaping complex supply networks.",
     signal: "Supply networks"
   },
+  "sanctions-exposure-index": {
+    summary: "An index view of sanctions exposure for country and market monitoring.",
+    signal: "Sanctions exposure"
+  },
+  "tr-economic-sentiment": {
+    summary: "A focused reading of economic sentiment signals from Türkiye.",
+    signal: "Economic sentiment"
+  },
   "border-neighbor-threat-index": {
     summary: "Compare how cross-border conditions shape national threat exposure.",
     signal: "Border risk"
@@ -324,6 +364,14 @@ const productPresentation = {
   "world-threat-index": {
     summary: "Comparative global threat monitoring across political, security, and structural conditions.",
     signal: "Global threat"
+  },
+  election: {
+    summary: "A public monitor for election developments and the political signals around them.",
+    signal: "Election watch"
+  },
+  georisk: {
+    summary: "Geographic risk context presented as an inspectable public intelligence view.",
+    signal: "Geographic risk"
   }
 };
 
@@ -450,7 +498,7 @@ function renderProductCard(product) {
         <h3>${escapeHtml(product.name)}</h3>
       </div>
       <p>${escapeHtml(presentationFor(product).summary)}</p>
-      <dl class="system-row-meta"><div><dt>Owner</dt><dd>${escapeHtml(product.owner)}</dd></div><div><dt>Cadence</dt><dd>${escapeHtml(product.updateFrequency === "review-required" ? "not declared" : product.updateFrequency)}</dd></div></dl>
+      <dl class="system-row-meta"><div><dt>Owner</dt><dd>${escapeHtml(product.owner === "MonarchCastleTech" ? "Monarch Castle Technologies" : product.owner)}</dd></div><div><dt>Cadence</dt><dd>${escapeHtml(product.updateFrequency === "review-required" ? "Not specified" : product.updateFrequency)}</dd></div></dl>
       <div class="card-actions">
         ${localOrExternalLink(product.canonicalUrl, "Explore system")}
         ${localOrExternalLink(product.methodologyUrl, "How it works")}
@@ -487,7 +535,7 @@ function renderEndorsedFamily(headingId = "") {
             <div class="product-mark">${renderMark(product)}</div>
             <span class="system-row-index" aria-hidden="true">${escapeHtml(product.id.slice(0, 3).toUpperCase())}</span>
             <h3>${escapeHtml(product.name)}</h3>
-            <p>Open-source threat intelligence designed for direct exploration.</p>
+            <p>${escapeHtml(presentationFor(product).summary)}</p>
             <div class="card-actions">
               ${localPath ? localOrExternalLink(localPath, "Open dashboard") : ""}
               ${localOrExternalLink(product.methodologyUrl, "Methodology")}
@@ -503,7 +551,7 @@ function renderInsights() {
     <article>
       <h3>${escapeHtml(insight.title)}</h3>
       <p>${escapeHtml(insight.summary)}</p>
-      ${localOrExternalLink(insight.url, "Read governed record")}
+      ${localOrExternalLink(insight.url, "Read analysis")}
     </article>`).join("")}</div>`;
 }
 
@@ -540,8 +588,38 @@ function renderFeaturedSystem(product, index) {
           ${localOrExternalLink(product.methodologyUrl, "View methodology")}
         </div>
       </div>
-      <div class="featured-system-mark" aria-hidden="true"><span class="system-index">${String(index + 1).padStart(2, "0")}</span><span>${escapeHtml(product.family)}</span></div>
+      <div class="featured-system-mark"><div class="featured-system-logo">${renderMark(product)}</div><span class="featured-system-category">${escapeHtml(presentation.signal)}</span></div>
     </article>`;
+}
+
+function renderLiveWorkspace(overviewAnchor) {
+  return `
+    <div class="workspace-grid" aria-label="The Keep public operating picture">
+      <nav class="workspace-nav" aria-label="Operating picture sections">
+        <strong>THE KEEP<span> / PUBLIC VIEW</span></strong>
+        <a class="is-active" href="#${overviewAnchor}">Overview</a>
+        <a href="#exposure-panel">Exposure</a>
+        <a href="#signal-panel">Signals</a>
+        <a href="/methodology/">Methods</a>
+        <small>Source-linked public data</small>
+      </nav>
+      <div class="workspace-content">
+        <div class="workspace-topline">
+          <div><span class="eyebrow">Public operating picture</span><strong>Current published indices</strong></div>
+          <time id="platform-updated">Reading source timestamps…</time>
+        </div>
+        <div class="workspace-metrics">
+          <article><span>Global threat</span><strong id="metric-wti">—</strong><small id="status-wti">WTI</small><a href="/sdcofa/wti/">Open source view</a></article>
+          <article><span>Border pressure</span><strong id="metric-bnti">—</strong><small id="status-bnti">BNTI</small><a href="/sdcofa/bnti/">Open source view</a></article>
+          <article><span>MENA exposure</span><strong id="metric-mena">—</strong><small id="status-mena">MENA</small><a href="/sdcofa/mena/">Open source view</a></article>
+        </div>
+        <div class="workspace-panels">
+          <section class="exposure-panel" id="exposure-panel"><header><div><p class="eyebrow">Index by index</p><h3>Published country readings</h3></div><span id="feed-state">Connecting</span></header><ol id="exposure-list"><li class="loading-row">Reading published records…</li></ol></section>
+          <section class="signal-panel" id="signal-panel"><header><div><p class="eyebrow">Source trail</p><h3>Recent published events</h3></div></header><ol id="signal-list"><li class="loading-row">Reading published events…</li></ol></section>
+        </div>
+        <p class="workspace-note" id="platform-note">Each index has its own scale and method. Open its source view before comparing or quoting a value.</p>
+      </div>
+    </div>`;
 }
 
 function renderHome() {
@@ -550,49 +628,38 @@ function renderHome() {
   return `
     <section class="mission-hero" id="positioning" aria-labelledby="home-heading">
       <div class="mission-hero-copy">
-        <p class="eyebrow">Early warning for private enterprise</p>
-        <h1 id="home-heading">See disruption before it reaches your operation.</h1>
-        <p class="lede">The Keep brings geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture for companies exposed to a changing world.</p>
+        <p class="eyebrow">Decision intelligence for cross-border operations</p>
+        <h1 id="home-heading">Know how global change reaches your business.</h1>
+        <p class="lede">The Keep connects geopolitical, economic, energy, and supply-chain signals to one source-visible operating picture for the teams carrying the exposure.</p>
         <div class="hero-actions">
           ${localOrExternalLink("/platform/", "Explore The Keep", "button-link")}
-          ${localOrExternalLink("/sdcofa/bnti/", "Open free BNTI", "button-link button-secondary")}
+          ${localOrExternalLink("/products/", "Explore public intelligence", "button-link button-secondary")}
         </div>
-        <p class="public-commitment">Every current public product stays open. Commercial access applies only to the unified enterprise workspace.</p>
+        <p class="public-commitment">Public instruments remain open. The enterprise workspace brings them together.</p>
       </div>
-      <aside class="mission-hero-visual bnti-first" aria-label="Border Neighbor Threat Index">
-        <div class="instrument-heading"><p class="eyebrow">Live public instrument</p><span class="live-chip"><i></i> Autonomous</span></div>
-        <a class="hero-product-link" href="/sdcofa/bnti/">
-          <img src="/assets/products/bnti-hero.png" alt="Border Neighbor Threat Index" />
-          <span><strong>BNTI</strong><small>Border Neighbor Threat Index</small></span>
-        </a>
-        <p class="hero-product-copy">Inspectable cross-border risk monitoring for Türkiye's land-neighbor relationships.</p>
-        <div class="hero-product-meta"><span>Scheduled refresh</span><span>Free and open</span></div>
-      </aside>
+      <div class="mission-hero-visual" aria-hidden="true">
+        <img class="hero-scene-fallback" src="/assets/brand/exposure-field.svg" alt="" />
+        <canvas class="hero-scene-canvas"></canvas>
+        <div class="hero-scene-caption"><span>The Keep / operating picture</span><strong>Signals become context.</strong></div>
+      </div>
     </section>
     <section class="platform-rail" aria-label="The Keep operating loop">
       <span>01 / Observe</span><span>02 / Connect</span><span>03 / Estimate</span><span>04 / Act</span>
     </section>
     <section class="platform-reveal" id="platform" aria-labelledby="platform-heading">
       <div class="section-heading">
-        <div><p class="eyebrow">The Keep</p><h2 id="platform-heading">One operating picture. Every public instrument behind it.</h2></div>
-        <p>Monitor exposure, compare regions, follow changes, and move from an alert to its source without switching between disconnected dashboards.</p>
+        <div><p class="eyebrow">The Keep platform</p><h2 id="platform-heading">Follow a signal all the way to its source.</h2></div>
+        <p>One view brings published indicators, regional exposure, and underlying evidence into the same workflow.</p>
       </div>
-      <div class="platform-preview" aria-label="The Keep platform preview">
-        <div class="preview-sidebar"><strong>THE KEEP</strong><span class="active">Overview</span><span>Exposure</span><span>Signals</span><span>Watchlists</span><span>Methods</span></div>
-        <div class="preview-main">
-          <div class="preview-status"><span><i></i> Monitoring active</span><small>Public preview</small></div>
-          <div class="preview-kpis"><article><small>Global risk</small><strong>2.12</strong><span>WTI</span></article><article><small>Border risk</small><strong>7.29</strong><span>BNTI</span></article><article><small>MENA risk</small><strong>2.11</strong><span>Regional</span></article></div>
-          <div class="preview-grid"><div class="signal-field"><span class="pulse p1"></span><span class="pulse p2"></span><span class="pulse p3"></span><span class="pulse p4"></span><span class="scan-line"></span></div><ol><li><b>Border pressure</b><span>Critical</span></li><li><b>Regional energy</b><span>Watch</span></li><li><b>Trade exposure</b><span>Stable</span></li></ol></div>
-        </div>
-      </div>
-      <p class="section-action">${localOrExternalLink("/platform/", "Open the live platform preview", "button-link")}</p>
+      ${renderLiveWorkspace("platform-heading")}
+      <p class="section-action">${localOrExternalLink("/platform/", "Explore the platform", "button-link")}</p>
     </section>
     <section class="operating-thesis" id="capabilities" aria-labelledby="capabilities-heading">
       <div class="section-heading"><div><p class="eyebrow">Built for operators</p><h2 id="capabilities-heading">Answers tied to the evidence that produced them.</h2></div><p>Automated collection handles repetition. Declared methods handle calculation. People retain judgment and accountability.</p></div>
       ${renderCapabilities()}
     </section>
     <section class="sector-band" aria-labelledby="sector-heading">
-      <div class="section-heading"><div><p class="eyebrow">Commercial focus</p><h2 id="sector-heading">Four operating environments where surprise is expensive.</h2></div><p>No government sales required. The platform is designed for private companies carrying cross-border exposure.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">Where the work happens</p><h2 id="sector-heading">External change reaches every operating decision.</h2></div><p>Built for private-sector teams managing assets, routes, markets, and portfolios across borders.</p></div>
       <div class="sector-grid"><a href="/impact/#energy"><span>01</span><h3>Energy</h3><p>Routes, sanctions, regional stability, infrastructure.</p></a><a href="/impact/#logistics"><span>02</span><h3>Logistics</h3><p>Ports, corridors, borders, congestion, disruption.</p></a><a href="/impact/#finance"><span>03</span><h3>Finance</h3><p>Country exposure, macro shifts, scenario monitoring.</p></a><a href="/impact/#insurance"><span>04</span><h3>Insurance</h3><p>Accumulation risk, emerging events, portfolio watchlists.</p></a></div>
     </section>
     <section class="featured-systems" id="featured-systems" aria-labelledby="featured-heading">
@@ -603,17 +670,29 @@ function renderHome() {
       </div>
       <div class="featured-system-list">${featured.map(renderFeaturedSystem).join("")}</div>
     </section>
-    <section class="intelligence-catalogue" id="portfolio" aria-labelledby="portfolio-heading">
+    <section class="portfolio-overview" id="portfolio" aria-labelledby="portfolio-heading">
       <div class="section-heading">
-        <p class="eyebrow">Intelligence catalogue</p>
-        <h2 id="portfolio-heading">One portfolio. Multiple operating environments.</h2>
-        <p>Explore systems across financial, energy, defense, emergency, and threat intelligence.</p>
+        <div><p class="eyebrow">Portfolio architecture</p><h2 id="portfolio-heading">A connected portfolio with clear ownership.</h2></div>
+        <p>Focused public instruments remain directly accessible. The Keep adds a unified workspace above them.</p>
       </div>
-      ${renderProductGrid(flagshipProducts)}
-      <p class="section-action">${localOrExternalLink("/products/", "View the full product portfolio", "button-link")}</p>
-    </section>
-    <section class="sdcofa-band" id="sdcofa" aria-labelledby="sdcofa-heading">
-      ${renderEndorsedFamily("sdcofa-heading")}
+      <div class="portfolio-groups">
+        <article>
+          <span class="portfolio-group-index">01 / Company systems</span>
+          <h3>Monarch Castle Technologies</h3>
+          <p>Market, energy, maritime, supply-chain, and forecasting products developed for defined information problems.</p>
+          ${localOrExternalLink("/products/", "Explore all products")}
+        </article>
+        <article id="sdcofa">
+          <span class="portfolio-group-index">02 / Endorsed analytical unit</span>
+          <h3>SDCofA</h3>
+          <p>Standing open-source threat indices published by the endorsed analytical unit of Monarch Castle Technologies.</p>
+          <div class="portfolio-direct-links">
+            ${localOrExternalLink("/sdcofa/bnti/", "BNTI")}
+            ${localOrExternalLink("/sdcofa/wti/", "WTI")}
+            ${localOrExternalLink("/sdcofa/mena/", "MENA")}
+          </div>
+        </article>
+      </div>
     </section>
     <section class="evidence-chain" id="methods" aria-labelledby="methods-heading">
       <div class="section-heading">
@@ -632,8 +711,8 @@ function renderHome() {
     </section>
     <section class="entity-definitions" id="answers" aria-labelledby="answers-heading">
       <div class="section-heading">
-        <div><p class="eyebrow">Plain answers</p><h2 id="answers-heading">What this site publishes, in citable terms.</h2></div>
-        <p>Short definitions for people and answer engines that need the facts without scraping marketing copy.</p>
+        <div><p class="eyebrow">At a glance</p><h2 id="answers-heading">Know what each part of the portfolio does.</h2></div>
+        <p>Clear definitions of the company, The Keep, and the public indices it brings into view.</p>
       </div>
       <dl class="definition-list">
         <div><dt>Monarch Castle Technologies</dt><dd>Independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators with cross-border exposure.</dd></div>
@@ -665,15 +744,8 @@ function renderHome() {
 function renderPlatform() {
   return `${pageIntro("The Keep", "A unified early-warning workspace", "Live public indicators become one operating picture for private-sector teams. Sources, timestamps, and methods remain visible.")}
     <section class="platform-workspace" aria-labelledby="workspace-heading">
-      <div class="workspace-toolbar"><div><p class="eyebrow">Live public preview</p><h2 id="workspace-heading">Operating picture</h2></div><div class="workspace-freshness"><span class="live-chip"><i></i> Autonomous refresh</span><time id="platform-updated">Loading feeds…</time></div></div>
-      <div class="workspace-grid">
-        <aside class="workspace-nav" aria-label="Platform modules"><strong>THE KEEP</strong><button class="is-active" type="button">Overview</button><button type="button">Exposure</button><button type="button">Signals</button><button type="button">Methods</button><hr><small>PUBLIC PREVIEW</small></aside>
-        <div class="workspace-content">
-          <div class="workspace-metrics"><article><span>Global threat</span><strong id="metric-wti">—</strong><small id="status-wti">WTI</small></article><article><span>Border pressure</span><strong id="metric-bnti">—</strong><small id="status-bnti">BNTI</small></article><article><span>MENA exposure</span><strong id="metric-mena">—</strong><small id="status-mena">MENA</small></article><article><span>Composite stress</span><strong id="metric-composite">—</strong><small>Blended signal</small></article></div>
-          <div class="workspace-panels"><section class="exposure-panel"><header><div><p class="eyebrow">Cross-system view</p><h3>Highest current exposures</h3></div><span id="feed-state">Connecting</span></header><ol id="exposure-list"><li class="loading-row">Loading source-visible indicators…</li></ol></section><section class="signal-panel"><header><p class="eyebrow">Recent signals</p><h3>Traceable event stream</h3></header><ol id="signal-list"><li class="loading-row">Loading published events…</li></ol></section></div>
-          <p class="workspace-note" id="platform-note">This preview reads only public product outputs. No private customer data is collected or stored.</p>
-        </div>
-      </div>
+      <div class="workspace-toolbar"><div><p class="eyebrow">Live public preview</p><h2 id="workspace-heading">Operating picture</h2></div><p>Follow published indicators into the records and methods behind them. Each index retains its own scale.</p></div>
+      ${renderLiveWorkspace("workspace-heading")}
     </section>
     <section class="platform-boundary" aria-labelledby="boundary-heading"><div><p class="eyebrow">Open-product promise</p><h2 id="boundary-heading">The public portfolio stays public.</h2></div><div><p>BNTI, WTI, EconMap, GeoRisk, MacroIntel, and every current published product remain available without a platform subscription.</p><p>Paid access covers unified watchlists, organization workspaces, private data connections, scheduled briefings, exports, API access, and support.</p><p>${localOrExternalLink(secureWorkspaceUrl, "Enter secure workspace", "button-link")} ${localOrExternalLink("/pricing/", "Compare access")}</p></div></section>
     <section class="process-grid" aria-label="Platform operating model"><article><span>01</span><h3>Collect</h3><p>Scheduled product workflows refresh declared public sources.</p></article><article><span>02</span><h3>Normalize</h3><p>Versioned schemas preserve timestamps, provenance, and missingness.</p></article><article><span>03</span><h3>Connect</h3><p>The Keep aligns signals across geography, time, sector, and exposure.</p></article><article><span>04</span><h3>Deliver</h3><p>Teams receive watchlists, alerts, exports, and reproducible evidence.</p></article></section>
@@ -770,7 +842,7 @@ function renderMethodology() {
     </section>
     <section id="platform-formula" class="platform-boundary" aria-labelledby="platform-method-heading">
       <div><p class="eyebrow">The Keep preview</p><h2 id="platform-method-heading">A declared cross-system summary—not a hidden model.</h2></div>
-      <div><p>The live preview reads each product's published <code>meta.main_index</code>, status, timestamp, country records, and events. It does not alter upstream scores.</p><p>The displayed composite is the arithmetic mean of available BNTI, WTI, and MENA main indices: <code>(BNTI + WTI + MENA) / n</code>. Missing or failed feeds are excluded and visibly reported. This preview composite is an orientation aid, not a forecast or customer-specific risk score.</p><p>Country exposure rows are sorted by the published product index. Event rows retain source links and timestamps. No LLM is required for platform rendering.</p></div>
+      <div><p>The live preview reads each product's published <code>meta.main_index</code>, status, timestamp, country records, and events. It does not alter upstream scores or combine indices that use different scales.</p><p>Country readings are grouped by index and ordered within each product. Event rows retain source links and timestamps. Failed feeds are reported as unavailable without substitute values.</p></div>
     </section>
     <section class="trust-grid" aria-label="Reproducibility controls"><article><h2>Versioned inputs</h2><p>Each mounted product output carries its own generation time, model version, and source boundary where available.</p></article><article><h2>Deterministic presentation</h2><p>Given the same JSON outputs, the platform preview produces the same metrics, rankings, and event order.</p></article><article><h2>Failure visibility</h2><p>Feed failures remain visible; the interface does not silently fabricate substitute values.</p></article></section>
     <section aria-labelledby="methods-catalog-heading">
@@ -824,7 +896,7 @@ function renderCompany() {
     </section>
     <section class="endorsed-panel" aria-labelledby="unit-heading">
       <div><p class="eyebrow">Organization structure</p><h2 id="unit-heading">${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2><p>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)} is the ${escapeHtml(site.brand.endorsedAnalyticalUnit.relationship)} of ${escapeHtml(site.brand.masterbrand)}.</p></div>
-      <div class="contact-card"><h3>Company state</h3><p>Product, methodology, security, and commercial materials are public. Legal incorporation and confidential contact infrastructure remain subject to their formal completion records.</p><div class="card-actions">${localOrExternalLink("/pilot/", "Pilot intake")}${localOrExternalLink("/trust/", "Trust center")}</div></div>
+      <div class="contact-card"><h3>How we work</h3><p>Our products, methods, and security reporting are available for inspection. A focused pilot starts with one operating decision and a clear measure of value.</p><div class="card-actions">${localOrExternalLink("/pilot/", "Discuss a pilot")}${localOrExternalLink("/trust/", "Read our commitments")}</div></div>
     </section>
     ${nextAction("/pilot/", "Start with a private-sector pilot", "Define one exposure, one decision owner, and one measurable result.", "Request a pilot")}`;
 }
@@ -987,6 +1059,7 @@ function renderPage(page) {
   <link rel="agent" type="application/json" href="/.well-known/agent.json" title="Agent card" />
   <link rel="preload" as="image" href="/assets/products/logo.png" />
   <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/identity.css" />
   ${jsonLdBlocks.map((block) => `<script type="application/ld+json">${JSON.stringify(block)}</script>`).join("\n  ")}
   <script>
   (function () {
@@ -1039,7 +1112,8 @@ function renderPage(page) {
       <a href="/company/">Contact</a>
     </nav>
   </footer>
-  ${page.slug === "platform" ? '<script type="module" src="/scripts/platform.js"></script>' : ""}
+  ${page.slug === "home" ? '<script type="module" src="/scripts/hero-loader.js"></script>' : ""}
+  ${["home", "platform"].includes(page.slug) ? '<script type="module" src="/scripts/platform.js"></script>' : ""}
 </body>
 </html>
 `;

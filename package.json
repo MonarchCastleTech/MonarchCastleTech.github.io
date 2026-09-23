@@ -9,7 +9,8 @@
     "sync": "node scripts/sync-upstreams.mjs",
     "sync:content": "node scripts/sync-content.mjs",
     "check:content": "node scripts/sync-content.mjs --check",
-    "build": "node scripts/build-site.mjs",
+    "build": "node scripts/build-site.mjs && npm run build:scene",
+    "build:scene": "esbuild src/scripts/hero-scene.js --bundle --minify --format=esm --target=es2020 --outfile=dist/scripts/hero-scene.js",
     "verify": "npm run sync && npm test && npm run build && npm run test:dist && node scripts/verify-dist.mjs",
     "check:live": "node scripts/check-live-site.mjs",
     "enforce:https": "node scripts/enforce-pages-https.mjs",
@@ -21,6 +22,10 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
+    "esbuild": "^0.28.2",
     "serve": "^14.2.6"
+  },
+  "dependencies": {
+    "three": "^0.186.0"
   }
 }

@@ -128,6 +128,7 @@
   ],
   "assets": [
     { "fromLocal": "src/assets/products", "to": "assets/products" },
-    { "fromLocal": "src/assets/approved", "to": "assets/approved" }
+    { "fromLocal": "src/assets/approved", "to": "assets/approved" },
+    { "fromLocal": "src/assets/brand", "to": "assets/brand" }
   ]
 }

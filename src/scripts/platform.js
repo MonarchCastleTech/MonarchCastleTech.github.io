@@ -34,7 +34,7 @@ function countryRows(feed, payload) {
     }))
     .filter((row) => row.value !== null)
     .sort((a, b) => b.value - a.value)
-    .slice(0, 4);
+    .slice(0, 2);
 }
 
 function eventRows(feed, payload) {
@@ -57,6 +57,13 @@ function eventRows(feed, payload) {
 function renderExposure(rows) {
   const list = document.getElementById("exposure-list");
   if (!list) return;
+  if (!rows.length) {
+    const item = document.createElement("li");
+    item.className = "empty-row";
+    item.textContent = "No exposure rows are available from the connected public feeds.";
+    list.replaceChildren(item);
+    return;
+  }
   list.replaceChildren(...rows.map((row) => {
     const item = document.createElement("li");
     const name = document.createElement("b");
@@ -73,13 +80,21 @@ function renderExposure(rows) {
 function renderEvents(rows) {
   const list = document.getElementById("signal-list");
   if (!list) return;
+  if (!rows.length) {
+    const item = document.createElement("li");
+    item.className = "empty-row";
+    item.textContent = "No dated events are available from the connected public feeds.";
+    list.replaceChildren(item);
+    return;
+  }
   list.replaceChildren(...rows.map((row) => {
     const item = document.createElement("li");
-    const link = document.createElement("a");
+    const validLink = /^https?:\/\//.test(row.href ?? "");
+    const link = document.createElement(validLink ? "a" : "div");
     const title = document.createElement("b");
     const meta = document.createElement("span");
-    link.href = /^https?:\/\//.test(row.href ?? "") ? row.href : "#";
-    if (link.href !== "#") {
+    if (validLink) {
+      link.href = row.href;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
     }
@@ -101,35 +116,38 @@ async function refresh() {
   const settled = await Promise.allSettled(feeds.map(readFeed));
   const valid = settled.filter((result) => result.status === "fulfilled").map((result) => result.value);
   const failures = settled.length - valid.length;
-  const values = [];
   const exposures = [];
   const events = [];
   const timestamps = [];
 
+  for (const feed of feeds) {
+    text(`metric-${feed.id}`, "—");
+    text(`status-${feed.id}`, `${feed.label} · Unavailable`);
+  }
+
   for (const { feed, payload } of valid) {
     const value = asFinite(payload?.meta?.main_index);
     if (value !== null) {
-      values.push(value);
       text(`metric-${feed.id}`, number.format(value));
     }
-    text(`status-${feed.id}`, `${feed.label} · ${payload?.meta?.status ?? "Published"}`);
+    text(`status-${feed.id}`, `${feed.label} · ${value === null ? "No current value" : payload?.meta?.status ?? "Published"}`);
     exposures.push(...countryRows(feed, payload));
     events.push(...eventRows(feed, payload));
     const timestamp = generatedAt(payload);
     if (timestamp) timestamps.push(timestamp);
   }
 
-  const composite = values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
-  text("metric-composite", composite === null ? "—" : number.format(composite));
   text("feed-state", failures ? `${valid.length}/${settled.length} feeds` : "All feeds connected");
   text("platform-updated", timestamps.length ? `Latest source output ${date.format(new Date(Math.max(...timestamps)))} UTC` : "No source timestamp available");
   text("platform-note", failures
     ? `${failures} public feed${failures === 1 ? "" : "s"} could not be read. Missing values are excluded; no substitute values were generated.`
-    : "This preview reads only public product outputs. No private customer data is collected or stored.");
+    : "Each index uses its own scale and method. Open its source view before comparing or quoting a value.");
 
-  renderExposure(exposures.sort((a, b) => b.value - a.value).slice(0, 8));
+  renderExposure(exposures);
   renderEvents(events.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5));
 }
 
 refresh();
-window.setInterval(refresh, 5 * 60 * 1000);
+window.setInterval(() => {
+  if (!document.hidden) refresh();
+}, 5 * 60 * 1000);

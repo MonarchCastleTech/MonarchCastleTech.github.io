@@ -168,10 +168,11 @@ test("root homepage follows the governed shell and links to canonical dashboard 
   assert.match(html, /href="\/sdcofa\/wti\/"/);
   assert.match(html, /href="\/sdcofa\/mena\/"/);
   assert.match(html, /href="\/styles\/site\.css"/);
-  assert.match(html, /See disruption before it reaches your operation/);
-  assert.match(html, /Every current public product stays open/);
+  assert.match(html, /Know how global change reaches your business/);
+  assert.match(html, /Public instruments remain open/);
   assert.match(html, /href="\/platform\/"/);
-  assert.match(html, /src="\/assets\/products\/bnti-hero\.png"/);
+  assert.match(html, /src="\/assets\/brand\/exposure-field\.svg"/);
+  assert.match(html, /href="\/styles\/identity\.css"/);
   assert.match(html, /Built around the decision, not the dashboard/i);
   assert.doesNotMatch(html, /mct-styles\.css|mct-app\.js/);
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
@@ -189,6 +190,7 @@ test("every public product asset is present and legacy theme assets are not requ
     "assets/products/supplychain-logo.png",
     "assets/products/bnti-icon.png",
     "assets/products/bnti-hero.png",
+    "assets/brand/exposure-field.svg",
     "assets/approved/mena-threat-index.png",
     "assets/approved/world-threat-index.png"
   ]) {

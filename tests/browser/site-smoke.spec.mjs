@@ -123,7 +123,7 @@ test("every public product logo loads, stays contained, and remains visible", as
   }
 });
 
-test("flagship palette resolves to MCT navy, gold, and warm white", async ({ page }) => {
+test("flagship palette resolves to the updated slate and paper identity", async ({ page }) => {
   await page.goto(`${baseURL}/`);
   const palette = await page.locator("html").evaluate((element) => {
     const style = getComputedStyle(element);
@@ -133,7 +133,7 @@ test("flagship palette resolves to MCT navy, gold, and warm white", async ({ pag
       ink: style.getPropertyValue("--ink").trim()
     };
   });
-  expect(palette).toEqual({ navy: "#07090a", gold: "#d6a34e", ink: "#f1f3f2" });
+  expect(palette).toEqual({ navy: "#101d25", gold: "#bdd2d6", ink: "#f2f5f2" });
 });
 
 for (const colorScheme of ["light", "dark"]) {
@@ -153,12 +153,12 @@ test("homepage exposes canonical dashboard links", async ({ page }) => {
   }
 });
 
-test("The Keep preview loads all public feeds and declared composite", async ({ page }) => {
+test("The Keep preview loads three source-linked public indices", async ({ page }) => {
   await page.goto(`${baseURL}/platform/`);
   await expect(page.getByText("All feeds connected")).toBeVisible();
-  const values = await page.locator("#metric-bnti, #metric-wti, #metric-mena, #metric-composite").allTextContents();
-  expect(values).toHaveLength(4);
+  const values = await page.locator("#metric-bnti, #metric-wti, #metric-mena").allTextContents();
+  expect(values).toHaveLength(3);
   expect(values.every((value) => /^\d+\.\d{2}$/.test(value))).toBeTruthy();
-  await expect(page.locator("#exposure-list li")).toHaveCount(8);
+  await expect(page.locator("#exposure-list li")).toHaveCount(6);
   await expect(page.locator("#signal-list li")).toHaveCount(5);
 });
