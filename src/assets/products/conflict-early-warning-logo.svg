@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 156" role="img" aria-label="Conflict Early Warning System product logo">
+  <title>Conflict Early Warning System product logo</title>
+  <desc>A radar sweep marks an incoming early-warning signal.</desc>
+  <style>
+    :root { --logo-blue: #2f7de1; --logo-cyan: #38b8d6; --logo-amber: #d7b46a; --logo-ink: #f3efe4; }
+    .blue, .cyan, .amber { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; }
+    .blue { stroke: var(--logo-blue); }
+    .cyan { stroke: var(--logo-cyan); }
+    .amber { stroke: var(--logo-amber); }
+    .blue-fill { fill: var(--logo-blue); }
+    .cyan-fill { fill: var(--logo-cyan); }
+    .amber-fill { fill: var(--logo-amber); }
+    .wordmark { fill: var(--logo-blue); font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, sans-serif; font-weight: 700; letter-spacing: -0.8px; }
+  </style>
+  <g aria-hidden="true"><circle class="blue" cx="66" cy="78" r="42"/><circle class="cyan" cx="66" cy="78" r="27"/><circle class="blue" cx="66" cy="78" r="12"/><path class="cyan" d="M66 31v12M66 113v12M19 78h12m70 0h12"/><path class="amber" d="M66 78 99 45"/><circle class="amber-fill" cx="99" cy="45" r="7"/><circle class="amber-fill" cx="66" cy="78" r="4"/></g>
+  <text class="wordmark" x="145" y="65" font-size="40">Conflict Early</text>
+  <text class="wordmark" x="145" y="111" font-size="40">Warning System</text>
+</svg>

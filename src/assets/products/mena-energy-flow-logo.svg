@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 156" role="img" aria-label="MENA Energy Flow Tracker product logo">
+  <title>MENA Energy Flow Tracker product logo</title>
+  <desc>Energy nodes connect along an amber-highlighted regional flow.</desc>
+  <style>
+    :root { --logo-blue: #2f7de1; --logo-cyan: #38b8d6; --logo-amber: #d7b46a; --logo-ink: #f3efe4; }
+    .blue, .cyan, .amber { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; }
+    .blue { stroke: var(--logo-blue); }
+    .cyan { stroke: var(--logo-cyan); }
+    .amber { stroke: var(--logo-amber); }
+    .blue-fill { fill: var(--logo-blue); }
+    .cyan-fill { fill: var(--logo-cyan); }
+    .amber-fill { fill: var(--logo-amber); }
+    .wordmark { fill: var(--logo-blue); font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, sans-serif; font-weight: 700; letter-spacing: -0.8px; }
+  </style>
+  <g aria-hidden="true"><circle class="blue" cx="36" cy="82" r="13"/><circle class="cyan" cx="96" cy="53" r="10"/><circle class="blue" cx="96" cy="105" r="10"/><path class="cyan" d="M48 77c16-5 22-17 38-21M48 88c16 5 22 14 38 16"/><path class="amber" d="m74 48 12 8-13 7m1 32 12 8-12 7"/><circle class="amber-fill" cx="67" cy="82" r="6"/></g>
+  <text class="wordmark" x="145" y="65" font-size="40">MENA Energy</text>
+  <text class="wordmark" x="145" y="111" font-size="40">Flow Tracker</text>
+</svg>

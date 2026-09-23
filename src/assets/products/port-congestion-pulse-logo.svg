@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 156" role="img" aria-label="Port Congestion Pulse product logo">
+  <title>Port Congestion Pulse product logo</title>
+  <desc>A harbor crane and pulse trace show port activity at a glance.</desc>
+  <style>
+    :root { --logo-blue: #2f7de1; --logo-cyan: #38b8d6; --logo-amber: #d7b46a; --logo-ink: #f3efe4; }
+    .blue, .cyan, .amber { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; }
+    .blue { stroke: var(--logo-blue); }
+    .cyan { stroke: var(--logo-cyan); }
+    .amber { stroke: var(--logo-amber); }
+    .blue-fill { fill: var(--logo-blue); }
+    .cyan-fill { fill: var(--logo-cyan); }
+    .amber-fill { fill: var(--logo-amber); }
+    .wordmark { fill: var(--logo-blue); font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, sans-serif; font-weight: 700; letter-spacing: -0.8px; }
+  </style>
+  <g aria-hidden="true"><path class="blue" d="M30 108V42h72M49 42l29 16M47 42v34M47 76h18v18H47zM75 76h18v18H75z"/><path class="cyan" d="M19 112h94"/><path class="amber" d="M25 99h24l8-13 9 20 9-14h27"/><path class="blue" d="M99 42v18m-7 0h14"/></g>
+  <text class="wordmark" x="145" y="65" font-size="35">Port Congestion</text>
+  <text class="wordmark" x="145" y="111" font-size="35">Pulse</text>
+</svg>

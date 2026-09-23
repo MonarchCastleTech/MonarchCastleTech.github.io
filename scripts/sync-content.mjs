@@ -26,17 +26,29 @@ const sourceFiles = {
 };
 
 const localPresentationLogos = {
+  "border-neighbor-threat-index": "assets/products/bnti-icon.png",
+  "caspian-black-sea-monitor": "assets/products/caspian-black-sea-monitor-logo.svg",
   "cloudy-shiny": "assets/products/cloudy-shiny-logo.png",
+  "climate-security-index": "assets/products/climate-security-index-logo.svg",
+  "conflict-early-warning": "assets/products/conflict-early-warning-logo.svg",
+  "cyber-exposure-map": "assets/products/cyber-exposure-map-logo.svg",
+  "defense-procurement": "assets/products/defense-procurement-logo.svg",
   econmap: "assets/products/econmap-logo.png",
+  election: "assets/products/election-logo.svg",
   esgmap: "assets/products/esgmap-logo.png",
+  georisk: "assets/products/georisk-logo.svg",
   macrointel: "assets/products/macrointel-logo.png",
+  "mena-energy-flow": "assets/products/mena-energy-flow-logo.svg",
+  "mena-threat-index": "assets/approved/mena-threat-index.png",
   "milcodec-receiver": "assets/products/milcodec-logo.png",
   "nuclear-energy-intelligence": "assets/products/nuclear-logo.png",
+  "nuclear-proliferation-watch": "assets/products/nuclear-proliferation-watch-logo.svg",
+  "port-congestion-pulse": "assets/products/port-congestion-pulse-logo.svg",
   prepturk: "assets/products/prepturk-logo.png",
+  "sanctions-exposure-index": "assets/products/sanctions-exposure-index-logo.svg",
   "superlig-forecast": "assets/products/superlig-forecast-logo.png",
   supplychain: "assets/products/supplychain-logo.png",
-  "border-neighbor-threat-index": "assets/products/bnti-icon.png",
-  "mena-threat-index": "assets/approved/mena-threat-index.png",
+  "tr-economic-sentiment": "assets/products/tr-economic-sentiment-logo.svg",
   "world-threat-index": "assets/approved/world-threat-index.png"
 };
 
