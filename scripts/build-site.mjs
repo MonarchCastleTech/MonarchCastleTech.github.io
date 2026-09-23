@@ -41,7 +41,7 @@ const pageFaqs = {
   ],
   methodology: [
     { question: "How should an index value be interpreted?", answer: "Treat each index as a focused analytical lens. Open the methodology route before quoting a score so provenance, cadence, limitations, and evidence status are visible." },
-    { question: "How often do standing indices refresh?", answer: "Each product declares its own update cadence. BNTI, WTI, and MENA publish scheduled refresh cycles with inspectable static artifacts rather than opaque screenshots." },
+    { question: "How often do standing indices refresh?", answer: "Each product declares its own update cadence and publication state. BNTI's index is currently withheld after classification failure; its endpoint carries a withdrawal notice." },
     { question: "Are forecasts investment advice?", answer: "No. Forecast and index outputs are analytical aids, not investment advice or official government intelligence. Evaluation rules and limitations are published on the methodology and trust routes." }
   ],
   trust: [
@@ -90,7 +90,7 @@ const homeFaq = pageFaqs.home.length ? pageFaqs.home : [
   },
   {
     question: "What are BNTI, WTI, and MENA?",
-    answer: "BNTI is the Border Neighbor Threat Index for Türkiye's land-neighbor relationships, WTI is the World Threat Index for global geopolitical pressure, and MENA is the MENA Threat Index for Middle East and North Africa regional risk. All three are standing open-source indices published by SDCofA."
+    answer: "BNTI is the Border Neighbor Threat Index for Türkiye's land-neighbor relationships, WTI covers global geopolitical pressure, and MENA covers Middle East and North Africa regional risk. BNTI's current score is withheld because its article classification failed."
   },
   {
     question: "Are Monarch Castle public products free?",
@@ -102,7 +102,7 @@ const homeFaq = pageFaqs.home.length ? pageFaqs.home : [
   },
   {
     question: "Who publishes the standing indices?",
-    answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies and publishes the standing BNTI, WTI, and MENA threat indices with declared doctrine, inputs, and refresh cadence."
+    answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies. It publishes public threat products with declared methods and publication status; BNTI's score is currently withheld."
   }
 ];
 pageFaqs.home = homeFaq;
@@ -282,16 +282,16 @@ const productPresentation = {
     signal: "Maritime corridors"
   },
   "climate-security-index": {
-    summary: "A climate-security lens for examining how environmental pressure intersects with regional stability.",
-    signal: "Climate security"
+    summary: "Source-linked climate and security headlines. The feed is a topical sample and does not produce a risk score.",
+    signal: "Climate news"
   },
   "conflict-early-warning": {
-    summary: "A public view of conflict indicators and emerging security developments.",
-    signal: "Conflict watch"
+    summary: "Source-linked conflict headlines for reading. The feed does not calculate an early-warning probability.",
+    signal: "Conflict news"
   },
   "cyber-exposure-map": {
-    summary: "A geographic view of cyber-threat exposure and its distribution across markets.",
-    signal: "Cyber exposure"
+    summary: "Source-linked cyber incident and vulnerability headlines, with no geographic exposure map or score.",
+    signal: "Cyber news"
   },
   "cloudy-shiny": {
     summary: "A market weather system that turns financial signals into an immediate read on risk appetite.",
@@ -326,8 +326,8 @@ const productPresentation = {
     signal: "Energy systems"
   },
   "nuclear-proliferation-watch": {
-    summary: "A public watch on nuclear-proliferation developments and related security signals.",
-    signal: "Proliferation watch"
+    summary: "Source-linked nuclear policy headlines. No facility-level or proliferation-risk estimate is published.",
+    signal: "Nuclear news"
   },
   "port-congestion-pulse": {
     summary: "A port-level view of congestion signals that can affect schedules and supply chains.",
@@ -338,23 +338,23 @@ const productPresentation = {
     signal: "Preparedness"
   },
   "superlig-forecast": {
-    summary: "Five million simulated seasons turn current matches, squads, transfers, and market values into transparent title and table probabilities.",
+    summary: "Season probabilities are temporarily withheld because the last release lacked completed official fixtures and full team matching.",
     signal: "Football forecasting"
   },
   supplychain: {
-    summary: "Map operational exposure and trace the forces shaping complex supply networks.",
+    summary: "Browse source-linked company profiles and disclosed research gaps; unsupported global supply links have been removed.",
     signal: "Supply networks"
   },
   "sanctions-exposure-index": {
-    summary: "An index view of sanctions exposure for country and market monitoring.",
-    signal: "Sanctions exposure"
+    summary: "Source-linked sanctions headlines. No country or company exposure index is currently calculated.",
+    signal: "Sanctions news"
   },
   "tr-economic-sentiment": {
     summary: "A focused reading of economic sentiment signals from Türkiye.",
     signal: "Economic sentiment"
   },
   "border-neighbor-threat-index": {
-    summary: "Compare how cross-border conditions shape national threat exposure.",
+    summary: "Index publication is paused after article attribution failed; the prior country scores have been withdrawn.",
     signal: "Border risk"
   },
   "mena-threat-index": {
@@ -370,7 +370,7 @@ const productPresentation = {
     signal: "Election watch"
   },
   georisk: {
-    summary: "Geographic risk context presented as an inspectable public intelligence view.",
+    summary: "Country probabilities are withheld while the last forecast snapshot is past its validity window.",
     signal: "Geographic risk"
   }
 };
@@ -525,7 +525,7 @@ function renderEndorsedFamily(headingId = "") {
       <div>
         <p class="eyebrow">Endorsed analytical unit</p>
         <h2${headingId ? ` id="${escapeHtml(headingId)}"` : ""}>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2>
-        <p>SDCofA publishes standing open-source threat indices as the endorsed analytical unit of Monarch Castle Technologies.</p>
+        <p>SDCofA publishes open-source threat products as the endorsed analytical unit of Monarch Castle Technologies. Each product states when a score is unavailable.</p>
         <p class="endorsement">SDCofA — endorsed analytical unit of Monarch Castle Technologies</p>
       </div>
       <div class="endorsed-links">
@@ -623,7 +623,7 @@ function renderLiveWorkspace(overviewAnchor) {
 }
 
 function renderHome() {
-  const featuredIds = ["border-neighbor-threat-index", "world-threat-index", "macrointel"];
+  const featuredIds = ["esgmap", "prepturk", "cloudy-shiny"];
   const featured = featuredIds.map((id) => productById.get(id)).filter(Boolean);
   return `
     <section class="mission-hero" id="positioning" aria-labelledby="home-heading">
@@ -717,10 +717,10 @@ function renderHome() {
       <dl class="definition-list">
         <div><dt>Monarch Castle Technologies</dt><dd>Independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators with cross-border exposure.</dd></div>
         <div><dt>The Keep</dt><dd>Unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.</dd></div>
-        <div><dt>Border Neighbor Threat Index (BNTI)</dt><dd>Standing open-source index comparing cross-border threat exposure across Türkiye's land-neighbor relationships.</dd></div>
+        <div><dt>Border Neighbor Threat Index (BNTI)</dt><dd>Cross-border threat index for Türkiye's land-neighbor relationships. Its country scores are currently withheld after article classification failed.</dd></div>
         <div><dt>World Threat Index (WTI)</dt><dd>Standing open-source index for comparative global geopolitical threat pressure across countries and blocs.</dd></div>
         <div><dt>MENA Threat Index</dt><dd>Standing open-source index for regional threat assessment across the Middle East and North Africa.</dd></div>
-        <div><dt>SDCofA</dt><dd>Strategic Data Company of Ankara — the endorsed analytical unit of Monarch Castle Technologies that publishes the standing threat indices.</dd></div>
+        <div><dt>SDCofA</dt><dd>Strategic Data Company of Ankara — the endorsed analytical unit of Monarch Castle Technologies that publishes threat products and their current publication status.</dd></div>
       </dl>
       <div class="faq-block">
         <h3>Frequently asked questions</h3>

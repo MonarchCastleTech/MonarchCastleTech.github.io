@@ -87,7 +87,7 @@
     },
     {
       "id": "climate-security-index",
-      "name": "Climate Security Index",
+      "name": "Climate Security News Monitor",
       "family": "climate-intelligence",
       "lifecycle": "review-required",
       "regions": [],
@@ -98,11 +98,11 @@
         "sourcePath": "assets/products/climate-security-index-logo.svg",
         "publicPath": "/assets/products/climate-security-index-logo.svg",
         "sha256": "a64e2cb3491bf34359498a0d25d8f5a6c079337eeda09b8410d6632ff28dd03c",
-        "alt": "Climate Security Index product logo"
+        "alt": "Climate Security News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/climate-security-index/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
+      "forecastEvidenceStatus": "Source-linked RSS headlines only; no risk index or geographic score",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
@@ -127,7 +127,7 @@
     },
     {
       "id": "conflict-early-warning",
-      "name": "Conflict Early Warning System",
+      "name": "Conflict News Monitor",
       "family": "threat-intelligence",
       "lifecycle": "review-required",
       "regions": [],
@@ -138,16 +138,16 @@
         "sourcePath": "assets/products/conflict-early-warning-logo.svg",
         "publicPath": "/assets/products/conflict-early-warning-logo.svg",
         "sha256": "33ab45cf756101dd7dd167aecaf6b8ce5796f71fb41e9d9c31a698c319530302",
-        "alt": "Conflict Early Warning System product logo"
+        "alt": "Conflict News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/conflict-early-warning/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
+      "forecastEvidenceStatus": "Source-linked RSS headlines only; no conflict prediction or early-warning score",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
       "id": "cyber-exposure-map",
-      "name": "Cyber Threat Exposure Map",
+      "name": "Cyber Threat News Monitor",
       "family": "cyber-intelligence",
       "lifecycle": "review-required",
       "regions": [],
@@ -158,11 +158,11 @@
         "sourcePath": "assets/products/cyber-exposure-map-logo.svg",
         "publicPath": "/assets/products/cyber-exposure-map-logo.svg",
         "sha256": "0c8e582e43fa8532d86ca758ba0b52999b7037e2c758820aed5e158dceeebea3",
-        "alt": "Cyber Threat Exposure Map product logo"
+        "alt": "Cyber Threat News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/cyber-exposure-map/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
+      "forecastEvidenceStatus": "Source-linked RSS headlines only; no geographic exposure map or score",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
@@ -307,7 +307,7 @@
     },
     {
       "id": "nuclear-proliferation-watch",
-      "name": "Nuclear Proliferation Watch",
+      "name": "Nuclear Policy News Monitor",
       "family": "threat-intelligence",
       "lifecycle": "review-required",
       "regions": [],
@@ -318,11 +318,11 @@
         "sourcePath": "assets/products/nuclear-proliferation-watch-logo.svg",
         "publicPath": "/assets/products/nuclear-proliferation-watch-logo.svg",
         "sha256": "ef190c3d4f5f2949fe4634650243f7a68686f43effbbc8d8e48489de6850e4f5",
-        "alt": "Nuclear Proliferation Watch product logo"
+        "alt": "Nuclear Policy News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/nuclear-proliferation-watch/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
+      "forecastEvidenceStatus": "Source-linked RSS headlines only; no proliferation-risk estimate",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
@@ -367,7 +367,7 @@
     },
     {
       "id": "sanctions-exposure-index",
-      "name": "Sanctions Exposure Index",
+      "name": "Sanctions News Monitor",
       "family": "financial-intelligence",
       "lifecycle": "review-required",
       "regions": [],
@@ -378,21 +378,21 @@
         "sourcePath": "assets/products/sanctions-exposure-index-logo.svg",
         "publicPath": "/assets/products/sanctions-exposure-index-logo.svg",
         "sha256": "3d83f3d4e0210c0f2a9dbda799d9f79a50b2506820b89e99917e2d4142796c5a",
-        "alt": "Sanctions Exposure Index product logo"
+        "alt": "Sanctions News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/sanctions-exposure-index/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
+      "forecastEvidenceStatus": "Source-linked RSS headlines only; no sanctions-exposure index",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
       "id": "superlig-forecast",
       "name": "Süper Lig Forecast",
       "family": "sports-intelligence",
-      "lifecycle": "production",
+      "lifecycle": "review-required",
       "regions": [],
       "methodologyUrl": "https://github.com/MonarchCastleTech/superlig-forecast/blob/main/README.md",
-      "updateFrequency": "daily",
+      "updateFrequency": "publication paused",
       "logo": {
         "kind": "approved-image",
         "sourcePath": "assets/products/superlig-forecast-logo.png",
@@ -402,7 +402,7 @@
       },
       "canonicalUrl": "https://monarchcastle.com/superlig-forecast/",
       "owner": "MonarchCastleTech",
-      "forecastEvidenceStatus": "public-release-verified; 20-season-expanding-window-backtest; logo-review-required",
+      "forecastEvidenceStatus": "Current-season forecast withheld: zero completed official fixtures and incomplete team matching in last release",
       "endorsementLabel": "Part of Monarch Castle Technologies"
     },
     {
@@ -422,7 +422,7 @@
       },
       "canonicalUrl": "https://monarchcastle.com/supplychain/",
       "owner": "MonarchCastleTech",
-      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "forecastEvidenceStatus": "Source-linked company profiles; unverified global relationships removed; coverage gaps disclosed",
       "endorsementLabel": "Part of Monarch Castle Technologies"
     },
     {
@@ -452,7 +452,7 @@
       "lifecycle": "review-required",
       "regions": [],
       "methodologyUrl": "https://github.com/SDCofA/border-neighbor-threat-index/blob/main/README.md",
-      "updateFrequency": "every 2 hours",
+      "updateFrequency": "publication paused",
       "logo": {
         "kind": "approved-image",
         "sourcePath": "assets/products/bnti-icon.png",
@@ -462,7 +462,7 @@
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/bnti/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "github-metadata-verified; logo-review-required",
+      "forecastEvidenceStatus": "Index withdrawn because the article classifier failed; no current country scores",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     },
     {
@@ -532,7 +532,7 @@
       "lifecycle": "review-required",
       "regions": [],
       "methodologyUrl": "https://github.com/SDCofA/georisk/blob/main/README.md",
-      "updateFrequency": "review-required",
+      "updateFrequency": "publication paused",
       "logo": {
         "kind": "approved-image",
         "sourcePath": "assets/products/georisk-logo.svg",
@@ -542,7 +542,7 @@
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/georisk/",
       "owner": "SDCofA",
-      "forecastEvidenceStatus": "SDCofA GitHub Pages and Actions verified; MCT endorsement visible; product-logo-review-required",
+      "forecastEvidenceStatus": "Country forecasts withheld; last snapshot expired 2026-04-19",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
     }
   ]

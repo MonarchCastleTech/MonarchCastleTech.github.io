@@ -145,18 +145,18 @@ test("every public product uses approved imagery or governed text branding", () 
   }
 });
 
-test("products page publishes the Süper Lig Forecast as a daily public product", () => {
+test("products page discloses the paused Süper Lig forecast", () => {
   const forecast = site.products.find(({ id }) => id === "superlig-forecast");
   assert.ok(forecast);
   assert.equal(
     forecast.canonicalUrl,
     "https://monarchcastle.com/superlig-forecast/",
   );
-  assert.equal(forecast.updateFrequency, "daily");
+  assert.equal(forecast.updateFrequency, "publication paused");
   assert.match(productsHtml, /data-product-id="superlig-forecast"/);
   assert.match(
     productsHtml,
-    /Five million simulated seasons turn current matches, squads, transfers, and market values into transparent title and table probabilities\./,
+    /Season probabilities are temporarily withheld because the last release lacked completed official fixtures and full team matching\./,
   );
 });
 

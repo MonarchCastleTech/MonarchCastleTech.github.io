@@ -130,7 +130,7 @@ async function refresh() {
     if (value !== null) {
       text(`metric-${feed.id}`, number.format(value));
     }
-    text(`status-${feed.id}`, `${feed.label} · ${value === null ? "No current value" : payload?.meta?.status ?? "Published"}`);
+    text(`status-${feed.id}`, `${feed.label} · ${payload?.meta?.withdrawn ? "WITHHELD" : value === null ? "No current value" : payload?.meta?.status ?? "Published"}`);
     exposures.push(...countryRows(feed, payload));
     events.push(...eventRows(feed, payload));
     const timestamp = generatedAt(payload);
