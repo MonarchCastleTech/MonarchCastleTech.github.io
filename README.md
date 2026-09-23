@@ -65,6 +65,8 @@ npm run check:content
 - `src/content/editorial.json` — non-inventory narrative, contact, trust, and capability copy.
 - `scripts/sync-content.mjs` — fail-closed governance projection and approved-mark synchronizer.
 - `scripts/build-site.mjs` — self-contained narrative renderer plus dashboard mount pipeline.
+- `src/styles/identity.css` — company-wide visual system layered over the base site styles.
+- `src/scripts/hero-loader.js` and `src/scripts/hero-scene.js` — desktop Three.js scene, loaded on demand with an SVG fallback for small screens, reduced motion, and unavailable WebGL.
 - `scripts/verify-dist.mjs` — route, metadata, local-reference, claims, and dashboard boundary verifier.
 - `src/scripts/platform.js` — deterministic, no-storage public The Keep preview over mounted BNTI, WTI, and MENA outputs.
 - `docs/business/` — market-entry, pricing, pilot, target-account, and incorporation preparation records.

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760" fill="none">
+  <defs>
+    <radialGradient id="atmosphere" cx="0" cy="0" r="1" gradientTransform="translate(580 360) rotate(90) scale(440 610)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#26424D" stop-opacity=".57"/>
+      <stop offset="1" stop-color="#0A161E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="terrain" x1="100" y1="200" x2="1040" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#95B6BC" stop-opacity="0"/>
+      <stop offset=".28" stop-color="#95B6BC" stop-opacity=".35"/>
+      <stop offset=".74" stop-color="#95B6BC" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#95B6BC" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="route" x1="260" y1="510" x2="870" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A4C6CA" stop-opacity=".18"/>
+      <stop offset=".45" stop-color="#D5E6E6"/>
+      <stop offset="1" stop-color="#C28D67" stop-opacity=".77"/>
+    </linearGradient>
+    <radialGradient id="node">
+      <stop stop-color="#DDE9E8" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#DDE9E8" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="frame"><rect x="0" y="0" width="1100" height="760"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="1100" height="760" fill="url(#atmosphere)"/>
+    <g stroke="url(#terrain)" stroke-width="1">
+      <path d="M56 414C270 352 380 295 539 292S845 342 1084 256"/>
+      <path d="M42 448C250 385 384 324 545 322S850 368 1089 288"/>
+      <path d="M29 481C255 418 395 356 555 352S856 398 1097 319"/>
+      <path d="M16 515C265 450 404 388 566 383S866 430 1107 352"/>
+      <path d="M4 549C273 482 413 422 577 416S875 465 1119 385"/>
+      <path d="M-10 584C284 515 426 455 587 450S885 498 1131 419"/>
+      <path d="M-21 620C292 550 437 490 598 485S896 533 1140 453"/>
+      <path d="M-33 656C300 585 448 525 609 520S906 568 1152 489"/>
+      <path d="M-45 692C308 620 458 560 620 555S917 603 1164 525"/>
+      <path d="M-56 728C315 655 470 596 632 590S927 640 1176 560"/>
+      <path d="M-14 330C142 286 309 257 427 258S703 265 927 210"/>
+      <path d="M165 292C174 418 239 564 334 724"/>
+      <path d="M258 268C267 399 344 548 451 713"/>
+      <path d="M353 253C371 396 453 540 568 704"/>
+      <path d="M453 251C480 396 568 531 681 690"/>
+      <path d="M554 265C591 405 680 529 796 672"/>
+      <path d="M660 276C700 410 787 521 906 653"/>
+      <path d="M760 274C803 404 893 506 1012 633"/>
+      <path d="M862 256C905 385 999 482 1114 608"/>
+    </g>
+    <g stroke="#7FA0AA" stroke-opacity=".37" stroke-width="1">
+      <path d="M315 473c65-54 131-71 197-45s117 24 170-18 115-41 157-10"/>
+      <path d="M301 489c75-61 139-80 210-52s122 27 177-16 119-44 166-10"/>
+      <path d="M286 504c82-68 151-88 226-59s130 30 184-15 121-47 173-12"/>
+    </g>
+    <path d="M266 527C383 397 476 339 562 402S734 469 871 294" stroke="url(#route)" stroke-width="2"/>
+    <path d="M562 402C651 360 712 388 832 509" stroke="#8CB2BC" stroke-opacity=".63" stroke-width="1.5"/>
+    <g>
+      <circle cx="266" cy="527" r="38" fill="url(#node)"/>
+      <circle cx="562" cy="402" r="52" fill="url(#node)"/>
+      <circle cx="871" cy="294" r="41" fill="url(#node)"/>
+      <circle cx="832" cy="509" r="36" fill="url(#node)"/>
+      <circle cx="266" cy="527" r="13" stroke="#A5C7CC" stroke-opacity=".72"/>
+      <circle cx="562" cy="402" r="18" stroke="#CF9A72" stroke-opacity=".88"/>
+      <circle cx="871" cy="294" r="13" stroke="#A5C7CC" stroke-opacity=".72"/>
+      <circle cx="832" cy="509" r="12" stroke="#A5C7CC" stroke-opacity=".72"/>
+      <circle cx="266" cy="527" r="3.5" fill="#DCE8E7"/>
+      <circle cx="562" cy="402" r="4" fill="#D9A47C"/>
+      <circle cx="871" cy="294" r="3.5" fill="#DCE8E7"/>
+      <circle cx="832" cy="509" r="3.5" fill="#DCE8E7"/>
+    </g>
+  </g>
+</svg>

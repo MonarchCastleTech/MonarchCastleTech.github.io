@@ -48,7 +48,7 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   assert.equal(endorsed.length, site.ownerViews.SDCofA.length);
 
   for (const product of flagship) {
-    assert.match(indexHtml, new RegExp(`data-product-id="${product.id}"`));
+    assert.match(productsHtml, new RegExp(`data-product-id="${product.id}"`));
   }
   assert.match(indexHtml, /SDCofA/);
   assert.match(indexHtml, /endorsed analytical unit/i);
@@ -57,14 +57,16 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
   }
 });
 
-test("homepage presents the private-sector platform and BNTI first", () => {
-  assert.match(indexHtml, /Early warning for private enterprise/);
+test("homepage presents The Keep with a source-linked operating picture", () => {
+  assert.match(indexHtml, /Decision intelligence for cross-border operations/);
   assert.match(indexHtml, /The Keep/);
-  assert.match(indexHtml, /See disruption before it reaches your operation/);
-  assert.match(indexHtml, /class="mission-hero-visual bnti-first"/);
-  assert.match(indexHtml, /src="\/assets\/products\/bnti-hero\.png"/);
-  assert.match(indexHtml, /href="\/sdcofa\/bnti\/">Open free BNTI/);
-  assert.ok(indexHtml.indexOf('data-product-id="border-neighbor-threat-index"') < indexHtml.indexOf('data-product-id="world-threat-index"'));
+  assert.match(indexHtml, /Know how global change reaches your business/);
+  assert.match(indexHtml, /class="mission-hero-visual"/);
+  assert.match(indexHtml, /src="\/assets\/brand\/exposure-field\.svg"/);
+  assert.match(indexHtml, /id="metric-bnti"/);
+  assert.match(indexHtml, /id="metric-wti"/);
+  assert.match(indexHtml, /id="metric-mena"/);
+  assert.doesNotMatch(indexHtml, /id="metric-composite"/);
 });
 
 test("products page exposes Monarch Castle Technologies and SDCofA as visibly separate owner groups", () => {
@@ -143,7 +145,7 @@ test("every public product uses approved imagery or governed text branding", () 
   }
 });
 
-test("homepage publishes the Süper Lig Forecast as a daily public product", () => {
+test("products page publishes the Süper Lig Forecast as a daily public product", () => {
   const forecast = site.products.find(({ id }) => id === "superlig-forecast");
   assert.ok(forecast);
   assert.equal(
@@ -151,9 +153,9 @@ test("homepage publishes the Süper Lig Forecast as a daily public product", () 
     "https://monarchcastle.com/superlig-forecast/",
   );
   assert.equal(forecast.updateFrequency, "daily");
-  assert.match(indexHtml, /data-product-id="superlig-forecast"/);
+  assert.match(productsHtml, /data-product-id="superlig-forecast"/);
   assert.match(
-    indexHtml,
+    productsHtml,
     /Five million simulated seasons turn current matches, squads, transfers, and market values into transparent title and table probabilities\./,
   );
 });
@@ -185,8 +187,7 @@ test("homepage follows the approved flagship narrative and keeps the four capabi
     "mission-hero",
     "operating-thesis",
     "featured-systems",
-    "intelligence-catalogue",
-    "sdcofa-band",
+    "portfolio-overview",
     "evidence-chain",
     "company-close"
   ];

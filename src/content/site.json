@@ -427,7 +427,7 @@
     },
     {
       "id": "tr-economic-sentiment",
-      "name": "T?rkiye Economic Sentiment Radar",
+      "name": "Türkiye Economic Sentiment Radar",
       "family": "financial-intelligence",
       "lifecycle": "review-required",
       "regions": [],
@@ -438,7 +438,7 @@
         "sourcePath": "assets/products/tr-economic-sentiment-logo.svg",
         "publicPath": "/assets/products/tr-economic-sentiment-logo.svg",
         "sha256": "119946f44f551ffd3a6d171479ff4dbaa9b8f54078ea7d0479ce1d168fafa271",
-        "alt": "T?rkiye Economic Sentiment Radar product logo"
+        "alt": "Türkiye Economic Sentiment Radar product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/tr-economic-sentiment/",
       "owner": "MonarchCastleTech",

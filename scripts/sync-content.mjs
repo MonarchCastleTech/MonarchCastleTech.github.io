@@ -142,7 +142,9 @@ const products = publicProducts.map((source) => {
   if (seenUrls.has(canonicalUrl)) throw new Error(`Duplicate product URL: ${canonicalUrl}`);
   seenUrls.add(canonicalUrl);
 
-  const name = requireText(source, "name");
+  const name = id === "tr-economic-sentiment"
+    ? requireText(source, "name").replace("T?rkiye", "Türkiye")
+    : requireText(source, "name");
   const owner = requireText(source, "ownerOrg");
   const sourceLogo = source.logo;
   const localPresentationLogo = localPresentationLogos[id];
