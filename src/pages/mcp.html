@@ -49,11 +49,11 @@
       <section class="hero compact">
         <p class="eyebrow">MCP server</p>
         <h1>Standing indices over streamable HTTP.</h1>
-        <p>Connect an MCP client to <code>https://monarchcastle.com/mcp</code> to read BNTI, WTI, and MENA snapshots without scraping HTML.</p>
+        <p>Connect an MCP client to <code>https://monarchcastle.com/mcp</code> to read BNTI, WTI, and MENA snapshots without scraping HTML. Check each snapshot's status before using numerical fields; BNTI currently reports a publication hold.</p>
       </section>
       <section class="section">
         <div class="product-grid">
-          <article><h3><code>get_bnti</code></h3><p>Border Neighbor Threat Index snapshot: meta status, country scores, and latest events.</p></article>
+          <article><h3><code>get_bnti</code></h3><p>Border Neighbor Threat Index publication status. Country scores are absent while classification is unavailable.</p></article>
           <article><h3><code>get_index</code></h3><p>Any standing index by slug: <code>bnti</code>, <code>wti</code>, <code>mena</code>. Optional country filter and top-N ranking.</p></article>
           <article><h3><code>list_indices</code></h3><p>Enumerate available indices with dashboard URLs and latest top-level status.</p></article>
           <article><h3><code>get_site_page</code></h3><p>Fetch a canonical monarchcastle.com page as plain text for citation.</p></article>
