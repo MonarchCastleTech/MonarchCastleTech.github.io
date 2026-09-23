@@ -278,7 +278,7 @@ function pageExtraJsonLd(page, canonical) {
 }
 const productPresentation = {
   "caspian-black-sea-monitor": {
-    summary: "A focused view of maritime and regional developments across the Caspian and Black Sea corridors.",
+    summary: "A source-backed corridor warning indicator with declared analyst weights; its score is not an event probability.",
     signal: "Maritime corridors"
   },
   "climate-security-index": {
@@ -294,35 +294,35 @@ const productPresentation = {
     signal: "Cyber news"
   },
   "cloudy-shiny": {
-    summary: "A market weather system that turns financial signals into an immediate read on risk appetite.",
+    summary: "A market sentiment composite built from observed prices and public fear/greed feeds; it does not forecast returns.",
     signal: "Market conditions"
   },
   "defense-procurement": {
-    summary: "Tracks defense-procurement activity and the commercial signals around it.",
+    summary: "Tracks sourced procurement and policy signals through an analyst-weighted indicator, not an official procurement statistic.",
     signal: "Defense procurement"
   },
   econmap: {
-    summary: "Country-level economic indicators arranged for fast comparison and macroeconomic orientation.",
+    summary: "Source-linked country indicators with explicitly illustrative scenarios. Unsupported composite risk and regional figures are withheld.",
     signal: "Economic landscape"
   },
   esgmap: {
-    summary: "Explore environmental, social, and governance signals through a global geospatial interface.",
+    summary: "Maps sourced ESG indicators and an openly weighted editorial composite; missing observations remain unavailable.",
     signal: "Sustainability intelligence"
   },
   macrointel: {
-    summary: "Macro signals, country context, and decision-ready economic views in one analytical surface.",
+    summary: "World Bank macro data and UN Comtrade goods exports; inbound trade links are labeled as mirrored partner exports where needed.",
     signal: "Macro intelligence"
   },
   "mena-energy-flow": {
-    summary: "Follows energy flows and route exposure across the Middle East and North Africa.",
+    summary: "A source-backed regional warning proxy for energy corridors; the score is not measured shipment volume or a risk probability.",
     signal: "Regional energy"
   },
   "milcodec-receiver": {
-    summary: "A focused receiver and analysis environment for military-coded communications.",
-    signal: "Defense signals"
+    summary: "A technical decoder demonstration with sample packets and a shared demo key; it does not publish operational intelligence.",
+    signal: "Technical demonstration"
   },
   "nuclear-energy-intelligence": {
-    summary: "Structured intelligence for monitoring the global nuclear-energy operating environment.",
+    summary: "OWID-derived electricity data alongside analyst-curated reactor and project references, with separate update paths.",
     signal: "Energy systems"
   },
   "nuclear-proliferation-watch": {
@@ -330,11 +330,11 @@ const productPresentation = {
     signal: "Nuclear news"
   },
   "port-congestion-pulse": {
-    summary: "A port-level view of congestion signals that can affect schedules and supply chains.",
+    summary: "A declared early-warning proxy from port, weather, and disaster feeds; it is not a direct measure of vessel waiting time.",
     signal: "Port conditions"
   },
   prepturk: {
-    summary: "Practical emergency-preparedness intelligence designed for households and communities in Türkiye.",
+    summary: "A static preparedness resource grounded in official sources; it does not provide live alerts or a public AI service.",
     signal: "Preparedness"
   },
   "superlig-forecast": {
@@ -350,7 +350,7 @@ const productPresentation = {
     signal: "Sanctions news"
   },
   "tr-economic-sentiment": {
-    summary: "A focused reading of economic sentiment signals from Türkiye.",
+    summary: "A deterministic anomaly indicator using TCMB, FRED, OECD, and news inputs; its composite is not an official statistic.",
     signal: "Economic sentiment"
   },
   "border-neighbor-threat-index": {
@@ -358,15 +358,15 @@ const productPresentation = {
     signal: "Border risk"
   },
   "mena-threat-index": {
-    summary: "A regional threat lens built for direct comparison across the Middle East and North Africa.",
+    summary: "A source-linked news pressure indicator. Its experimental forecast did not outperform a naive baseline in the published review.",
     signal: "Regional threat"
   },
   "world-threat-index": {
-    summary: "Comparative global threat monitoring across political, security, and structural conditions.",
+    summary: "A news-flow threat indicator using article classification, with substantial low-confidence heuristic coverage disclosed.",
     signal: "Global threat"
   },
   election: {
-    summary: "A public monitor for election developments and the political signals around them.",
+    summary: "A sourced election calendar; grade-D structural simulations are retained for method review but numerical win probabilities are withheld.",
     signal: "Election watch"
   },
   georisk: {
