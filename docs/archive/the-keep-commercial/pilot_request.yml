@@ -1,0 +1,54 @@
+name: Private-sector pilot request
+description: Non-confidential intake for a six-week The Keep pilot
+title: "Pilot request: [company / sector]"
+labels: ["pilot-intake"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this public form only for non-confidential information. Do not include personal data, credentials, customer records, regulated data, or trade secrets.
+  - type: dropdown
+    id: sector
+    attributes:
+      label: Sector
+      options:
+        - Energy and commodities
+        - Logistics and supply chain
+        - Finance and advisory
+        - Insurance and reinsurance
+        - Other private sector
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Operating decision
+      description: What recurring decision should receive earlier or clearer warning?
+      placeholder: Describe the decision without confidential details.
+    validations:
+      required: true
+  - type: textarea
+    id: exposure
+    attributes:
+      label: Exposure scope
+      description: Countries, routes, assets, sectors, or supplier classes in scope.
+    validations:
+      required: true
+  - type: dropdown
+    id: timing
+    attributes:
+      label: Desired start
+      options:
+        - Within 30 days
+        - Within 60 days
+        - Within 90 days
+        - Exploring only
+    validations:
+      required: true
+  - type: checkboxes
+    id: acknowledgement
+    attributes:
+      label: Public intake acknowledgement
+      options:
+        - label: I confirm this request contains no confidential, personal, regulated, or security-sensitive information.
+          required: true

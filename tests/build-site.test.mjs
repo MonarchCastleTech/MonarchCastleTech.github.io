@@ -22,6 +22,9 @@ function copyBuildScripts(root) {
   fs.mkdirSync(path.join(root, "scripts", "lib"), { recursive: true });
   fs.copyFileSync(path.join(repoRoot, "scripts", "build-site.mjs"), path.join(root, "scripts", "build-site.mjs"));
   fs.copyFileSync(path.join(repoRoot, "scripts", "lib", "static-rewrite.mjs"), path.join(root, "scripts", "lib", "static-rewrite.mjs"));
+  fs.copyFileSync(path.join(repoRoot, "scripts", "lib", "data-experience.mjs"), path.join(root, "scripts", "lib", "data-experience.mjs"));
+  fs.mkdirSync(path.join(root, "src", "scripts"), { recursive: true });
+  fs.copyFileSync(path.join(repoRoot, "src", "scripts", "feed-records.js"), path.join(root, "src", "scripts", "feed-records.js"));
 }
 
 function baseProject(root, assets = []) {
@@ -65,6 +68,7 @@ function baseProject(root, assets = []) {
   }));
   writeFile(root, "src/styles/site.css", "body{}");
   writeFile(root, "src/scripts/site.js", "");
+  writeFile(root, "package.json", '{"type":"module"}');
 }
 
 function runBuild(root) {

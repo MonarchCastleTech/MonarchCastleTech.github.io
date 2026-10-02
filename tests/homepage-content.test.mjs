@@ -58,11 +58,11 @@ test("flagship cards are owner-scoped and the endorsed SDCofA family is still re
 });
 
 test("homepage presents The Keep with a source-linked operating picture", () => {
-  assert.match(indexHtml, /Decision intelligence for cross-border operations/);
+  assert.match(indexHtml, /Monarch Castle \/ Open intelligence/);
   assert.match(indexHtml, /The Keep/);
-  assert.match(indexHtml, /Know how global change reaches your business/);
+  assert.match(indexHtml, /A changing world/);
   assert.match(indexHtml, /class="mission-hero-visual"/);
-  assert.match(indexHtml, /src="\/assets\/brand\/exposure-field\.svg"/);
+  assert.match(indexHtml, /id="atlas-country"/);
   assert.match(indexHtml, /id="metric-bnti"/);
   assert.match(indexHtml, /id="metric-wti"/);
   assert.match(indexHtml, /id="metric-mena"/);
@@ -185,8 +185,7 @@ test("generated public pages never expose internal workflow or registry language
 test("homepage follows the approved flagship narrative and keeps the four capabilities", () => {
   const sectionClasses = [
     "mission-hero",
-    "operating-thesis",
-    "featured-systems",
+    "platform-reveal",
     "portfolio-overview",
     "evidence-chain",
     "company-close"
@@ -195,16 +194,16 @@ test("homepage follows the approved flagship narrative and keeps the four capabi
   assert.ok(offsets.every((offset) => offset >= 0), "all flagship sections exist");
   assert.deepEqual(offsets, [...offsets].sort((a, b) => a - b));
   assert.deepEqual(site.brand.pillars, ["Strategy", "Data", "Intelligence", "Forecasting"]);
-  for (const pillar of site.brand.pillars) assert.match(indexHtml, new RegExp(`>${pillar}<`));
+  assert.match(indexHtml, /Context travels with the number/);
 });
 
 test("public shell uses product-led navigation and a self-serve platform action", () => {
   assert.match(indexHtml, /<img class="brand-logo" src="\/assets\/products\/logo\.png" alt="" \/>/);
   assert.match(indexHtml, /<link rel="icon" type="image\/png" href="\/assets\/products\/logo\.png" \/>/);
-  for (const label of ["Platform", "Products", "Insights", "Methodology", "Company"]) {
+  for (const label of ["Data", "Maps", "Signals", "Research", "Methodology"]) {
     assert.match(indexHtml, new RegExp(`>${label}<`));
   }
-  assert.match(indexHtml, /class="header-action" href="https:\/\/the-keep-enterprise\.ardakgul4\.workers\.dev\/login">Open The Keep</);
+  assert.match(indexHtml, /class="header-action" href="\/platform\/">Open The Keep</);
 });
 
 test("insights lead with the operating picture instead of internal process language", () => {

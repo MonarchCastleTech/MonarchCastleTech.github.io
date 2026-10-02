@@ -1,4 +1,6 @@
 import fs from "node:fs";
+import { renderDataHome, renderFreeKeep, renderFreeAccess } from "./lib/data-experience.mjs";
+import { asFinite } from "../src/scripts/feed-records.js";
 import path from "node:path";
 import { isTextAsset, rewriteStaticContent, shouldCopyStaticFile } from "./lib/static-rewrite.mjs";
 
@@ -9,7 +11,7 @@ const editorial = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "
 const dist = path.join(root, "dist");
 const cacheRoot = path.join(root, ".cache", "upstreams");
 const canonicalOrigin = `https://${routes.canonicalDomain}`;
-const secureWorkspaceUrl = "https://the-keep-enterprise.ardakgul4.workers.dev/login";
+const secureWorkspaceUrl = "/platform/";
 const productById = new Map(site.products.map((product) => [product.id, product]));
 const flagshipProducts = (site.ownerViews?.MonarchCastleTech ?? [])
   .map((id) => productById.get(id))
@@ -26,19 +28,15 @@ const publicSignals = readPublicSignalSnapshot();
 const pageFaqs = {
   products: [
     { question: "What products does Monarch Castle Technologies publish?", answer: "The portfolio covers market weather, country economics, ESG mapping, macro intelligence, defense signals, nuclear energy intelligence, emergency preparedness, football forecasting, supply networks, and the endorsed SDCofA standing threat indices." },
-    { question: "Which Monarch Castle products are free?", answer: "Every current public dashboard, methodology page, and standing index remains free and open. Paid access applies only to The Keep enterprise workspace and related services." },
+    { question: "Which Monarch Castle products are free?", answer: "Every current public dashboard, methodology page, and standing index remains free and open. The Keep public workspace is also free." },
     { question: "Who publishes the SDCofA products?", answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies and publishes BNTI, WTI, MENA, election, and GeoRisk intelligence surfaces." }
   ],
   platform: [
-    { question: "What is The Keep?", answer: "The Keep is a unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture for private-sector teams." },
-    { question: "Does The Keep replace the public dashboards?", answer: "No. BNTI's withdrawal notice, WTI, MENA, and every current public product remain independently accessible without a platform subscription. The Keep adds cross-product views, watchlists, alerts, exports, and team workflows." },
+    { question: "What is The Keep?", answer: "The Keep is a unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible public workspace." },
+    { question: "Does The Keep replace the public dashboards?", answer: "No. BNTI's withdrawal notice, WTI, MENA, and every current public product remain independently accessible without an account. The Keep displays public snapshots, a local watchlist and source-linked records." },
     { question: "Does the public platform preview store private customer data?", answer: "No. The live public preview reads only published product outputs. Private customer data is not collected or stored in that preview." }
   ],
-  pricing: [
-    { question: "Are Monarch Castle public products free?", answer: "Yes. Public dashboards, methodologies, and standing index outputs stay free. Commercial pricing applies to The Keep workspace, services, and support." },
-    { question: "What does a paid pilot cost?", answer: "Paid pilots start from USD 15,000 for a six-week engagement with one defined exposure, decision owner, and measurable operational result." },
-    { question: "What does enterprise access include?", answer: "Enterprise access starts from USD 36,000 per year and covers organization workspaces, role-based access, watchlists, exports, alerts, API access, private connectors, and support." }
-  ],
+  pricing: [{ question: "Is The Keep free?", answer: "Yes. The public workspace, dashboards, source links and methods are free to explore without payment or an account." }],
   methodology: [
     { question: "How should an index value be interpreted?", answer: "Treat each index as a focused analytical lens. Open the methodology route before quoting a score so provenance, cadence, limitations, and evidence status are visible." },
     { question: "How often do standing indices refresh?", answer: "Each product declares its own update cadence and publication state. BNTI's index is currently withheld after classification failure; its endpoint carries a withdrawal notice." },
@@ -54,14 +52,8 @@ const pageFaqs = {
     { question: "Is there an MCP endpoint?", answer: "Yes. POST https://monarchcastle.com/mcp exposes get_index, get_bnti, list_indices, and get_site_page over streamable HTTP. Server card: /.well-known/mcp/server-card.json." },
     { question: "Where is the source code?", answer: "Public repositories live under https://github.com/MonarchCastleTech and https://github.com/SDCofA. Repository links are listed on the developers route." }
   ],
-  impact: [
-    { question: "Who is The Keep built for?", answer: "Private-sector teams in energy, logistics, finance, insurance, and advisory services that carry cross-border exposure and need inspectable early-warning context." },
-    { question: "How is pilot value measured?", answer: "Pilots measure lead time, analyst effort removed, and whether a reviewer can reproduce the evidence used to escalate a change." }
-  ],
-  pilot: [
-    { question: "How long does a pilot run?", answer: "A pilot runs for six weeks with one defined exposure, a decision owner, and an agreed success measure." },
-    { question: "What should not be sent in the intake?", answer: "Do not include confidential, personal, or regulated information. The intake is a non-confidential public GitHub issue form." }
-  ],
+  impact: [{ question: "How should outputs be used?", answer: "Read each observation with its source, date, method and limitations. Separate published statistics, proxies and forecast probabilities." }],
+  pilot: [{ question: "How do I start?", answer: "Open The Keep or browse the dataset catalogue. Access is free and no intake is required." }],
   datasets: [
     { question: "Where can I download standing index JSON?", answer: "Use GET /api/bnti, /api/wti, /api/mena, /api/indices or the canonical snapshots under /sdcofa/<index>/<index>_data.json. BNTI currently returns a withdrawal notice, not a valid score. The API catalog is at /.well-known/api-catalog." },
     { question: "Does third-party data remain under its original terms?", answer: "Yes. Third-party data remains subject to its original terms. The datasets route documents public source routes and analytical scope." }
@@ -71,7 +63,7 @@ const pageFaqs = {
     { question: "Is there an RSS feed?", answer: "Yes. Subscribe at /insights/feed.xml for automatically published, source-visible outputs from the public portfolio." }
   ],
   company: [
-    { question: "Where is Monarch Castle Technologies based?", answer: "The company operates from Ankara, Türkiye and publishes decision-intelligence and early-warning products for private-sector operators." },
+    { question: "Where is Monarch Castle Technologies based?", answer: "The company operates from Ankara, Türkiye and publishes open data instruments and analytical methods." },
     { question: "What is SDCofA?", answer: "SDCofA (Strategic Data Company of Ankara) is the endorsed analytical unit of Monarch Castle Technologies and publishes the standing threat indices." }
   ],
   solutions: [
@@ -82,7 +74,7 @@ const pageFaqs = {
 const homeFaq = pageFaqs.home.length ? pageFaqs.home : [
   {
     question: "What is Monarch Castle Technologies?",
-    answer: "Monarch Castle Technologies is an independent technology company that publishes transparent early-warning and decision-intelligence products for private-sector operators. The public portfolio stays free; paid access applies only to The Keep enterprise workspace."
+    answer: "Monarch Castle Technologies is an independent technology company that publishes transparent early-warning and decision-intelligence products for private-sector operators. The public portfolio and The Keep are free."
   },
   {
     question: "What is The Keep?",
@@ -94,7 +86,7 @@ const homeFaq = pageFaqs.home.length ? pageFaqs.home : [
   },
   {
     question: "Are Monarch Castle public products free?",
-    answer: "Yes. Every current public product, methodology page, and standing index remains free and open. Commercial access covers only the unified enterprise workspace, private integrations, exports, and support."
+    answer: "Yes. Every current public product, methodology page, and standing index remains free and open. The Keep public workspace is free to explore without an account."
   },
   {
     question: "How can an application read the standing indices?",
@@ -140,7 +132,7 @@ function pageExtraJsonLd(page, canonical) {
       url: `${canonicalOrigin}/platform/`,
       description: "Unified early-warning workspace combining public geopolitical, economic, energy, and supply-chain indicators.",
       publisher: orgRef,
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "Public product access remains free; commercial access applies to enterprise workspace features." }
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "The Keep and public products are free to explore." }
     });
   }
   if (page.slug === "products") {
@@ -187,8 +179,6 @@ function pageExtraJsonLd(page, canonical) {
       publisher: orgRef,
       itemListElement: [
         { "@type": "Offer", name: "Open products", price: "0", priceCurrency: "USD", description: "Every current public dashboard and methodology." },
-        { "@type": "Offer", name: "Paid pilot", price: "15000", priceCurrency: "USD", description: "Six-week bounded pilot engagement." },
-        { "@type": "Offer", name: "Enterprise annual access", price: "36000", priceCurrency: "USD", description: "Organization workspace, exports, API access, and support." }
       ]
     });
   }
@@ -266,12 +256,12 @@ function pageExtraJsonLd(page, canonical) {
     blocks.push({
       "@context": "https://schema.org",
       "@type": "Service",
-      name: page.slug === "pilot" ? "Six-week early-warning pilot" : page.title.split("|")[0].trim(),
+      name: page.slug === "pilot" ? "Public data exploration" : page.title.split("|")[0].trim(),
       url: canonical,
       provider: orgRef,
       serviceType: "Decision intelligence",
       areaServed: "Private-sector operators with cross-border exposure",
-      isAccessibleForFree: page.slug !== "pilot"
+      isAccessibleForFree: true
     });
   }
   return blocks;
@@ -389,12 +379,12 @@ function readPublicSignalSnapshot() {
     if (!fs.existsSync(source)) continue;
     try {
       const payload = JSON.parse(fs.readFileSync(source, "utf8"));
-      const value = Number(payload?.meta?.main_index);
-      if (!Number.isFinite(value)) continue;
+      const value = asFinite(payload?.meta?.main_index);
+      if (payload?.meta?.withdrawn || value === null) continue;
       const countries = Object.entries(payload?.countries ?? {}).map(([code, record]) => ({
         name: record?.name ?? code,
-        value: Number(record?.index)
-      })).filter((record) => Number.isFinite(record.value)).sort((a, b) => b.value - a.value).slice(0, 3);
+        value: asFinite(record?.index)
+      })).filter((record) => record.value !== null).sort((a, b) => b.value - a.value).slice(0, 3);
       records.push({
         generatedAt: payload?.meta?.generated_at ?? payload?.meta?.issued_at ?? null,
         label: mount.label,
@@ -490,7 +480,7 @@ function renderMark(product) {
 
 function renderProductCard(product) {
   return `
-    <article class="product-card system-row" data-product-id="${escapeHtml(product.id)}">
+    <article class="product-card system-row" data-search="${escapeHtml(product.name + " " + product.family + " " + product.regions.join(" "))}" data-family="${escapeHtml(product.family)}" data-product-id="${escapeHtml(product.id)}">
       <div class="product-mark">${renderMark(product)}</div>
       <div class="system-row-index" aria-hidden="true">${escapeHtml(product.id.slice(0, 3).toUpperCase())}</div>
       <div class="system-row-copy">
@@ -501,7 +491,7 @@ function renderProductCard(product) {
       <dl class="system-row-meta"><div><dt>Owner</dt><dd>${escapeHtml(product.owner === "MonarchCastleTech" ? "Monarch Castle Technologies" : product.owner)}</dd></div><div><dt>Cadence</dt><dd>${escapeHtml(product.updateFrequency === "review-required" ? "Not specified" : product.updateFrequency)}</dd></div></dl>
       <div class="card-actions">
         ${localOrExternalLink(product.canonicalUrl, "Explore system")}
-        ${localOrExternalLink(product.methodologyUrl, "How it works")}
+        ${localOrExternalLink(methodologyUrlFor(product), "How it works")}
       </div>
     </article>`;
 }
@@ -519,32 +509,6 @@ function renderCapabilities() {
     </article>`).join("")}</div>`;
 }
 
-function renderEndorsedFamily(headingId = "") {
-  return `
-    <div class="endorsed-panel">
-      <div>
-        <p class="eyebrow">Endorsed analytical unit</p>
-        <h2${headingId ? ` id="${escapeHtml(headingId)}"` : ""}>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2>
-        <p>SDCofA publishes open-source threat products as the endorsed analytical unit of Monarch Castle Technologies. Each product states when a score is unavailable.</p>
-        <p class="endorsement">SDCofA — endorsed analytical unit of Monarch Castle Technologies</p>
-      </div>
-      <div class="endorsed-links">
-        ${endorsedProducts.map((product) => {
-          const localPath = dashboardPaths[product.id];
-          return `<article data-product-id="${escapeHtml(product.id)}">
-            <div class="product-mark">${renderMark(product)}</div>
-            <span class="system-row-index" aria-hidden="true">${escapeHtml(product.id.slice(0, 3).toUpperCase())}</span>
-            <h3>${escapeHtml(product.name)}</h3>
-            <p>${escapeHtml(presentationFor(product).summary)}</p>
-            <div class="card-actions">
-              ${localPath ? localOrExternalLink(localPath, "Open dashboard") : ""}
-              ${localOrExternalLink(product.methodologyUrl, "Methodology")}
-            </div>
-          </article>`;
-        }).join("")}
-      </div>
-    </div>`;
-}
 
 function renderInsights() {
   return `<div class="insight-grid">${editorial.insights.map((insight) => `
@@ -574,23 +538,6 @@ function nextAction(href, heading, text, label) {
   </aside>`;
 }
 
-function renderFeaturedSystem(product, index) {
-  const presentation = presentationFor(product);
-  const productUrl = dashboardPaths[product.id] ?? product.canonicalUrl;
-  return `
-    <article class="featured-system" data-product-id="${escapeHtml(product.id)}">
-      <div class="featured-system-copy">
-        <p class="eyebrow">${String(index + 1).padStart(2, "0")} / ${escapeHtml(presentation.signal)}</p>
-        <h3>${escapeHtml(product.name)}</h3>
-        <p>${escapeHtml(presentation.summary)}</p>
-        <div class="card-actions">
-          ${localOrExternalLink(productUrl, "Explore system", "button-link")}
-          ${localOrExternalLink(product.methodologyUrl, "View methodology")}
-        </div>
-      </div>
-      <div class="featured-system-mark"><div class="featured-system-logo">${renderMark(product)}</div><span class="featured-system-category">${escapeHtml(presentation.signal)}</span></div>
-    </article>`;
-}
 
 function renderLiveWorkspace(overviewAnchor) {
   return `
@@ -609,10 +556,11 @@ function renderLiveWorkspace(overviewAnchor) {
           <time id="platform-updated">Reading source timestamps…</time>
         </div>
         <div class="workspace-metrics">
-          <article><span>Global threat</span><strong id="metric-wti">—</strong><small id="status-wti">WTI</small><a href="/sdcofa/wti/">Open source view</a></article>
-          <article><span>Border pressure</span><strong id="metric-bnti">—</strong><small id="status-bnti">BNTI</small><a href="/sdcofa/bnti/">Open source view</a></article>
-          <article><span>MENA exposure</span><strong id="metric-mena">—</strong><small id="status-mena">MENA</small><a href="/sdcofa/mena/">Open source view</a></article>
+          <article><span>Global threat</span><strong id="metric-wti">—</strong><small id="status-wti">WTI</small><time id="updated-wti">Timestamp pending</time><a href="/sdcofa/wti/">Open source view</a></article>
+          <article><span>Border pressure</span><strong id="metric-bnti">—</strong><small id="status-bnti">BNTI</small><time id="updated-bnti">Timestamp pending</time><a href="/sdcofa/bnti/">Open source view</a></article>
+          <article><span>MENA exposure</span><strong id="metric-mena">—</strong><small id="status-mena">MENA</small><time id="updated-mena">Timestamp pending</time><a href="/sdcofa/mena/">Open source view</a></article>
         </div>
+        <div class="workspace-filter"><label>Country<input id="keep-search" type="search" placeholder="Find a country" /></label><label>Source<select id="keep-source"><option value="">All sources</option><option value="wti">WTI</option><option value="mena">MENA</option><option value="bnti">BNTI</option></select></label><label class="watchlist-toggle"><input id="keep-watchlist" type="checkbox" />Watchlist only</label><button id="keep-export" type="button">Export JSON ↓</button></div>
         <div class="workspace-panels">
           <section class="exposure-panel" id="exposure-panel"><header><div><p class="eyebrow">Index by index</p><h3>Published country readings</h3></div><span id="feed-state">Connecting</span></header><ol id="exposure-list"><li class="loading-row">Reading published records…</li></ol></section>
           <section class="signal-panel" id="signal-panel"><header><div><p class="eyebrow">Source trail</p><h3>Recent published events</h3></div></header><ol id="signal-list"><li class="loading-row">Reading published events…</li></ol></section>
@@ -623,188 +571,54 @@ function renderLiveWorkspace(overviewAnchor) {
 }
 
 function renderHome() {
-  const featuredIds = ["esgmap", "prepturk", "cloudy-shiny"];
-  const featured = featuredIds.map((id) => productById.get(id)).filter(Boolean);
-  return `
-    <section class="mission-hero" id="positioning" aria-labelledby="home-heading">
-      <div class="mission-hero-copy">
-        <p class="eyebrow">Decision intelligence for cross-border operations</p>
-        <h1 id="home-heading">Know how global change reaches your business.</h1>
-        <p class="lede">The Keep connects geopolitical, economic, energy, and supply-chain signals to one source-visible operating picture for the teams carrying the exposure.</p>
-        <div class="hero-actions">
-          ${localOrExternalLink("/platform/", "Explore The Keep", "button-link")}
-          ${localOrExternalLink("/products/", "Explore public intelligence", "button-link button-secondary")}
-        </div>
-        <p class="public-commitment">Public instruments remain open. The enterprise workspace brings them together.</p>
-      </div>
-      <div class="mission-hero-visual" aria-hidden="true">
-        <img class="hero-scene-fallback" src="/assets/brand/exposure-field.svg" alt="" />
-        <canvas class="hero-scene-canvas"></canvas>
-        <div class="hero-scene-caption"><span>The Keep / operating picture</span><strong>Signals become context.</strong></div>
-      </div>
-    </section>
-    <section class="platform-rail" aria-label="The Keep operating loop">
-      <span>01 / Observe</span><span>02 / Connect</span><span>03 / Estimate</span><span>04 / Act</span>
-    </section>
-    <section class="platform-reveal" id="platform" aria-labelledby="platform-heading">
-      <div class="section-heading">
-        <div><p class="eyebrow">The Keep platform</p><h2 id="platform-heading">Follow a signal all the way to its source.</h2></div>
-        <p>One view brings published indicators, regional exposure, and underlying evidence into the same workflow.</p>
-      </div>
-      ${renderLiveWorkspace("platform-heading")}
-      <p class="section-action">${localOrExternalLink("/platform/", "Explore the platform", "button-link")}</p>
-    </section>
-    <section class="operating-thesis" id="capabilities" aria-labelledby="capabilities-heading">
-      <div class="section-heading"><div><p class="eyebrow">Built for operators</p><h2 id="capabilities-heading">Answers tied to the evidence that produced them.</h2></div><p>Automated collection handles repetition. Declared methods handle calculation. People retain judgment and accountability.</p></div>
-      ${renderCapabilities()}
-    </section>
-    <section class="sector-band" aria-labelledby="sector-heading">
-      <div class="section-heading"><div><p class="eyebrow">Where the work happens</p><h2 id="sector-heading">External change reaches every operating decision.</h2></div><p>Built for private-sector teams managing assets, routes, markets, and portfolios across borders.</p></div>
-      <div class="sector-grid"><a href="/impact/#energy"><span>01</span><h3>Energy</h3><p>Routes, sanctions, regional stability, infrastructure.</p></a><a href="/impact/#logistics"><span>02</span><h3>Logistics</h3><p>Ports, corridors, borders, congestion, disruption.</p></a><a href="/impact/#finance"><span>03</span><h3>Finance</h3><p>Country exposure, macro shifts, scenario monitoring.</p></a><a href="/impact/#insurance"><span>04</span><h3>Insurance</h3><p>Accumulation risk, emerging events, portfolio watchlists.</p></a></div>
-    </section>
-    <section class="featured-systems" id="featured-systems" aria-labelledby="featured-heading">
-      <div class="section-heading">
-        <p class="eyebrow">Featured systems</p>
-        <h2 id="featured-heading">Built around the decision, not the dashboard.</h2>
-        <p>Each public product remains directly accessible, free of a platform paywall.</p>
-      </div>
-      <div class="featured-system-list">${featured.map(renderFeaturedSystem).join("")}</div>
-    </section>
-    <section class="portfolio-overview" id="portfolio" aria-labelledby="portfolio-heading">
-      <div class="section-heading">
-        <div><p class="eyebrow">Portfolio architecture</p><h2 id="portfolio-heading">A connected portfolio with clear ownership.</h2></div>
-        <p>Focused public instruments remain directly accessible. The Keep adds a unified workspace above them.</p>
-      </div>
-      <div class="portfolio-groups">
-        <article>
-          <span class="portfolio-group-index">01 / Company systems</span>
-          <h3>Monarch Castle Technologies</h3>
-          <p>Market, energy, maritime, supply-chain, and forecasting products developed for defined information problems.</p>
-          ${localOrExternalLink("/products/", "Explore all products")}
-        </article>
-        <article id="sdcofa">
-          <span class="portfolio-group-index">02 / Endorsed analytical unit</span>
-          <h3>SDCofA</h3>
-          <p>Standing open-source threat indices published by the endorsed analytical unit of Monarch Castle Technologies.</p>
-          <div class="portfolio-direct-links">
-            ${localOrExternalLink("/sdcofa/bnti/", "BNTI")}
-            ${localOrExternalLink("/sdcofa/wti/", "WTI")}
-            ${localOrExternalLink("/sdcofa/mena/", "MENA")}
-          </div>
-        </article>
-      </div>
-    </section>
-    <section class="evidence-chain" id="methods" aria-labelledby="methods-heading">
-      <div class="section-heading">
-        <p class="eyebrow">Evidence chain</p>
-        <h2 id="methods-heading">Intelligence is useful when its reasoning can be followed.</h2>
-      </div>
-      <div class="evidence-steps">
-        <article><span>01</span><h3>Source context</h3><p>Start with where an observation came from, when it was captured, and what it can support.</p></article>
-        <article><span>02</span><h3>Analytical method</h3><p>Make transformations, comparisons, and limitations understandable to the reader.</p></article>
-        <article><span>03</span><h3>Decision output</h3><p>Present the result in a form that clarifies choices without hiding uncertainty.</p></article>
-      </div>
-      <div class="evidence-actions">
-        ${localOrExternalLink("/methodology/", "Explore methodology", "button-link")}
-        ${localOrExternalLink("/trust/", "Read our commitments")}
-      </div>
-    </section>
-    <section class="entity-definitions" id="answers" aria-labelledby="answers-heading">
-      <div class="section-heading">
-        <div><p class="eyebrow">At a glance</p><h2 id="answers-heading">Know what each part of the portfolio does.</h2></div>
-        <p>Clear definitions of the company, The Keep, and the public indices it brings into view.</p>
-      </div>
-      <dl class="definition-list">
-        <div><dt>Monarch Castle Technologies</dt><dd>Independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators with cross-border exposure.</dd></div>
-        <div><dt>The Keep</dt><dd>Unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.</dd></div>
-        <div><dt>Border Neighbor Threat Index (BNTI)</dt><dd>Cross-border threat index for Türkiye's land-neighbor relationships. Its country scores are currently withheld after article classification failed.</dd></div>
-        <div><dt>World Threat Index (WTI)</dt><dd>Standing open-source index for comparative global geopolitical threat pressure across countries and blocs.</dd></div>
-        <div><dt>MENA Threat Index</dt><dd>Standing open-source index for regional threat assessment across the Middle East and North Africa.</dd></div>
-        <div><dt>SDCofA</dt><dd>Strategic Data Company of Ankara — the endorsed analytical unit of Monarch Castle Technologies that publishes threat products and their current publication status.</dd></div>
-      </dl>
-      <div class="faq-block">
-        <h3>Frequently asked questions</h3>
-        ${homeFaq.map((entry) => `<details><summary>${escapeHtml(entry.question)}</summary><p>${escapeHtml(entry.answer)}</p></details>`).join("")}
-      </div>
-      <p class="platform-disclaimer">Index outputs are analytical aids, not investment advice or official government intelligence. Inspect methodology before quoting a value.</p>
-    </section>
-    <section class="company-close" id="company-contact" aria-labelledby="company-heading">
-      <div class="company-close-copy">
-        <p class="eyebrow">Monarch Castle Technologies</p>
-        <h2 id="company-heading">Start with one exposure. Prove value in six weeks.</h2>
-        <p>A paid pilot connects your operating question to The Keep without restricting any existing public product.</p>
-      </div>
-      <div class="company-close-actions">
-        ${localOrExternalLink("/pilot/", "Request a pilot", "button-link")}
-        ${localOrExternalLink("/pricing/", "Platform access")}
-      </div>
-    </section>`;
+  return renderDataHome({
+    workspace: renderLiveWorkspace("platform"),
+    cards: ["econmap", "esgmap", "macrointel", "world-threat-index"].map(id => productById.get(id)).filter(Boolean).map(renderProductCard).join(""),
+    faq: '<div class="faq-block">' + homeFaq.map(entry => '<details><summary>' + escapeHtml(entry.question) + '</summary><p>' + escapeHtml(entry.answer) + '</p></details>').join("") + '</div>'
+  });
 }
 
 function renderPlatform() {
-  return `${pageIntro("The Keep", "A unified early-warning workspace", "Live public indicators become one operating picture for private-sector teams. Sources, timestamps, and methods remain visible.")}
-    <section class="platform-workspace" aria-labelledby="workspace-heading">
-      <div class="workspace-toolbar"><div><p class="eyebrow">Live public preview</p><h2 id="workspace-heading">Operating picture</h2></div><p>Follow published indicators into the records and methods behind them. Each index retains its own scale.</p></div>
-      ${renderLiveWorkspace("workspace-heading")}
-    </section>
-    <section class="platform-boundary" aria-labelledby="boundary-heading"><div><p class="eyebrow">Open-product promise</p><h2 id="boundary-heading">The public portfolio stays public.</h2></div><div><p>BNTI, WTI, EconMap, GeoRisk, MacroIntel, and every current published product remain available without a platform subscription.</p><p>Paid access covers unified watchlists, organization workspaces, private data connections, scheduled briefings, exports, API access, and support.</p><p>${localOrExternalLink(secureWorkspaceUrl, "Enter secure workspace", "button-link")} ${localOrExternalLink("/pricing/", "Compare access")}</p></div></section>
-    <section class="process-grid" aria-label="Platform operating model"><article><span>01</span><h3>Collect</h3><p>Scheduled product workflows refresh declared public sources.</p></article><article><span>02</span><h3>Normalize</h3><p>Versioned schemas preserve timestamps, provenance, and missingness.</p></article><article><span>03</span><h3>Connect</h3><p>The Keep aligns signals across geography, time, sector, and exposure.</p></article><article><span>04</span><h3>Deliver</h3><p>Teams receive watchlists, alerts, exports, and reproducible evidence.</p></article></section>
-    ${nextAction("/pilot/", "Connect one real operating decision", "A six-week pilot begins with an exposure, a decision owner, and an agreed success measure.", "Request a pilot")}`;
+  return renderFreeKeep({ intro: pageIntro, workspace: renderLiveWorkspace("overview"), next: nextAction });
 }
 
 function renderImpact() {
-  const cases = [
-    ["energy", "Energy and commodities", "Track regional instability, sanctions, ports, infrastructure, and route conditions around assets and contracts.", "Trading, procurement, strategy, security"],
-    ["logistics", "Logistics and supply chains", "Watch border pressure, port congestion, corridor disruption, and country conditions before schedules and inventories absorb the shock.", "Network planning, operations, procurement"],
-    ["finance", "Finance and advisory", "Combine macro, country, and event signals into transparent watchlists for research, risk, and client work.", "Country risk, research, portfolio oversight"],
-    ["insurance", "Insurance and reinsurance", "Monitor emerging accumulation patterns and retain the source trail needed for triage and escalation.", "Exposure management, underwriting, claims"]
-  ];
-  return `${pageIntro("Operational use cases", "Built for commercial exposure, not government procurement", "The Keep helps private-sector teams detect change, connect it to assets and routes, and preserve an inspectable evidence trail.")}
-    <section class="impact-list" aria-label="Private-sector use cases">${cases.map(([id, title, summary, users], index) => `<article id="${id}"><span>${String(index + 1).padStart(2, "0")}</span><div><p class="eyebrow">${escapeHtml(users)}</p><h2>${escapeHtml(title)}</h2><p>${escapeHtml(summary)}</p></div><ol><li>Define exposed assets, countries, routes, or suppliers.</li><li>Monitor public signals and declared model outputs.</li><li>Escalate changes with source and timestamp attached.</li></ol></article>`).join("")}</section>
-    <section class="evidence-chain" aria-labelledby="measurement-heading"><div class="section-heading"><div><p class="eyebrow">Pilot measurement</p><h2 id="measurement-heading">Prove operational value without inventing a case study.</h2></div><p>Until paid pilots produce permissioned results, this site publishes workflows and measurement criteria—not fabricated customer logos or claims.</p></div><div class="evidence-steps"><article><span>01</span><h3>Lead time</h3><p>How much earlier did the workflow surface a relevant change?</p></article><article><span>02</span><h3>Analyst effort</h3><p>How much repetitive collection and triage time was removed?</p></article><article><span>03</span><h3>Decision trace</h3><p>Could a reviewer reproduce the evidence used to escalate?</p></article></div></section>
-    ${nextAction("/pilot/", "Create the first permissioned impact record", "Run one bounded pilot with agreed inputs, outputs, and measures.", "Request a pilot")}`;
+  return `${pageIntro("Applications", "Put observations in context", "Inspect energy, logistics, economic and geopolitical observations in their original analytical context.")}
+    <section class="evidence-chain"><div class="evidence-steps"><article><span>Energy</span><h2>Compare observation years</h2><p>Open nuclear electricity and ESG records with their source years and missingness.</p><a href="https://monarchcastle.com/NuclearEnergyIntelligence/">Nuclear electricity →</a></article><article><span>Geopolitics</span><h2>Follow the source trail</h2><p>Read WTI and MENA as news pressure indicators, with distinct methods and uncertainty.</p><a href="/sdcofa/wti/">World Threat Index →</a></article><article><span>Economics</span><h2>Inspect the measure</h2><p>Compare sourced macroeconomic observations and trade records within their stated scope.</p><a href="https://monarchcastle.com/macrointel/">MacroIntel →</a></article></div></section>
+    ${nextAction("/datasets/", "Explore the collection", "Choose a subject, inspect a source and read its method.", "Browse datasets")}`;
 }
 
 function renderPricing() {
-  return `${pageIntro("Platform access", "Public products stay free. The unified workspace is commercial.", "No existing dashboard, methodology page, or public data output is placed behind a paywall. Explore independently; no sales call is required.")}
-    <section class="pricing-grid" aria-label="The Keep commercial access">
-      <article><p class="eyebrow">Public</p><h2>Open products</h2><p class="price">$0</p><ul><li>Every current public dashboard</li><li>Published methodologies</li><li>Public source and timestamp trails</li><li>Repository access under stated licenses</li></ul>${localOrExternalLink("/products/", "Explore free products", "button-link button-secondary")}</article>
-      <article class="pricing-featured"><p class="eyebrow">Six-week engagement</p><h2>Paid pilot</h2><p class="price">From $15k</p><ul><li>One defined exposure and decision workflow</li><li>Unified watchlist and scheduled briefing</li><li>Customer-provided data mapping when permitted</li><li>Measured lead-time and analyst-effort baseline</li></ul>${localOrExternalLink("/pilot/", "Scope a pilot", "button-link")}</article>
-      <article><p class="eyebrow">Annual access</p><h2>Enterprise</h2><p class="price">From $36k / year</p><ul><li>Organization workspace and role-based access</li><li>Watchlists, exports, alerts, and API access</li><li>Private connectors and deployment options</li><li>Support, onboarding, and service objectives</li></ul>${localOrExternalLink("/pilot/", "Discuss enterprise access", "button-link button-secondary")}</article>
-    </section>
-    <section class="platform-boundary" aria-labelledby="commercial-boundary"><div><p class="eyebrow">Commercial boundary</p><h2 id="commercial-boundary">Pay for coordination and service—not for access to work already published.</h2></div><div><p>The commercial product is The Keep workspace: cross-product views, team workflows, private integrations, delivery guarantees, and support.</p><p>Prices are starting points for qualified private-sector buyers. Taxes, data licensing, bespoke infrastructure, and third-party services are scoped separately.</p></div></section>
-    ${nextAction("/pilot/", "Begin with a bounded outcome", "A pilot converts one recurring risk question into a measured operating workflow.", "Request a pilot")}`;
+  return renderFreeAccess({ intro: pageIntro, next: nextAction, previous: false });
 }
 
 function renderPilot() {
-  const intakeUrl = "https://github.com/MonarchCastleTech/MonarchCastleTech.github.io/issues/new?template=pilot_request.yml";
-  return `${pageIntro("Private-sector pilot", "Turn one exposure into a working early-warning loop", "A six-week pilot has a decision owner, a bounded scope, declared data, and a measurable operational result.")}
-    <section class="pilot-layout" aria-labelledby="pilot-scope-heading"><div><p class="eyebrow">Pilot structure</p><h2 id="pilot-scope-heading">Small enough to finish. Useful enough to renew.</h2><ol class="pilot-steps"><li><span>01</span><div><strong>Define</strong><p>Choose one portfolio, route, region, supplier set, or recurring risk decision.</p></div></li><li><span>02</span><div><strong>Connect</strong><p>Map public products and approved customer inputs into The Keep.</p></div></li><li><span>03</span><div><strong>Operate</strong><p>Run scheduled monitoring, briefing, escalation, and evidence capture.</p></div></li><li><span>04</span><div><strong>Measure</strong><p>Compare lead time, analyst effort, coverage, and reproducibility against baseline.</p></div></li></ol></div><aside class="pilot-card"><p class="eyebrow">Non-confidential intake</p><h3>Request a pilot</h3><p>Use the asynchronous public intake to describe sector, geography, and decision. No cold call is required. Do not include confidential, personal, or regulated information.</p><dl><div><dt>Duration</dt><dd>6 weeks</dd></div><div><dt>Starting price</dt><dd>USD 15,000</dd></div><div><dt>Customer</dt><dd>Private-sector organizations</dd></div></dl>${localOrExternalLink(intakeUrl, "Open pilot intake", "button-link")}<small>A GitHub account is required for this temporary intake route.</small></aside></section>
-    <section class="trust-grid" aria-label="Pilot conditions"><article><h2>No hidden lock-in</h2><p>Public product access remains unchanged before, during, and after a pilot.</p></article><article><h2>No invented certainty</h2><p>Outputs preserve confidence, limitations, missingness, and source boundaries.</p></article><article><h2>No government dependency</h2><p>The commercial plan targets private companies in energy, logistics, finance, insurance, and advisory services.</p></article></section>
-    ${nextAction("/methodology/", "Inspect the method before buying", "Review provenance, automation, model evaluation, and platform formulas.", "Read methodology")}`;
+  return renderFreeAccess({ intro: pageIntro, next: nextAction, previous: true });
 }
 
 function renderProducts() {
   return `${pageIntro("Products", "Intelligence systems for consequential decisions", "Explore Monarch Castle Technologies products and the SDCofA threat-intelligence family.")}
+    <div class="catalogue-filter"><label>Search instruments<input id="catalogue-search" type="search" placeholder="Country, subject or instrument" /></label><label>Subject<select id="catalogue-family"><option value="">All subjects</option>${[...new Set(site.products.map(p => p.family))].map(f => `<option>${escapeHtml(f)}</option>`).join("")}</select></label><p id="catalogue-count" role="status"></p></div>
     <section class="owner-portfolio-section owner-portfolio-section--flagship" aria-labelledby="flagship-heading">
       <div class="section-heading"><div><p class="eyebrow">Product owner</p><h2 id="flagship-heading">Monarch Castle Technologies</h2></div><p>Each system turns a defined information problem into a focused analytical experience.</p></div>
       ${renderProductGrid(flagshipProducts)}
     </section>
-    <section class="sdcofa-band owner-portfolio-section owner-portfolio-section--endorsed" aria-labelledby="endorsed-heading">${renderEndorsedFamily("endorsed-heading")}</section>
+    <section class="sdcofa-band owner-portfolio-section owner-portfolio-section--endorsed" aria-labelledby="endorsed-heading"><div class="section-heading"><div><p class="eyebrow">Endorsed analytical unit</p><h2 id="endorsed-heading">SDCofA</h2></div><p>Source-linked indicators and analytical methods.</p></div>${renderProductGrid(endorsedProducts)}</section>
     ${nextAction("/datasets/", "See the intelligence foundations", "Continue to the public source and methodology routes behind the portfolio.", "Browse datasets and sources")}`;
 }
 
 function renderDatasets() {
   return `${pageIntro("Datasets and sources", "Source routes and analytical scope", "Explore the public methods and source records behind each system. Third-party data remains subject to its original terms.")}
+    <div class="catalogue-filter"><label>Search datasets<input id="catalogue-search" type="search" placeholder="Country, subject or instrument" /></label><label>Subject<select id="catalogue-family"><option value="">All subjects</option>${[...new Set(site.products.map(p => p.family))].map(f => `<option>${escapeHtml(f)}</option>`).join("")}</select></label><p id="catalogue-count" role="status"></p></div>
     <section aria-labelledby="catalog-heading">
       <div class="section-heading"><h2 id="catalog-heading">Public source catalog</h2><p>Move directly from a product to the method that supports it.</p></div>
       <div class="table-wrap" tabindex="0" aria-label="Scrollable dataset catalog">
         <table>
           <thead><tr><th scope="col">Product</th><th scope="col">Intelligence family</th><th scope="col">Method</th></tr></thead>
-          <tbody>${site.products.map((product) => `<tr>
-            <th scope="row">${escapeHtml(product.name)}</th>
+          <tbody>${site.products.map((product) => `<tr data-product-id="${escapeHtml(product.id)}" data-search="${escapeHtml(product.name + " " + product.family + " " + product.regions.join(" "))}" data-family="${escapeHtml(product.family)}">
+            <th scope="row">${localOrExternalLink(product.canonicalUrl, product.name)}</th>
             <td>${escapeHtml(sentenceCase(product.family))}</td>
-            <td>${localOrExternalLink(product.methodologyUrl, "Explore method")}</td>
+            <td>${localOrExternalLink(methodologyUrlFor(product), "Explore method")}</td>
           </tr>`).join("")}</tbody>
         </table>
       </div>
@@ -813,10 +627,9 @@ function renderDatasets() {
 }
 
 function renderSolutions() {
-  return `${pageIntro("Offerings", "Early warning built around commercial exposure", "The Keep connects open intelligence products to the operating questions faced by energy, logistics, finance, and insurance teams.")}
-    <section aria-labelledby="solutions-heading"><div class="section-heading"><div><p class="eyebrow">Operating model</p><h2 id="solutions-heading">From exposed asset to traceable action.</h2></div><p>Start with the decision and exposure. Add only the sources, models, and alerts that materially improve it.</p></div>${renderCapabilities()}</section>
-    <section class="split-section" aria-labelledby="application-heading"><div><p class="eyebrow">Delivery</p><h2 id="application-heading">Public instruments below. Unified workflow above.</h2></div><div><p>Open products remain independently usable. The commercial layer coordinates them into watchlists, private integrations, scheduled briefings, exports, and team workflows.</p>${localOrExternalLink("/platform/", "Explore The Keep")}</div></section>
-    ${nextAction("/impact/", "Match the platform to an operating environment", "Review private-sector workflows without fabricated customer claims.", "See use cases")}`;
+  return `${pageIntro("Analytical process", "From observation to interpretation", "Sources, methods and explicit limitations connect the public collection.")}
+    <section>${renderCapabilities()}</section>
+    ${nextAction("/platform/", "Inspect the published evidence", "The Keep brings public snapshots and source records into one free workspace.", "Open The Keep")}`;
 }
 
 function renderInsightsPage() {
@@ -838,18 +651,23 @@ function renderMethodology() {
     </section>
     <section id="forecasting" class="split-section" aria-labelledby="forecast-method-heading">
       <div><p class="eyebrow">Forecasting</p><h2 id="forecast-method-heading">Evaluation before performance language</h2></div>
-      <div><p>Forecasting claims are published only with a defined horizon, scoring rule, and evidence that readers can examine.</p>${localOrExternalLink(editorial.insights[0].url, "Read the forecast evaluation protocol")}</div>
+      <div><p>Read each product's evaluation record before interpreting its forecast. The portfolio does not claim validated predictive performance from a protocol alone.</p><ol><li>Define the target, horizon, observation unit and outcome rule before evaluation.</li><li>Use only information available at the forecast date. Keep event, publication and ingestion dates distinct.</li><li>Evaluate in forward time against declared naive baselines.</li><li>Publish scoring rules, calibration, missingness and sample limits with the results.</li><li>Withhold numerical claims when evidence or source attribution fails.</li></ol></div>
     </section>
     <section id="platform-formula" class="platform-boundary" aria-labelledby="platform-method-heading">
-      <div><p class="eyebrow">The Keep preview</p><h2 id="platform-method-heading">A declared cross-system summary—not a hidden model.</h2></div>
+      <div><p class="eyebrow">The Keep preview</p><h2 id="platform-method-heading">Separate measures. Visible sources.</h2></div>
       <div><p>The live preview reads each product's published <code>meta.main_index</code>, status, timestamp, country records, and events. It does not alter upstream scores or combine indices that use different scales.</p><p>Country readings are grouped by index and ordered within each product. Event rows retain source links and timestamps. Failed feeds are reported as unavailable without substitute values.</p></div>
     </section>
     <section class="trust-grid" aria-label="Reproducibility controls"><article><h2>Versioned inputs</h2><p>Each mounted product output carries its own generation time, model version, and source boundary where available.</p></article><article><h2>Deterministic presentation</h2><p>Given the same JSON outputs, the platform preview produces the same metrics, rankings, and event order.</p></article><article><h2>Failure visibility</h2><p>Feed failures remain visible; the interface does not silently fabricate substitute values.</p></article></section>
     <section aria-labelledby="methods-catalog-heading">
       <div class="section-heading"><h2 id="methods-catalog-heading">Product methodology routes</h2></div>
-      <ul class="method-list">${site.products.map((product) => `<li><span>${escapeHtml(product.name)}</span>${localOrExternalLink(product.methodologyUrl, "Open method")}</li>`).join("")}</ul>
+      <ul class="method-list">${site.products.map((product) => `<li><span>${escapeHtml(product.name)}</span>${localOrExternalLink(methodologyUrlFor(product), "Open method")}</li>`).join("")}</ul>
     </section>
     ${nextAction("/trust/", "Review the public trust commitments", "Continue to claims, security, licensing, provenance, and endorsement.", "Open trust center")}`;
+}
+
+// The election repository publishes from master; preserve the governed registry projection.
+function methodologyUrlFor(product) {
+  return product.id === "election" ? product.methodologyUrl.replace("/blob/main/", "/blob/master/") : product.methodologyUrl;
 }
 
 function repositoryUrl(product) {
@@ -889,16 +707,10 @@ function renderTrust() {
 }
 
 function renderCompany() {
-  return `${pageIntro("Company", site.brand.masterbrand, "An independent technology company building transparent early-warning systems for private-sector operators exposed to geopolitical and economic change.")}
-    <section class="split-section" aria-labelledby="position-heading">
-      <div><p class="eyebrow">Positioning</p><h2 id="position-heading">Early warning for companies operating across borders.</h2></div>
-      <div><p>The Keep unifies the public Monarch Castle Technologies portfolio and the explicitly endorsed SDCofA analytical unit without restricting their existing public access.</p>${localOrExternalLink("/platform/", "Explore The Keep")}</div>
-    </section>
-    <section class="endorsed-panel" aria-labelledby="unit-heading">
-      <div><p class="eyebrow">Organization structure</p><h2 id="unit-heading">${escapeHtml(site.brand.endorsedAnalyticalUnit.name)}</h2><p>${escapeHtml(site.brand.endorsedAnalyticalUnit.name)} is the ${escapeHtml(site.brand.endorsedAnalyticalUnit.relationship)} of ${escapeHtml(site.brand.masterbrand)}.</p></div>
-      <div class="contact-card"><h3>How we work</h3><p>Our products, methods, and security reporting are available for inspection. A focused pilot starts with one operating decision and a clear measure of value.</p><div class="card-actions">${localOrExternalLink("/pilot/", "Discuss a pilot")}${localOrExternalLink("/trust/", "Read our commitments")}</div></div>
-    </section>
-    ${nextAction("/pilot/", "Start with a private-sector pilot", "Define one exposure, one decision owner, and one measurable result.", "Request a pilot")}`;
+  return `${pageIntro("Company", site.brand.masterbrand, "An independent technology company publishing transparent data instruments and analytical methods.")}
+    <section class="split-section"><div><p class="eyebrow">Our work</p><h2>Inspectable observations.</h2></div><div><p>The Keep brings the public collection together in a free workspace. Every instrument keeps its own sources and limitations.</p><a href="/platform/">Open The Keep →</a></div></section>
+    <section class="endorsed-panel"><div><p class="eyebrow">Endorsed analytical unit</p><h2>SDCofA</h2><p>Strategic Data Company of Ankara is the endorsed analytical unit of Monarch Castle Technologies.</p></div><div class="contact-card"><h3>Contact & contribution</h3><p>Inspect our repositories, raise a source correction or contribute through the public project routes.</p><a href="https://github.com/MonarchCastleTech">GitHub organization ↗</a></div></section>
+    ${nextAction("/trust/", "Read our public commitments", "Sources, licensing, security and analytical limitations.", "Open trust center")}`;
 }
 
 function renderBody(page) {
@@ -926,11 +738,11 @@ function renderBody(page) {
 
 function renderNav(currentPath) {
   const navigation = [
-    { label: "Platform", path: "/platform/" },
-    { label: "Products", path: "/products/" },
-    { label: "Insights", path: "/insights/" },
-    { label: "Methodology", path: "/methodology/" },
-    { label: "Company", path: "/company/" }
+    { label: "Data", path: "/datasets/" },
+    { label: "Maps", path: "/products/" },
+    { label: "Signals", path: "/insights/" },
+    { label: "Research", path: "/developers/" },
+    { label: "Methodology", path: "/methodology/" }
   ];
   return navigation.map((item) => {
     const current = item.path === currentPath ? ' aria-current="page"' : "";
@@ -1112,6 +924,7 @@ function renderPage(page) {
       <a href="/company/">Contact</a>
     </nav>
   </footer>
+  ${["products", "datasets"].includes(page.slug) ? '<script type="module" src="/scripts/catalogue.js"></script>' : ""}
   ${page.slug === "home" ? '<script type="module" src="/scripts/hero-loader.js"></script>' : ""}
   ${["home", "platform"].includes(page.slug) ? '<script type="module" src="/scripts/platform.js"></script>' : ""}
 </body>
@@ -1190,7 +1003,7 @@ fs.writeFileSync(path.join(dist, "robots.txt"), [
   `Sitemap: ${canonicalOrigin}/sitemap.xml`,
   ""
 ].join("\n"));
-fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.\n\n## Quick facts\n\n- ${site.brand.masterbrand}: ${canonicalOrigin}/ — independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- The Keep: ${canonicalOrigin}/platform/ — unified early-warning workspace across geopolitical, economic, energy, and supply-chain signals.\n- SDCofA: ${canonicalOrigin}/sdcofa/ — endorsed analytical unit that publishes WTI and MENA threat indices; BNTI's score is currently withdrawn.\n- Pricing: ${canonicalOrigin}/pricing/ — every current public product stays free; paid access is only the enterprise workspace.\n\n## Primary routes\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- Tools: ${canonicalOrigin}/tools/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- REST API index: ${canonicalOrigin}/api\n- API catalog: ${canonicalOrigin}/.well-known/api-catalog\n- AI catalog: ${canonicalOrigin}/.well-known/ai-catalog.json\n- Agent card: ${canonicalOrigin}/.well-known/agent.json\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index (score withdrawn pending classification repair): ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n\n## Standing index JSON APIs (public, no key)\n\n- API index: GET ${canonicalOrigin}/api\n- BNTI: GET ${canonicalOrigin}/api/bnti (canonical: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json)\n- WTI: GET ${canonicalOrigin}/api/wti (canonical: ${canonicalOrigin}/sdcofa/wti/wti_data.json)\n- MENA: GET ${canonicalOrigin}/api/mena (canonical: ${canonicalOrigin}/sdcofa/mena/mena_data.json)\n- Catalog: GET ${canonicalOrigin}/api/indices\n- Query: ?country=Name&top=10\n- MCP: POST ${canonicalOrigin}/mcp\n\n## FAQ\n\n- What is Monarch Castle Technologies? An independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- What is The Keep? A unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.\n- Are public products free? Yes. Every current public product, methodology page, and standing index remains free; paid access applies only to the enterprise workspace.\n- How do applications read the indices? GET ${canonicalOrigin}/api/bnti, ${canonicalOrigin}/api/wti, ${canonicalOrigin}/api/mena, and ${canonicalOrigin}/api/indices, or POST ${canonicalOrigin}/mcp. No API key is required.\n- Who publishes BNTI, WTI, and MENA? SDCofA (Strategic Data Company of Ankara), the endorsed analytical unit of Monarch Castle Technologies.\n- Full page answers: ${canonicalOrigin}/#answers and per-route #faq anchors on narrative pages.\n\n## Glossary\n\n- BNTI: Border Neighbor Threat Index — score withdrawn after article-classification failure; the public endpoint carries a withdrawal notice.\n- WTI: World Threat Index — comparative global geopolitical threat pressure.\n- MENA: MENA Threat Index — regional threat assessment for the Middle East and North Africa.\n- SDCofA: Strategic Data Company of Ankara — endorsed analytical unit of Monarch Castle Technologies.\n- The Keep: unified early-warning workspace layer above free public dashboards.\n- Evidence chain: source context → analytical method → decision output with explicit limitations.\n`);
+fs.writeFileSync(path.join(dist, "llms.txt"), `# ${site.brand.masterbrand}\n\nTransparent public early-warning products and methods. The Keep brings public datasets and source records together in a free workspace.\n\n## Quick facts\n\n- ${site.brand.masterbrand}: ${canonicalOrigin}/ — independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- The Keep: ${canonicalOrigin}/platform/ — unified early-warning workspace across geopolitical, economic, energy, and supply-chain signals.\n- SDCofA: ${canonicalOrigin}/sdcofa/ — endorsed analytical unit that publishes WTI and MENA threat indices; BNTI's score is currently withdrawn.\n- Pricing: ${canonicalOrigin}/pricing/ — The Keep and the public collection are free.\n\n## Primary routes\n\n- Platform: ${canonicalOrigin}/platform/\n- Public products: ${canonicalOrigin}/products/\n- Current signals: ${canonicalOrigin}/insights/\n- RSS: ${canonicalOrigin}/insights/feed.xml\n- Methodology: ${canonicalOrigin}/methodology/\n- Trust and limitations: ${canonicalOrigin}/trust/\n- Company: ${canonicalOrigin}/company/\n- Datasets and sources: ${canonicalOrigin}/datasets/\n- Developer routes: ${canonicalOrigin}/developers/\n- Tools: ${canonicalOrigin}/tools/\n- MCP catalog: ${canonicalOrigin}/mcp/\n- REST API index: ${canonicalOrigin}/api\n- API catalog: ${canonicalOrigin}/.well-known/api-catalog\n- AI catalog: ${canonicalOrigin}/.well-known/ai-catalog.json\n- Agent card: ${canonicalOrigin}/.well-known/agent.json\n- SDCofA endorsed unit: ${canonicalOrigin}/sdcofa/\n- Source repositories: https://github.com/MonarchCastleTech and https://github.com/SDCofA\n\n## Standing indices\n\n- Border Neighbor Threat Index (score withdrawn pending classification repair): ${canonicalOrigin}/sdcofa/bnti/\n- World Threat Index: ${canonicalOrigin}/sdcofa/wti/\n- MENA Threat Index: ${canonicalOrigin}/sdcofa/mena/\n\n## Standing index JSON APIs (public, no key)\n\n- API index: GET ${canonicalOrigin}/api\n- BNTI: GET ${canonicalOrigin}/api/bnti (canonical: ${canonicalOrigin}/sdcofa/bnti/bnti_data.json)\n- WTI: GET ${canonicalOrigin}/api/wti (canonical: ${canonicalOrigin}/sdcofa/wti/wti_data.json)\n- MENA: GET ${canonicalOrigin}/api/mena (canonical: ${canonicalOrigin}/sdcofa/mena/mena_data.json)\n- Catalog: GET ${canonicalOrigin}/api/indices\n- Query: ?country=Name&top=10\n- MCP: POST ${canonicalOrigin}/mcp\n\n## FAQ\n\n- What is Monarch Castle Technologies? An independent technology company publishing transparent early-warning and decision-intelligence products for private-sector operators.\n- What is The Keep? A unified early-warning workspace that combines geopolitical, economic, energy, and supply-chain signals into one source-visible operating picture.\n- Are public products free? Yes. The Keep, public products and methods are free.\n- How do applications read the indices? GET ${canonicalOrigin}/api/bnti, ${canonicalOrigin}/api/wti, ${canonicalOrigin}/api/mena, and ${canonicalOrigin}/api/indices, or POST ${canonicalOrigin}/mcp. No API key is required.\n- Who publishes BNTI, WTI, and MENA? SDCofA (Strategic Data Company of Ankara), the endorsed analytical unit of Monarch Castle Technologies.\n- Full page answers: ${canonicalOrigin}/#answers and per-route #faq anchors on narrative pages.\n\n## Glossary\n\n- BNTI: Border Neighbor Threat Index — score withdrawn after article-classification failure; the public endpoint carries a withdrawal notice.\n- WTI: World Threat Index — comparative global geopolitical threat pressure.\n- MENA: MENA Threat Index — regional threat assessment for the Middle East and North Africa.\n- SDCofA: Strategic Data Company of Ankara — endorsed analytical unit of Monarch Castle Technologies.\n- The Keep: unified early-warning workspace layer above free public dashboards.\n- Evidence chain: source context → analytical method → decision output with explicit limitations.\n`);
 const llmsFullLines = [
   `# ${site.brand.masterbrand} full corpus`,
   "",
@@ -1207,7 +1020,7 @@ const llmsFullLines = [
   "",
   "## Products",
   "",
-  ...site.products.map((product) => `- ${product.name} (${product.owner}): ${product.canonicalUrl} — ${presentationFor(product).summary} Method: ${product.methodologyUrl}. Cadence: ${product.updateFrequency}.`),
+  ...site.products.map((product) => `- ${product.name} (${product.owner}): ${product.canonicalUrl} — ${presentationFor(product).summary} Method: ${methodologyUrlFor(product)}. Cadence: ${product.updateFrequency}.`),
   "",
   "## Narrative routes",
   "",

@@ -1,22 +1,13 @@
 # The Keep architecture
 
-## Public layer
+The free public workspace reads mounted BNTI, WTI and MENA JSON snapshots. Independent scales, per-source dates and withdrawal states remain visible. No cross-index average is calculated.
 
-Independent GitHub repositories collect, calculate, test, and publish versioned static outputs. Each current product remains free and directly accessible.
+Country search, source filters, a browser-local watchlist and JSON export operate without authentication or a backend. Watchlists contain only public product/country identifiers; local storage is optional.
 
-## Platform preview
+The homepage atlas uses published WTI records and locally bundled geographic boundaries derived from ESGMap's Natural Earth topology. Three.js loads on desktop when reduced motion is off; an SVG map and the same country controls remain available otherwise. Country marker positions are approximate geographic centres, not event coordinates.
 
-The company site mounts BNTI, WTI, and MENA outputs during its hourly GitHub Actions build. `/platform/` reads those local JSON files, displays published scores and events, and calculates only the declared available-value mean. It stores no customer data and requires no LLM.
+The repository does not contain the separately deployed legacy Workers runtime. Its authentication, billing and private tenant data are outside this change. All public site entry actions open /platform/.
 
-## Enterprise target
+Historical commercial plans and unsigned templates are retained under docs/archive/the-keep-commercial and are not active offers.
 
-Adapters → normalized observation/event schema → exposure graph → watchlist/alert service → workspace/API. Authentication, tenant isolation, audit log, encrypted storage, retention controls, private connectors, and billing must be deployed outside GitHub Pages before confidential customer data is accepted.
-
-## Independence
-
-Core operation uses repository code, pinned dependencies, GitHub Actions, source APIs, deterministic calculations, tests, and runbooks. Codex may assist development but is not a runtime dependency. LLM enrichment, if used by an upstream product, must be optional, declared, bounded, and fail visibly.
-
-## Release gates
-
-Schema validation, source/freshness checks, unit tests, built-artifact verification, responsive browser tests, broken-link/image checks, security review, Pages deployment, and live health check.
-
+Validation: npm test, npm run test:dist, npm run browser:test, node scripts/verify-dist.mjs.
