@@ -8,7 +8,7 @@
 
 Public website for Monarch Castle Technologies
 
-The site presents **The Keep**, a unified private-sector early-warning platform. Existing public products remain free; commercial access applies only to the unified workspace, private integrations, team workflows, delivery guarantees, and support.
+The site leads with inspectable public data, geographic views and source-visible methods. **The Keep** is a free public workspace with country/source filters, a device-local watchlist and JSON export; no account or payment is required.
 
 ![Lifecycle: Active](docs/lifecycle-active.svg)
 
@@ -68,7 +68,7 @@ npm run check:content
 - `src/styles/identity.css` — company-wide visual system layered over the base site styles.
 - `src/scripts/hero-loader.js` and `src/scripts/hero-scene.js` — desktop Three.js scene, loaded on demand with an SVG fallback for small screens, reduced motion, and unavailable WebGL.
 - `scripts/verify-dist.mjs` — route, metadata, local-reference, claims, and dashboard boundary verifier.
-- `src/scripts/platform.js` — deterministic, no-storage public The Keep preview over mounted BNTI, WTI, and MENA outputs.
+- `src/scripts/platform.js` — public The Keep workspace over mounted BNTI, WTI, and MENA outputs, with an optional watchlist stored on this device.
 - `docs/business/` — market-entry, pricing, pilot, target-account, and incorporation preparation records.
 - `docs/architecture/the-keep.md` and `docs/runbooks/platform-operations.md` — Codex-independent operating architecture and incident runbook.
 
