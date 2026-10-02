@@ -46,3 +46,7 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 ## 2026-10-02 — Data-first public collection
 
 User approved the plan and GitHub update. Implemented data-led homepage, geographic Three.js/SVG atlas, free Keep filters/local watchlist/export, removed active commercial copy, archived prior offers, and shared design 2026.10 across 24 product repos. Validation and release ordering: docs/design-system.md and docs/portfolio-delivery.md. No production merge or external Worker billing change.
+
+## 2026-10-02 — Production publication authorized
+
+User explicitly requested live publication to monarchcastle.com. Merge reviewed product UI changes first, then main Pages build. Election panel contrast and mobile brand target were corrected after CI accessibility findings; source feeds and deployment protections are preserved. Live evidence is recorded in the workspace deployment journal.

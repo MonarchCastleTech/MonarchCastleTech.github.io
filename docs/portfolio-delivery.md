@@ -1,33 +1,33 @@
 # Public design delivery — 2026-10-02
 
-User-approved data-first design implemented in the main site and 24 public products. All changes are draft PRs; no production merge was performed.
+User-approved data-first design implemented in the main site and 24 public products. The user explicitly authorized production publication on 2026-10-02. Product changes are being merged first, followed by the main site through the existing GitHub Pages workflows. Live verification is recorded in the workspace release journal.
 
 | Product | Change | Base branch |
 | --- | --- | --- |
-| Caspian & Black Sea Monitor | [Draft PR](https://github.com/MonarchCastleTech/caspian-black-sea-monitor/pull/1) | main |
-| Climate Security News Monitor | [Draft PR](https://github.com/SDCofA/climate-security-index/pull/1) | main |
-| Cloudy&Shiny Index | [Draft PR](https://github.com/MonarchCastleTech/Cloudy-Shiny/pull/3) | main |
-| Conflict News Monitor | [Draft PR](https://github.com/SDCofA/conflict-early-warning/pull/1) | main |
-| Cyber Threat News Monitor | [Draft PR](https://github.com/SDCofA/cyber-exposure-map/pull/1) | main |
-| Defense Procurement Intelligence | [Draft PR](https://github.com/MonarchCastleTech/defense-procurement/pull/1) | main |
-| EconMap | [Draft PR](https://github.com/MonarchCastleTech/econmap/pull/7) | main |
-| ESGMap | [Draft PR](https://github.com/MonarchCastleTech/esgmap/pull/4) | master |
-| MacroIntel | [Draft PR](https://github.com/MonarchCastleTech/macrointel/pull/4) | main |
-| MENA Energy Flow Tracker | [Draft PR](https://github.com/MonarchCastleTech/mena-energy-flow/pull/1) | main |
-| MILCODEC Receiver | [Draft PR](https://github.com/MonarchCastleTech/milcodec-receiver/pull/3) | main |
-| Nuclear Energy Intelligence | [Draft PR](https://github.com/MonarchCastleTech/NuclearEnergyIntelligence/pull/3) | main |
-| Nuclear Policy News Monitor | [Draft PR](https://github.com/SDCofA/nuclear-proliferation-watch/pull/1) | main |
-| Port Congestion Pulse | [Draft PR](https://github.com/MonarchCastleTech/port-congestion-pulse/pull/1) | main |
-| PrepTurk | [Draft PR](https://github.com/MonarchCastleTech/prepturk/pull/5) | master |
-| Sanctions News Monitor | [Draft PR](https://github.com/SDCofA/sanctions-exposure-index/pull/1) | main |
-| Süper Lig Forecast | [Draft PR](https://github.com/MonarchCastleTech/superlig-forecast/pull/4) | main |
-| Supply Chain Intelligence | [Draft PR](https://github.com/MonarchCastleTech/supplychain/pull/3) | master |
-| Türkiye Economic Sentiment Radar | [Draft PR](https://github.com/MonarchCastleTech/tr-economic-sentiment/pull/1) | main |
-| Border Neighbor Threat Index | [Draft PR](https://github.com/SDCofA/border-neighbor-threat-index/pull/4) | main |
-| MENA Threat Index | [Draft PR](https://github.com/SDCofA/mena-threat-index/pull/7) | main |
-| World Threat Index | [Draft PR](https://github.com/SDCofA/world-threat-index/pull/6) | main |
-| Election Monitor | [Draft PR](https://github.com/SDCofA/election/pull/1) | master |
-| GeoRisk | [Draft PR](https://github.com/SDCofA/georisk/pull/1) | main |
+| Caspian & Black Sea Monitor | [PR](https://github.com/MonarchCastleTech/caspian-black-sea-monitor/pull/1) | main |
+| Climate Security News Monitor | [PR](https://github.com/SDCofA/climate-security-index/pull/1) | main |
+| Cloudy&Shiny Index | [PR](https://github.com/MonarchCastleTech/Cloudy-Shiny/pull/3) | main |
+| Conflict News Monitor | [PR](https://github.com/SDCofA/conflict-early-warning/pull/1) | main |
+| Cyber Threat News Monitor | [PR](https://github.com/SDCofA/cyber-exposure-map/pull/1) | main |
+| Defense Procurement Intelligence | [PR](https://github.com/MonarchCastleTech/defense-procurement/pull/1) | main |
+| EconMap | [PR](https://github.com/MonarchCastleTech/econmap/pull/7) | main |
+| ESGMap | [PR](https://github.com/MonarchCastleTech/esgmap/pull/4) | master |
+| MacroIntel | [PR](https://github.com/MonarchCastleTech/macrointel/pull/4) | main |
+| MENA Energy Flow Tracker | [PR](https://github.com/MonarchCastleTech/mena-energy-flow/pull/1) | main |
+| MILCODEC Receiver | [PR](https://github.com/MonarchCastleTech/milcodec-receiver/pull/3) | main |
+| Nuclear Energy Intelligence | [PR](https://github.com/MonarchCastleTech/NuclearEnergyIntelligence/pull/3) | main |
+| Nuclear Policy News Monitor | [PR](https://github.com/SDCofA/nuclear-proliferation-watch/pull/1) | main |
+| Port Congestion Pulse | [PR](https://github.com/MonarchCastleTech/port-congestion-pulse/pull/1) | main |
+| PrepTurk | [PR](https://github.com/MonarchCastleTech/prepturk/pull/5) | master |
+| Sanctions News Monitor | [PR](https://github.com/SDCofA/sanctions-exposure-index/pull/1) | main |
+| Süper Lig Forecast | [PR](https://github.com/MonarchCastleTech/superlig-forecast/pull/4) | main |
+| Supply Chain Intelligence | [PR](https://github.com/MonarchCastleTech/supplychain/pull/3) | master |
+| Türkiye Economic Sentiment Radar | [PR](https://github.com/MonarchCastleTech/tr-economic-sentiment/pull/1) | main |
+| Border Neighbor Threat Index | [PR](https://github.com/SDCofA/border-neighbor-threat-index/pull/4) | main |
+| MENA Threat Index | [PR](https://github.com/SDCofA/mena-threat-index/pull/7) | main |
+| World Threat Index | [PR](https://github.com/SDCofA/world-threat-index/pull/6) | main |
+| Election Monitor | [PR](https://github.com/SDCofA/election/pull/1) | master |
+| GeoRisk | [PR](https://github.com/SDCofA/georisk/pull/1) | main |
 
 ## Validation
 
@@ -43,6 +43,6 @@ Product diffs were audited against their original branches. Data files, models, 
 
 ## Review and publication
 
-Review product PRs first, especially BNTI, WTI and MENA, which the main site's existing sync step mounts. Review the main release after those upstream changes are available. Merging uses existing deployment workflows; this delivery does not merge or change hosting settings.
+Review product PRs first, especially BNTI, WTI and MENA, which the main site's existing sync step mounts. Review the main release after those upstream changes are available. Publication uses the existing deployment workflows and Cloudflare proxy. Hosting settings are unchanged.
 
 The Keep is free on the public site. The external enterprise Worker source was unavailable; public sales/login links are removed, while its separate billing system and private accounts are unchanged.
