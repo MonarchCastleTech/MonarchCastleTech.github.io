@@ -168,12 +168,12 @@ test("root homepage follows the governed shell and links to canonical dashboard 
   assert.match(html, /href="\/sdcofa\/wti\/"/);
   assert.match(html, /href="\/sdcofa\/mena\/"/);
   assert.match(html, /href="\/styles\/site\.css\?v=[a-f0-9]{16}"/);
-  assert.match(html, /A changing world/);
+  assert.match(html, /Data\. Context\.<br>Intelligence\./);
   assert.match(html, /Free public access/);
   assert.match(html, /href="\/platform\/"/);
   assert.match(html, /id="atlas-country"/);
   assert.match(html, /href="\/styles\/identity\.css\?v=[a-f0-9]{16}"/);
-  assert.match(html, /Context travels with the number/i);
+  assert.match(html, /Every reading keeps its source and publication date/i);
   assert.doesNotMatch(html, /mct-styles\.css|mct-app\.js/);
   assert.doesNotMatch(html, /sdcofa\.github\.io\/border-neighbor-threat-index/);
 });

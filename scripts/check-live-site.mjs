@@ -3,13 +3,13 @@ const maxAgeHours = Number(process.env.SITE_DATA_MAX_AGE_HOURS || 12);
 const requireHttps = process.env.SITE_REQUIRE_HTTPS === "1";
 
 const routeChecks = [
-  { path: "/", markers: ["A changing world.", "Inspectable data.", "assets/products/logo.png", 'id="atlas-country"', 'id="answers"', "Frequently asked questions"] },
+  { path: "/", markers: ["Data. Context.", "Intelligence.", "assets/products/logo.png", 'id="atlas-country"', 'id="answers"', "Frequently asked questions"] },
   { path: "/404.html", markers: ["Page not found", "llms.txt", "noindex"] },
-  { path: "/platform/", markers: ["The Keep", "free public workspace", "scripts/platform.js", "metric-mena"] },
+  { path: "/platform/", markers: ["The Keep", "Free access. No account required.", "scripts/platform.js", "metric-mena"] },
   { path: "/impact/", markers: ["Put observations in context", "Follow the source trail"] },
   { path: "/pricing/", markers: ["Free access to The Keep", "No subscription"] },
   { path: "/pilot/", markers: ["Start exploring", "No subscription"] },
-  { path: "/insights/", markers: ["Live signals. Clear next steps.", "Selected public records"] },
+  { path: "/insights/", markers: ["What deserves attention now", "Selected public records"] },
   { path: "/insights/feed.xml", markers: ["<rss version=\"2.0\">", "Monarch Castle public signals"] },
   { path: "/sitemap.xml", markers: ["<urlset", "/insights/", "<lastmod>", "<changefreq>", "<priority>"] },
   { path: "/robots.txt", markers: ["User-agent: *", "/sitemap.xml", "Content-Signal: ai-train=yes"] },

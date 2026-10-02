@@ -17,9 +17,24 @@ export function timestamp(value) {
   return Number.isNaN(parsed.valueOf()) ? null : parsed.toISOString();
 }
 
+// Publication dates without an offset do not establish a timezone. Keep the
+// source string in records and exports instead of guessing the viewer's zone.
+export function publicationDate(value) {
+  return typeof value === "string" && !Number.isNaN(new Date(value).valueOf()) ? value : null;
+}
+
+export function sourceDate(value) {
+  if (!value) return "Source date unavailable";
+  const zone = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(value);
+  if (!zone) return value.replace("T", " ").slice(0, 16) + " (as published)";
+  return new Intl.DateTimeFormat("en", {
+    dateStyle: "medium", timeStyle: "short", timeZone: "UTC"
+  }).format(new Date(value)) + " UTC";
+}
+
 export function normaliseFeed(feed, payload) {
   const withheld = payload?.meta?.withdrawn === true || payload?.meta?.status === "WITHHELD";
-  const updated = timestamp(payload?.meta?.generated_at ?? payload?.meta?.issued_at);
+  const updated = publicationDate(payload?.meta?.generated_at ?? payload?.meta?.issued_at);
   const value = withheld ? null : asFinite(payload?.meta?.main_index);
   const status = withheld ? "WITHHELD" : payload?.meta?.status ?? (value === null ? "No current value" : "Published");
   const countries = Object.entries(payload?.countries ?? {}).map(([code, record]) => ({
