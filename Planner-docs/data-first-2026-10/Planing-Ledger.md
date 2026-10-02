@@ -16,3 +16,5 @@
 Son durum: kullanıcı onayladı; ana site ve 24 ürün doğrulandı.
 
 - 2026-10-02: Implementation validated: main 75 tests, 13 dist checks, 33 browser tests; product collection shell 48 browser checks. Known GeoRisk snapshot-fixture failures documented. Draft PR delivery prepared.
+
+- 2026-10-02: Production publication authorized; product PRs and main PR merged. Live check found stale unversioned assets. Added complete CSS/module revision, passed 76 tests and 14 artifact checks; publishing follow-up fix.
