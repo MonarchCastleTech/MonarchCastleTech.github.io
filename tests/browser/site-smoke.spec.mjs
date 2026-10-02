@@ -125,17 +125,17 @@ test("every public product logo loads, stays contained, and remains visible", as
   }
 });
 
-test("flagship palette resolves to the updated slate and paper identity", async ({ page }) => {
+test("flagship palette resolves to the approved paper and charcoal identity", async ({ page }) => {
   await page.goto(`${baseURL}/`);
   const palette = await page.locator("html").evaluate((element) => {
     const style = getComputedStyle(element);
     return {
-      navy: style.getPropertyValue("--navy").trim(),
-      gold: style.getPropertyValue("--gold").trim(),
+      paper: style.getPropertyValue("--paper").trim(),
+      dark: style.getPropertyValue("--dark").trim(),
       ink: style.getPropertyValue("--ink").trim()
     };
   });
-  expect(palette).toEqual({ navy: "#0B1726", gold: "#A2C4D5", ink: "#F4F6F8" });
+  expect(palette).toEqual({ paper: "#F2F3F0", dark: "#111613", ink: "#151816" });
 });
 
 for (const colorScheme of ["light", "dark"]) {
@@ -163,7 +163,7 @@ test("The Keep preview loads three source-linked public indices", async ({ page 
   await expect(page.locator("#metric-bnti")).toHaveText(bntiSnapshot.meta.withdrawn ? "—" : Number(bntiSnapshot.meta.main_index).toFixed(2));
   for (const id of ["wti", "mena"]) await expect(page.locator(`#metric-${id}`)).toHaveText(/^\d+\.\d{2}$/);
   if (bntiSnapshot.meta.withdrawn) await expect(page.locator("#status-bnti")).toContainText("WITHHELD");
-  expect(await page.locator("#exposure-list li").count()).toBeGreaterThan(100);
+  expect(await page.locator("#exposure-list tr").count()).toBeGreaterThan(100);
   await expect(page.locator("#signal-list li")).toHaveCount(12);
 });
 
@@ -172,14 +172,14 @@ test("Keep filters, watchlist and export retain public provenance", async ({ pag
   await expect(page.getByText("All feeds connected")).toBeVisible();
   await page.locator("#keep-source").selectOption("wti");
   await page.locator("#keep-search").fill("Türkiye");
-  await expect(page.locator("#exposure-list li")).toHaveCount(1);
+  await expect(page.locator("#exposure-list tr")).toHaveCount(1);
   const pin = page.locator(".watchlist-pin");
   await pin.click();
   await expect(pin).toHaveAttribute("aria-pressed", "true");
   await page.reload();
   await expect(page.getByText("All feeds connected")).toBeVisible();
   await page.locator("#keep-watchlist").check();
-  await expect(page.locator("#exposure-list li")).toHaveCount(1);
+  await expect(page.locator("#exposure-list tr")).toHaveCount(1);
   const downloaded = page.waitForEvent("download");
   await page.locator("#keep-export").click();
   const file = await (await downloaded).path();
@@ -194,7 +194,40 @@ test("atlas country controls remain usable with reduced motion", async ({ page }
   await page.goto(`${baseURL}/`);
   await expect(page.locator("#atlas-country option")).toHaveCount(195);
   await page.locator("#atlas-country").selectOption("JP");
-  await expect(page.locator("#atlas-record")).toContainText("Japan / WTI");
+  await expect(page.locator("#atlas-country option:checked")).toHaveText("Japan");
+  await expect(page.locator("#country-score")).toHaveText(/^\d+\.\d{2}$/);
+  await expect(page.locator(".world-scene")).toHaveClass(/is-3d/);
+  await expect(page.locator(".hero-scene-canvas")).toBeVisible();
+});
+
+test("mobile navigation and a static map remain usable without WebGL", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (name, ...args) {
+      return name.startsWith("webgl") ? null : original.call(this, name, ...args);
+    };
+  });
+  await page.goto(`${baseURL}/`);
+  await expect(page.locator("#atlas-country option")).toHaveCount(195);
+  await page.locator("#atlas-country").selectOption("JP");
+  await expect(page.locator("#country-score")).toHaveText(/^\d+\.\d{2}$/);
   await expect(page.locator(".atlas-fallback")).toBeVisible();
-  await expect(page.locator(".hero-scene-canvas")).toBeHidden();
+  await page.locator(".mobile-nav summary").click();
+  await expect(page.getByRole("navigation", { name: "Mobile", exact: true }).getByRole("link", { name: "Data", exact: true })).toBeVisible();
+});
+
+test("one unavailable feed preserves the other sources and truthful exports", async ({ page }) => {
+  await page.route("**/sdcofa/mena/mena_data.json", route => route.fulfill({ status: 503, body: "Unavailable" }));
+  await page.goto(`${baseURL}/platform/`);
+  await expect(page.locator("#feed-state")).toHaveText("2/3 feeds available");
+  await expect(page.locator("#metric-mena")).toHaveText("—");
+  await expect(page.locator("#status-mena")).toContainText("Unavailable");
+  await expect(page.locator("#metric-wti")).toHaveText(/^\d+\.\d{2}$/);
+  await page.locator("#keep-source").selectOption("mena");
+  await expect(page.locator("#exposure-list")).toContainText("No country records");
+  const downloaded = page.waitForEvent("download");
+  await page.locator("#keep-export").click();
+  const exported = JSON.parse(fs.readFileSync(await (await downloaded).path(), "utf8"));
+  expect(exported.records).toEqual([]);
 });

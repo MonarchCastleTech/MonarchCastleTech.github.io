@@ -118,7 +118,7 @@ test("every generated narrative route has one h1, unique metadata, canonical URL
     assert.match(html, /<footer\b/);
     assert.match(html, /class="skip-link"/);
     if (route.slug === "home") {
-      assert.match(html, /class="company-close"/);
+      assert.match(html, /class="[^"]*\bcompany-close\b[^"]*"/);
     } else {
       assert.match(html, /class="next-action"/);
     }

@@ -548,47 +548,25 @@ function nextAction(href, heading, text, label) {
 }
 
 
-function renderLiveWorkspace(overviewAnchor) {
-  return `
-    <div class="workspace-grid" aria-label="The Keep public operating picture">
-      <nav class="workspace-nav" aria-label="Operating picture sections">
-        <strong>THE KEEP<span> / PUBLIC VIEW</span></strong>
-        <a class="is-active" href="#${overviewAnchor}">Overview</a>
-        <a href="#exposure-panel">Exposure</a>
-        <a href="#signal-panel">Signals</a>
-        <a href="/methodology/">Methods</a>
-        <small>Source-linked public data</small>
-      </nav>
-      <div class="workspace-content">
-        <div class="workspace-topline">
-          <div><span class="eyebrow">Public operating picture</span><strong>Current published indices</strong></div>
-          <time id="platform-updated">Reading source timestamps…</time>
-        </div>
-        <div class="workspace-metrics">
-          <article><span>Global threat</span><strong id="metric-wti">—</strong><small id="status-wti">WTI</small><time id="updated-wti">Timestamp pending</time><a href="/sdcofa/wti/">Open source view</a></article>
-          <article><span>Border pressure</span><strong id="metric-bnti">—</strong><small id="status-bnti">BNTI</small><time id="updated-bnti">Timestamp pending</time><a href="/sdcofa/bnti/">Open source view</a></article>
-          <article><span>MENA exposure</span><strong id="metric-mena">—</strong><small id="status-mena">MENA</small><time id="updated-mena">Timestamp pending</time><a href="/sdcofa/mena/">Open source view</a></article>
-        </div>
-        <div class="workspace-filter"><label>Country<input id="keep-search" type="search" placeholder="Find a country" /></label><label>Source<select id="keep-source"><option value="">All sources</option><option value="wti">WTI</option><option value="mena">MENA</option><option value="bnti">BNTI</option></select></label><label class="watchlist-toggle"><input id="keep-watchlist" type="checkbox" />Watchlist only</label><button id="keep-export" type="button">Export JSON ↓</button></div>
-        <div class="workspace-panels">
-          <section class="exposure-panel" id="exposure-panel"><header><div><p class="eyebrow">Index by index</p><h3>Published country readings</h3></div><span id="feed-state">Connecting</span></header><ol id="exposure-list"><li class="loading-row">Reading published records…</li></ol></section>
-          <section class="signal-panel" id="signal-panel"><header><div><p class="eyebrow">Source trail</p><h3>Recent published events</h3></div></header><ol id="signal-list"><li class="loading-row">Reading published events…</li></ol></section>
-        </div>
-        <p class="workspace-note" id="platform-note">Each index has its own scale and method. Open its source view before comparing or quoting a value.</p>
-      </div>
-    </div>`;
+function renderLiveWorkspace() {
+  return `<div class="keep-workspace" aria-label="The Keep public workspace">
+    <div class="keep-toolbar"><label>Find a country<input id="keep-search" type="search" placeholder="Search country names" /></label><label>Source<select id="keep-source"><option value="">All sources</option><option value="wti">WTI</option><option value="mena">MENA</option><option value="bnti">BNTI</option></select></label><label class="watchlist-toggle"><input id="keep-watchlist" type="checkbox" />Watchlist only</label><button id="keep-export" type="button">Export source records <span aria-hidden="true">↓</span></button></div>
+    <section class="exposure-panel" id="exposure-panel" aria-labelledby="readings-heading"><header class="readings-heading"><h3 id="readings-heading">Published country readings</h3><span id="feed-state" role="status">Connecting</span></header>
+      <div class="data-table" tabindex="0" aria-label="Scrollable published country readings"><table><thead><tr><th scope="col">Country</th><th scope="col">Source</th><th scope="col">Reading</th><th scope="col">Publication state</th><th scope="col">Source date</th><th scope="col"><span class="sr-only">Watchlist</span></th><th scope="col"><span class="sr-only">Source link</span></th></tr></thead><tbody id="exposure-list"><tr><td colspan="7">Loading published records.</td></tr></tbody></table></div>
+    </section><p class="workspace-note" id="platform-note">Each index has its own scale and method. Open its source view before comparing or quoting a value.</p>
+    <details class="signal-panel" id="signal-panel"><summary>Recent published events</summary><ol id="signal-list"><li>Reading source events.</li></ol></details>
+  </div>`;
 }
 
 function renderHome() {
   return renderDataHome({
-    workspace: renderLiveWorkspace("platform"),
-    cards: ["econmap", "esgmap", "macrointel", "world-threat-index"].map(id => productById.get(id)).filter(Boolean).map(renderProductCard).join(""),
+    workspace: renderLiveWorkspace(),
     faq: '<div class="faq-block">' + homeFaq.map(entry => '<details><summary>' + escapeHtml(entry.question) + '</summary><p>' + escapeHtml(entry.answer) + '</p></details>').join("") + '</div>'
   });
 }
 
 function renderPlatform() {
-  return renderFreeKeep({ intro: pageIntro, workspace: renderLiveWorkspace("overview"), next: nextAction });
+  return renderFreeKeep({ intro: pageIntro, workspace: renderLiveWorkspace(), next: nextAction });
 }
 
 function renderImpact() {
@@ -747,11 +725,10 @@ function renderBody(page) {
 
 function renderNav(currentPath) {
   const navigation = [
+    { label: "Our systems", path: "/products/" },
     { label: "Data", path: "/datasets/" },
-    { label: "Maps", path: "/products/" },
-    { label: "Signals", path: "/insights/" },
-    { label: "Research", path: "/developers/" },
-    { label: "Methodology", path: "/methodology/" }
+    { label: "Research & methods", path: "/methodology/" },
+    { label: "Company", path: "/company/" }
   ];
   return navigation.map((item) => {
     const current = item.path === currentPath ? ' aria-current="page"' : "";
@@ -842,12 +819,12 @@ function renderPage(page) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="light" />
   <title>${escapeHtml(page.title)}</title>
   <meta name="description" content="${escapeHtml(page.description)}" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="author" content="${escapeHtml(site.brand.masterbrand)}" />
-  <meta name="theme-color" content="#071522" />
+  <meta name="theme-color" content="#F2F3F0" />
   <link rel="canonical" href="${canonical}" />
   <link rel="alternate" hreflang="en" href="${canonical}" />
   <link rel="alternate" hreflang="x-default" href="${canonical}" />
@@ -912,26 +889,20 @@ function renderPage(page) {
 </head>
 <body data-page="${escapeHtml(page.slug)}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="site-header">
+  <header class="site-header masthead">
     <a class="wordmark" href="/" aria-label="${escapeHtml(site.brand.masterbrand)} home">
-      <img class="brand-logo" src="/assets/products/logo.png" alt="" />
-      <span class="wordmark-copy"><span>Monarch Castle</span><strong>Technologies</strong></span>
+      <span class="brand-symbol"><img class="brand-logo" src="/assets/products/logo.png" alt="" /></span>
+      <span>Monarch Castle<small>Technologies</small></span>
     </a>
     <nav aria-label="Primary"><ul>${renderNav(page.path)}</ul></nav>
     <a class="header-action" href="${secureWorkspaceUrl}">Open The Keep</a>
+    <details class="mobile-nav"><summary><span class="sr-only">Menu</span></summary><nav aria-label="Mobile"><a href="/products/">Our systems</a><a href="/datasets/">Data</a><a href="/methodology/">Research & methods</a><a href="/company/">Company</a></nav></details>
   </header>
   <main id="main-content" tabindex="-1">${renderBody(page)}</main>
   <footer class="site-footer">
-    <div><strong>${escapeHtml(site.brand.masterbrand)}</strong><p>${escapeHtml(site.brand.positioning)}</p></div>
-    <nav aria-label="Trust and company">
-      <a href="/methodology/">Methodology</a>
-      <a href="/pricing/">Access</a>
-      <a href="/impact/">Use cases</a>
-      <a href="/trust/">Trust</a>
-      <a href="${escapeHtml(editorial.securityUrl)}">Security</a>
-      <a href="${escapeHtml(editorial.licenseUrl)}">License</a>
-      <a href="/company/">Contact</a>
-    </nav>
+    <a class="footer-brand" href="/">Monarch Castle</a>
+    <div><span>Technologies</span><nav aria-label="Trust and company"><a href="/trust/">Trust & limitations</a><a href="/developers/">Developers</a><a href="/insights/">Research</a><a href="/pricing/">Free access</a><a href="${escapeHtml(editorial.securityUrl)}">Security</a><a href="${escapeHtml(editorial.licenseUrl)}">License</a><a href="/company/">Contact</a></nav></div>
+    <p>SDCofA is the endorsed analytical unit of Monarch Castle Technologies.</p>
   </footer>
   ${["products", "datasets"].includes(page.slug) ? '<script type="module" src="/scripts/catalogue.js"></script>' : ""}
   ${page.slug === "home" ? '<script type="module" src="/scripts/hero-loader.js"></script>' : ""}

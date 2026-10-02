@@ -54,3 +54,7 @@ User explicitly requested live publication to monarchcastle.com. Merge reviewed 
 ## 2026-10-02 — Cache-safe public release
 
 Production browser verification detected old cached CSS and modules mixed with new HTML. Build now versions the complete owned CSS/module graph, including lazy Three.js, using a deterministic content hash. Validation: 76 tests, 14 dist checks, verify-dist passed. Existing Cloudflare/Pages cache settings and source data unchanged.
+
+## 2026-10-02 — Approved second visual direction
+
+After rejecting the first live aesthetic, the user approved the new local prototype. Main site and Keep now use paper/charcoal, expressive Plex typography, a solid full-width globe, editorial system rows and a source table. Free access, source provenance, device-local watchlists and events are preserved. Publication dates retain original timezone information. Mobile/reduced-motion/WebGL failure and independent feed failure are covered. Publish this approved main-site revision through the existing workflow; details in Planner-docs/approved-editorial-redesign.md and docs/design-system.md. The earlier shared 24-product application shell remains published separately.
