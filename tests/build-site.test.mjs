@@ -69,6 +69,7 @@ function baseProject(root, assets = []) {
   writeFile(root, "src/styles/site.css", "body{}");
   writeFile(root, "src/scripts/site.js", "");
   writeFile(root, "package.json", '{"type":"module"}');
+  writeFile(root, "package-lock.json", '{"lockfileVersion":3}');
 }
 
 function runBuild(root) {

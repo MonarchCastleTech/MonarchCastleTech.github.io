@@ -50,3 +50,7 @@ User approved the plan and GitHub update. Implemented data-led homepage, geograp
 ## 2026-10-02 — Production publication authorized
 
 User explicitly requested live publication to monarchcastle.com. Merge reviewed product UI changes first, then main Pages build. Election panel contrast and mobile brand target were corrected after CI accessibility findings; source feeds and deployment protections are preserved. Live evidence is recorded in the workspace deployment journal.
+
+## 2026-10-02 — Cache-safe public release
+
+Production browser verification detected old cached CSS and modules mixed with new HTML. Build now versions the complete owned CSS/module graph, including lazy Three.js, using a deterministic content hash. Validation: 76 tests, 14 dist checks, verify-dist passed. Existing Cloudflare/Pages cache settings and source data unchanged.

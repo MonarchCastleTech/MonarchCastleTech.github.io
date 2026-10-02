@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { createHash } from "node:crypto";
 import { renderDataHome, renderFreeKeep, renderFreeAccess } from "./lib/data-experience.mjs";
 import { asFinite } from "../src/scripts/feed-records.js";
 import path from "node:path";
@@ -9,6 +10,14 @@ const routes = JSON.parse(fs.readFileSync(path.join(root, "site.routes.json"), "
 const site = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "site.json"), "utf8"));
 const editorial = JSON.parse(fs.readFileSync(path.join(root, "src", "content", "editorial.json"), "utf8"));
 const dist = path.join(root, "dist");
+// One content revision covers the complete stylesheet/module graph, including Three.js.
+const assetHash = createHash("sha256").update(fs.readFileSync(path.join(root, "package-lock.json")));
+for (const directory of ["styles", "scripts"]) {
+  for (const filename of fs.readdirSync(path.join(root, "src", directory)).sort()) {
+    assetHash.update(filename).update(fs.readFileSync(path.join(root, "src", directory, filename)));
+  }
+}
+const assetRevision = assetHash.digest("hex").slice(0, 16);
 const cacheRoot = path.join(root, ".cache", "upstreams");
 const canonicalOrigin = `https://${routes.canonicalDomain}`;
 const secureWorkspaceUrl = "/platform/";
@@ -1104,4 +1113,22 @@ function copyStaticTree(sourceRoot, targetRoot) {
 const staticRoot = path.join(root, "static");
 if (fs.existsSync(staticRoot)) {
   copyStaticTree(staticRoot, dist);
+}
+
+// Keep public URLs stable while preventing old cached files from mixing with a new page.
+for (const page of [...routes.sitePages, ...routes.localPages]) {
+  const target = path.join(dist, page.output);
+  const html = fs.readFileSync(target, "utf8").replace(
+    /((?:href|src)=["'])(\/(?:styles|scripts)\/[^"'?]+\.(?:css|js))(["'])/g,
+    `$1$2?v=${assetRevision}$3`
+  );
+  fs.writeFileSync(target, html);
+}
+for (const filename of fs.readdirSync(path.join(dist, "scripts")).filter(file => file.endsWith(".js"))) {
+  const target = path.join(dist, "scripts", filename);
+  const source = fs.readFileSync(target, "utf8").replace(
+    /(\bfrom\s*["']|\bimport\(["'])(\.\/[^"'?]+\.js)(["'])/g,
+    `$1$2?v=${assetRevision}$3`
+  );
+  fs.writeFileSync(target, source);
 }
