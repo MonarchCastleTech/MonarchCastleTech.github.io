@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
+import fs from "node:fs";
 
 const baseURL = process.env.BASE_URL ?? "http://127.0.0.1:4173";
+const bntiSnapshot = JSON.parse(fs.readFileSync(new URL("../../dist/sdcofa/bnti/bnti_data.json", import.meta.url), "utf8"));
 const narrativeRoutes = [
   "/",
   "/products/",
@@ -17,7 +19,7 @@ const narrativeRoutes = [
   "/company/"
 ];
 const dashboardExpectations = {
-  "/sdcofa/bnti/": { text: /Border Neighbor Threat Index/i, selector: "#map-svg" },
+  "/sdcofa/bnti/": { text: /Border Neighbor Threat Index/i, selector: bntiSnapshot.meta.withdrawn ? "#main-content [role='alert']" : "#map-svg" },
   "/sdcofa/wti/": { text: /World Threat Index/i, selector: "#world-map" },
   "/sdcofa/mena/": { text: /MENA Threat Index/i, selector: "text=Regional threat map" }
 };
@@ -93,7 +95,7 @@ test("every public product logo loads, stays contained, and remains visible", as
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${baseURL}/products/`);
   const logos = page.locator(".product-mark img, .endorsed-links img");
-  expect(await logos.count()).toBe(12);
+  expect(await logos.count()).toBe(24);
 
   for (let index = 0; index < await logos.count(); index += 1) {
     const state = await logos.nth(index).evaluate((image) => {
@@ -133,7 +135,7 @@ test("flagship palette resolves to the updated slate and paper identity", async 
       ink: style.getPropertyValue("--ink").trim()
     };
   });
-  expect(palette).toEqual({ navy: "#101d25", gold: "#bdd2d6", ink: "#f2f5f2" });
+  expect(palette).toEqual({ navy: "#0B1726", gold: "#A2C4D5", ink: "#F4F6F8" });
 });
 
 for (const colorScheme of ["light", "dark"]) {
@@ -158,7 +160,41 @@ test("The Keep preview loads three source-linked public indices", async ({ page 
   await expect(page.getByText("All feeds connected")).toBeVisible();
   const values = await page.locator("#metric-bnti, #metric-wti, #metric-mena").allTextContents();
   expect(values).toHaveLength(3);
-  expect(values.every((value) => /^\d+\.\d{2}$/.test(value))).toBeTruthy();
-  await expect(page.locator("#exposure-list li")).toHaveCount(6);
-  await expect(page.locator("#signal-list li")).toHaveCount(5);
+  await expect(page.locator("#metric-bnti")).toHaveText(bntiSnapshot.meta.withdrawn ? "—" : Number(bntiSnapshot.meta.main_index).toFixed(2));
+  for (const id of ["wti", "mena"]) await expect(page.locator(`#metric-${id}`)).toHaveText(/^\d+\.\d{2}$/);
+  if (bntiSnapshot.meta.withdrawn) await expect(page.locator("#status-bnti")).toContainText("WITHHELD");
+  expect(await page.locator("#exposure-list li").count()).toBeGreaterThan(100);
+  await expect(page.locator("#signal-list li")).toHaveCount(12);
+});
+
+test("Keep filters, watchlist and export retain public provenance", async ({ page }) => {
+  await page.goto(`${baseURL}/platform/`);
+  await expect(page.getByText("All feeds connected")).toBeVisible();
+  await page.locator("#keep-source").selectOption("wti");
+  await page.locator("#keep-search").fill("Türkiye");
+  await expect(page.locator("#exposure-list li")).toHaveCount(1);
+  const pin = page.locator(".watchlist-pin");
+  await pin.click();
+  await expect(pin).toHaveAttribute("aria-pressed", "true");
+  await page.reload();
+  await expect(page.getByText("All feeds connected")).toBeVisible();
+  await page.locator("#keep-watchlist").check();
+  await expect(page.locator("#exposure-list li")).toHaveCount(1);
+  const downloaded = page.waitForEvent("download");
+  await page.locator("#keep-export").click();
+  const file = await (await downloaded).path();
+  const exported = JSON.parse(fs.readFileSync(file, "utf8"));
+  expect(exported.records).toHaveLength(1);
+  expect(exported.records[0]).toMatchObject({ product: "wti", name: "Türkiye", source: "/sdcofa/wti/wti_data.json" });
+  expect(exported.records[0].updated).toBeTruthy();
+});
+
+test("atlas country controls remain usable with reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(`${baseURL}/`);
+  await expect(page.locator("#atlas-country option")).toHaveCount(195);
+  await page.locator("#atlas-country").selectOption("JP");
+  await expect(page.locator("#atlas-record")).toContainText("Japan / WTI");
+  await expect(page.locator(".atlas-fallback")).toBeVisible();
+  await expect(page.locator(".hero-scene-canvas")).toBeHidden();
 });

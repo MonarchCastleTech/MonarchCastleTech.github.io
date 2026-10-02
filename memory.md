@@ -42,3 +42,7 @@ Public site for Monarch Castle Technologies + endorsed SDCofA indices. Static ge
 - Local probes: use `curl --doh-url https://cloudflare-dns.com/dns-query` — local UDP/53 still TT→Squarespace
 - arda-akgul.com: rescan isitagentready after ~4h; Squarespace A/AAAA + www CNAME to CF still user-side for arda
 - CF token was pasted in chat (do not commit tokens)
+
+## 2026-10-02 — Data-first public collection
+
+User approved the plan and GitHub update. Implemented data-led homepage, geographic Three.js/SVG atlas, free Keep filters/local watchlist/export, removed active commercial copy, archived prior offers, and shared design 2026.10 across 24 product repos. Validation and release ordering: docs/design-system.md and docs/portfolio-delivery.md. No production merge or external Worker billing change.

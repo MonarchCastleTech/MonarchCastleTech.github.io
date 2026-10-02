@@ -1,153 +1,56 @@
-const feeds = [
-  { id: "bnti", label: "BNTI", url: "/sdcofa/bnti/bnti_data.json" },
-  { id: "wti", label: "WTI", url: "/sdcofa/wti/wti_data.json" },
-  { id: "mena", label: "MENA", url: "/sdcofa/mena/mena_data.json" }
-];
-
-const number = new Intl.NumberFormat("en", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+import { feeds, readFeeds } from "./feed-records.js";
+const number = new Intl.NumberFormat("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const date = new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" });
-
-function text(id, value) {
-  const element = document.getElementById(id);
-  if (element) element.textContent = value;
-}
-
-function asFinite(value) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
-function generatedAt(payload) {
-  const value = payload?.meta?.generated_at ?? payload?.meta?.issued_at;
-  const parsed = value ? new Date(value) : null;
-  return parsed && !Number.isNaN(parsed.valueOf()) ? parsed : null;
-}
-
-function countryRows(feed, payload) {
-  const entries = Object.entries(payload?.countries ?? {});
-  return entries
-    .map(([code, record]) => ({
-      product: feed.label,
-      name: record?.name ?? code,
-      value: asFinite(record?.index),
-      status: record?.status ?? payload?.meta?.status ?? "Published"
-    }))
-    .filter((row) => row.value !== null)
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 2);
-}
-
-function eventRows(feed, payload) {
-  const rows = [];
-  for (const [code, record] of Object.entries(payload?.countries ?? {})) {
-    for (const event of record?.events ?? []) {
-      const timestamp = new Date(event?.date ?? 0);
-      rows.push({
-        product: feed.label,
-        country: record?.name ?? code,
-        title: event?.translated_title || event?.title || "Published signal",
-        href: event?.link,
-        timestamp: Number.isNaN(timestamp.valueOf()) ? new Date(0) : timestamp
-      });
-    }
-  }
-  return rows.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5);
-}
-
-function renderExposure(rows) {
+const dated = value => value ? date.format(new Date(value)) + " UTC" : "Timestamp unavailable";
+const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+let records = [], events = [], visible = [], watchlist = new Set();
+try { const saved = JSON.parse(localStorage.getItem("monarch-keep-watchlist") ?? "[]"); if (Array.isArray(saved)) watchlist = new Set(saved.filter(v => typeof v === "string")); } catch { /* Storage is optional. */ }
+const key = row => row.product + ":" + row.code;
+function render() {
+  const query = document.getElementById("keep-search")?.value.trim().toLowerCase() ?? "";
+  const source = document.getElementById("keep-source")?.value ?? "";
+  const savedOnly = document.getElementById("keep-watchlist")?.checked;
+  visible = records.filter(row => row.name.toLowerCase().includes(query) && (!source || row.product === source) && (!savedOnly || watchlist.has(key(row))));
   const list = document.getElementById("exposure-list");
-  if (!list) return;
-  if (!rows.length) {
-    const item = document.createElement("li");
-    item.className = "empty-row";
-    item.textContent = "No exposure rows are available from the connected public feeds.";
-    list.replaceChildren(item);
-    return;
+  if (list) {
+    list.replaceChildren(...visible.map(row => {
+      const item = document.createElement("li"), link = document.createElement("a"), name = document.createElement("b"), meta = document.createElement("span"), value = document.createElement("strong"), pin = document.createElement("button");
+      link.href = row.view; name.textContent = row.name; meta.textContent = row.label + " · " + row.status + " · " + dated(row.updated);
+      link.append(name, meta); value.textContent = row.value === null ? "—" : number.format(row.value);
+      pin.type = "button"; pin.className = "watchlist-pin"; pin.textContent = watchlist.has(key(row)) ? "★" : "☆";
+      pin.setAttribute("aria-label", (watchlist.has(key(row)) ? "Remove " : "Save ") + row.name + " " + row.label + " watchlist");
+      pin.setAttribute("aria-pressed", String(watchlist.has(key(row))));
+      pin.addEventListener("click", () => { if (watchlist.has(key(row))) watchlist.delete(key(row)); else watchlist.add(key(row)); try { localStorage.setItem("monarch-keep-watchlist", JSON.stringify([...watchlist])); } catch { /* In-memory saving still works. */ } render(); });
+      item.append(link, value, pin); return item;
+    }));
+    if (!visible.length) { const empty = document.createElement("li"); empty.textContent = "No country records match these filters."; list.append(empty); }
   }
-  list.replaceChildren(...rows.map((row) => {
-    const item = document.createElement("li");
-    const name = document.createElement("b");
-    const product = document.createElement("span");
-    const value = document.createElement("strong");
-    name.textContent = row.name;
-    product.textContent = `${row.product} · ${row.status}`;
-    value.textContent = number.format(row.value);
-    item.append(name, product, value);
-    return item;
-  }));
-}
-
-function renderEvents(rows) {
-  const list = document.getElementById("signal-list");
-  if (!list) return;
-  if (!rows.length) {
-    const item = document.createElement("li");
-    item.className = "empty-row";
-    item.textContent = "No dated events are available from the connected public feeds.";
-    list.replaceChildren(item);
-    return;
+  const eventList = document.getElementById("signal-list");
+  if (eventList) {
+    const matches = events.filter(row => (!source || row.product === source) && row.country.toLowerCase().includes(query) && (!savedOnly || records.some(record => record.product === row.product && record.name === row.country && watchlist.has(key(record))))).slice(0, 12);
+    eventList.replaceChildren(...matches.map(row => {
+      const item = document.createElement("li"), link = document.createElement(row.href ? "a" : "div"), title = document.createElement("b"), meta = document.createElement("span");
+      if (row.href) { link.href = row.href; link.target = "_blank"; link.rel = "noopener noreferrer"; }
+      title.textContent = row.title; meta.textContent = row.label + " · source grouping: " + row.country + " · " + dated(row.timestamp);
+      link.append(title, meta); item.append(link); return item;
+    }));
+    if (!matches.length) { const empty = document.createElement("li"); empty.textContent = "No dated source records match these filters."; eventList.append(empty); }
   }
-  list.replaceChildren(...rows.map((row) => {
-    const item = document.createElement("li");
-    const validLink = /^https?:\/\//.test(row.href ?? "");
-    const link = document.createElement(validLink ? "a" : "div");
-    const title = document.createElement("b");
-    const meta = document.createElement("span");
-    if (validLink) {
-      link.href = row.href;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-    }
-    title.textContent = row.title;
-    meta.textContent = `${row.product} · ${row.country} · ${date.format(row.timestamp)} UTC`;
-    link.append(title, meta);
-    item.append(link);
-    return item;
-  }));
 }
-
-async function readFeed(feed) {
-  const response = await fetch(feed.url, { cache: "no-store", headers: { Accept: "application/json" } });
-  if (!response.ok) throw new Error(`${feed.label} returned ${response.status}`);
-  return { feed, payload: await response.json() };
-}
-
 async function refresh() {
-  const settled = await Promise.allSettled(feeds.map(readFeed));
-  const valid = settled.filter((result) => result.status === "fulfilled").map((result) => result.value);
-  const failures = settled.length - valid.length;
-  const exposures = [];
-  const events = [];
-  const timestamps = [];
-
-  for (const feed of feeds) {
-    text(`metric-${feed.id}`, "—");
-    text(`status-${feed.id}`, `${feed.label} · Unavailable`);
-  }
-
-  for (const { feed, payload } of valid) {
-    const value = asFinite(payload?.meta?.main_index);
-    if (value !== null) {
-      text(`metric-${feed.id}`, number.format(value));
-    }
-    text(`status-${feed.id}`, `${feed.label} · ${payload?.meta?.withdrawn ? "WITHHELD" : value === null ? "No current value" : payload?.meta?.status ?? "Published"}`);
-    exposures.push(...countryRows(feed, payload));
-    events.push(...eventRows(feed, payload));
-    const timestamp = generatedAt(payload);
-    if (timestamp) timestamps.push(timestamp);
-  }
-
-  text("feed-state", failures ? `${valid.length}/${settled.length} feeds` : "All feeds connected");
-  text("platform-updated", timestamps.length ? `Latest source output ${date.format(new Date(Math.max(...timestamps)))} UTC` : "No source timestamp available");
-  text("platform-note", failures
-    ? `${failures} public feed${failures === 1 ? "" : "s"} could not be read. Missing values are excluded; no substitute values were generated.`
-    : "Each index uses its own scale and method. Open its source view before comparing or quoting a value.");
-
-  renderExposure(exposures);
-  renderEvents(events.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5));
+  const settled = await readFeeds(), valid = settled.filter(r => r.status === "fulfilled").map(r => r.value);
+  for (const feed of feeds) { text("metric-" + feed.id, "—"); text("status-" + feed.id, feed.label + " · Unavailable"); text("updated-" + feed.id, "Timestamp unavailable"); }
+  for (const feed of valid) { text("metric-" + feed.id, feed.value === null ? "—" : number.format(feed.value)); text("status-" + feed.id, feed.label + " · " + feed.status); text("updated-" + feed.id, (feed.withheld ? "Withdrawal notice: " : "Source output: ") + dated(feed.updated)); }
+  records = valid.flatMap(feed => feed.countries).sort((a, b) => a.label.localeCompare(b.label) || a.name.localeCompare(b.name));
+  events = valid.flatMap(feed => feed.events).sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+  text("feed-state", valid.length === feeds.length ? "All feeds connected" : valid.length + "/" + feeds.length + " feeds available");
+  text("platform-updated", "Individual source dates shown below");
+  text("platform-note", records.length + " source records. Independent scales; withheld values stay unavailable. Watchlists are saved on this device.");
+  render(); document.dispatchEvent(new CustomEvent("monarch:feeds", { detail: valid }));
 }
-
-refresh();
-window.setInterval(() => {
-  if (!document.hidden) refresh();
-}, 5 * 60 * 1000);
+for (const id of ["keep-search", "keep-source", "keep-watchlist"]) document.getElementById(id)?.addEventListener("input", render);
+document.getElementById("keep-export")?.addEventListener("click", () => {
+  const url = URL.createObjectURL(new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), note: "Independent scales; withheld values are null.", records: visible }, null, 2)], { type: "application/json" }));
+  const link = document.createElement("a"); link.href = url; link.download = "monarch-keep-records.json"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+refresh(); window.setInterval(() => { if (!document.hidden) refresh(); }, 300000);

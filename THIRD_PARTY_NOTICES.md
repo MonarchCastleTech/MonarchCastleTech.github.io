@@ -18,3 +18,7 @@ Reviewed exclusions:
 - logos, trademarks, screenshots, fonts, and external assets
 
 Generated analytical outputs can inherit restrictions or attribution duties from their inputs. Contributors must document a source and applicable terms before adding a third-party dataset or asset.
+
+## Public design assets, 2026.10
+
+IBM Plex Sans and Mono are redistributed under SIL OFL 1.1; see src/assets/fonts/OFL.txt. Font copyright and licence text are preserved. Country geometry comes from Natural Earth 110m via the topology vendored in ESGMap; see src/assets/geo/README.md for source and interpretation boundaries.

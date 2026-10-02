@@ -1,12 +1,12 @@
 {
   "name": "Monarch Castle Technologies",
   "short_name": "Monarch Castle",
-  "description": "Transparent public early-warning products and methods. The Keep unifies free public dashboards with an optional enterprise workspace.",
+  "description": "The Keep is a free public workspace for source-linked snapshots, country records and transparent analytical methods.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#071522",
-  "theme_color": "#071522",
+  "background_color": "#0B1726",
+  "theme_color": "#0B1726",
   "lang": "en",
   "icons": [
     {
