@@ -36,6 +36,7 @@ body[data-page="home"] main>.closing{padding:100px var(--edge) 90px;min-height:0
 .hero-copy h1{margin:0}.hero-copy h1,.hero-copy p,.hero-copy a{color:inherit}.hero-copy p{color:#C2C9C3}
 .hero::before{display:none}.world-scene .atlas-fallback{margin:0}.world-scene .hero-scene-canvas{position:static;width:100%;height:100%}
 .intro-heading h2,.section-heading h2{margin:0}.section-heading{border:0;padding:0}.source-entry header{padding:0;margin:0}.source-entry p{margin:0}.source-entry time{overflow-wrap:anywhere}.source-entry a:hover{color:#334D3B}
+.source-entry .withdrawal-reason{margin-top:12px;line-height:1.5;overflow-wrap:anywhere}.source-entry .withdrawal-reason[hidden]{display:none}
 .keep-workspace{border:0;background:transparent;padding:0;margin:0;display:block;color:var(--ink)}
 .keep-toolbar{flex-wrap:wrap}.keep-toolbar input,.keep-toolbar select{color:var(--ink);max-width:100%}.keep-toolbar .watchlist-toggle{display:flex;align-items:center;gap:8px;padding-bottom:13px;max-width:none;flex:none;white-space:nowrap}.watchlist-toggle input{width:16px;height:16px;padding:0;accent-color:#334D3B}
 .readings-heading{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:0 0 14px}.readings-heading h3{font-size:13px;letter-spacing:0;margin:0}.readings-heading #feed-state{font-size:11px;color:#4B564D}.exposure-panel{min-width:0}

@@ -11,11 +11,12 @@ test("missing and invalid scores never become zero", () => {
 });
 test("withdrawal suppresses both aggregate and country scores", () => {
   const data = normaliseFeed({ id: "bnti", label: "BNTI" }, {
-    meta: { withdrawn: true, main_index: 50 }, countries: { TR: { index: 12 } }
+    meta: { withdrawn: true, main_index: 50, withdrawal_reason: "Classifier failed" }, countries: { TR: { index: 12 } }
   });
   assert.equal(data.value, null);
   assert.equal(data.countries[0].value, null);
   assert.equal(data.status, "WITHHELD");
+  assert.equal(data.withdrawalReason, "Classifier failed");
 });
 test("source events retain dates and reject executable links", () => {
   const data = normaliseFeed({ id: "wti", label: "WTI" }, {

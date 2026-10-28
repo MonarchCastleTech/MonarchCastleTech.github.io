@@ -43,8 +43,8 @@ function render() {
 }
 async function refresh() {
   const settled = await readFeeds(), valid = settled.filter(r => r.status === "fulfilled").map(r => r.value);
-  for (const feed of feeds) { text("metric-" + feed.id, "—"); text("status-" + feed.id, feed.label + " · Unavailable"); text("updated-" + feed.id, "Timestamp unavailable"); }
-  for (const feed of valid) { text("metric-" + feed.id, feed.value === null ? "—" : number.format(feed.value)); text("status-" + feed.id, feed.label + " · " + feed.status); text("updated-" + feed.id, (feed.withheld ? "Withdrawal notice: " : "Source output: ") + dated(feed.updated)); }
+  for (const feed of feeds) { text("metric-" + feed.id, "—"); text("status-" + feed.id, feed.label + " · Unavailable"); text("updated-" + feed.id, "Timestamp unavailable"); const reason = document.getElementById("reason-" + feed.id); if (reason) { reason.hidden = true; reason.textContent = ""; } }
+  for (const feed of valid) { text("metric-" + feed.id, feed.value === null ? "—" : number.format(feed.value)); text("status-" + feed.id, feed.label + " · " + feed.status); text("updated-" + feed.id, (feed.withheld ? "Withdrawal notice: " : "Source output: ") + dated(feed.updated)); const reason = document.getElementById("reason-" + feed.id); if (reason && feed.withdrawalReason) { reason.textContent = feed.withdrawalReason; reason.hidden = false; } }
   records = valid.flatMap(feed => feed.countries).sort((a, b) => a.name.localeCompare(b.name) || a.label.localeCompare(b.label));
   events = valid.flatMap(feed => feed.events).sort((a, b) => b.timestamp.localeCompare(a.timestamp));
   text("feed-state", valid.length === feeds.length ? "All feeds connected" : valid.length + "/" + feeds.length + " feeds available");

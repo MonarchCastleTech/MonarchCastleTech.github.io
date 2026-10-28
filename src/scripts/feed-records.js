@@ -34,6 +34,8 @@ export function sourceDate(value) {
 
 export function normaliseFeed(feed, payload) {
   const withheld = payload?.meta?.withdrawn === true || payload?.meta?.status === "WITHHELD";
+  const withdrawalReason = withheld && typeof payload?.meta?.withdrawal_reason === "string"
+    ? payload.meta.withdrawal_reason.trim() : "";
   const updated = publicationDate(payload?.meta?.generated_at ?? payload?.meta?.issued_at);
   const value = withheld ? null : asFinite(payload?.meta?.main_index);
   const status = withheld ? "WITHHELD" : payload?.meta?.status ?? (value === null ? "No current value" : "Published");
@@ -51,7 +53,7 @@ export function normaliseFeed(feed, payload) {
       timestamp: timestamp(event?.date)
     })).filter((event) => event.timestamp)
   ).sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-  return { ...feed, value, status, updated, withheld, countries, events };
+  return { ...feed, value, status, updated, withheld, withdrawalReason, countries, events };
 }
 
 export async function readFeeds() {

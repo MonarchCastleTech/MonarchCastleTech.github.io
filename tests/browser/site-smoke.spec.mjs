@@ -167,6 +167,17 @@ test("The Keep preview loads three source-linked public indices", async ({ page 
   await expect(page.locator("#signal-list li")).toHaveCount(12);
 });
 
+test("withdrawn sources explain why their values are unavailable", async ({ page }) => {
+  await page.route("**/sdcofa/bnti/bnti_data.json", route => route.fulfill({
+    json: { meta: { withdrawn: true, generated_at: "2026-09-23T19:42:04Z", withdrawal_reason: "Classification did not pass review." }, countries: {} }
+  }));
+  await page.goto(`${baseURL}/platform/`);
+  await expect(page.locator("#metric-bnti")).toHaveText("—");
+  await expect(page.locator("#reason-bnti")).toBeVisible();
+  await expect(page.locator("#reason-bnti")).toHaveText("Classification did not pass review.");
+  await expect(page.locator("#reason-wti")).toBeHidden();
+});
+
 test("Keep filters, watchlist and export retain public provenance", async ({ page }) => {
   await page.goto(`${baseURL}/platform/`);
   await expect(page.getByText("All feeds connected")).toBeVisible();

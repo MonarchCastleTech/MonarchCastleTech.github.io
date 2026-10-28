@@ -3,7 +3,7 @@ export function renderSourceBoard() {
     <div class="source-heading"><span>Published intelligence</span><span>Independent indicators. Independent scales.</span></div>
     <div id="source-readings">${[
       ["wti", "World Threat Index"], ["mena", "MENA Threat Index"], ["bnti", "Border Neighbor Threat Index (BNTI)"]
-    ].map(([id, name]) => `<article class="source-entry"><header><span>${name}</span><a href="/sdcofa/${id}/" aria-label="Open ${name}">↗</a></header><strong id="metric-${id}">—</strong><p id="status-${id}">Reading source</p><time id="updated-${id}">Source date pending</time></article>`).join("")}</div>
+    ].map(([id, name]) => `<article class="source-entry"><header><span>${name}</span><a href="/sdcofa/${id}/" aria-label="Open ${name}">↗</a></header><strong id="metric-${id}">—</strong><p id="status-${id}">Reading source</p><time id="updated-${id}">Source date pending</time><p class="withdrawal-reason" id="reason-${id}" hidden></p></article>`).join("")}</div>
     <p class="source-note">Country positions are geographic references. Indicators describe published source outputs, not event coordinates or probabilities.</p>
   </div>`;
 }
