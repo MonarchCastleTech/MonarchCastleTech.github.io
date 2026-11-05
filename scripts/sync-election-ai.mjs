@@ -10,8 +10,7 @@ try{const r=await fetch('https://monarchcastletech.github.io/sdcofa/election/fee
 async function write(value){await fs.writeFile(destination,JSON.stringify(value));}
 async function get(url){const r=await fetch(url,{signal:AbortSignal.timeout(25000),headers:{Accept:'application/json','User-Agent':'MonarchCastleElectionAtlas/1.0'}});if(!r.ok)throw Error('Results API HTTP '+r.status);return r.json();}
 try{
-  const germany=JSON.parse(await fs.readFile(path.join(directory,'germany.json'),'utf8'));
-  const forecasts=(Date.now()-Date.parse(germany.fetchedAt)<36e5*24)?forecastInputs(germany,now):[];
+  const forecasts=[]; // Public future projections now come from the independently backtested world model.
   const base='https://elekt.io/elekt/api/v1/contests?election=usa-general-2026&include=candidates';
   const rows=(await Promise.all(['senate','governor'].map(async kind=>{const first=await get(base+'&office_kind='+kind),all=[...first.data];if(!first.meta||first.meta.pages>10)throw Error('Unexpected results pagination');for(let page=2;page<=first.meta.pages;page++)all.push(...(await get(base+'&office_kind='+kind+'&page='+page)).data);if(all.length!==first.meta.total)throw Error('Incomplete results pagination');return all;}))).flat();
   // List responses omit provenance. Fetch full records only for fresh races that could pass the numerical gate.

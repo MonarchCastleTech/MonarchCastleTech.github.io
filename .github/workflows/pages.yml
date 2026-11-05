@@ -34,10 +34,12 @@ jobs:
         run: npm run sync
       - name: Refresh free election calendar and polling APIs
         run: node scripts/sync-election.mjs
-      - name: Generate SDCofA AI forecasts and result calls
+      - name: Review SDCofA election-night result calls
         run: node scripts/sync-election-ai.mjs
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      - name: Build global historical models and chronological backtests
+        run: python3 scripts/sync-election-world.py
       - name: Build site
         run: npm run build
       - name: Run unit tests
