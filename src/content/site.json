@@ -9,7 +9,7 @@
       "claims": "claims/claims-register.json",
       "forecastBenchmark": "forecasting/benchmark-manifest.json"
     },
-    "sha256": "a846587664ed9c893a8d763fd3ce9608a3a7580a4ac3d44172051ac5f0080bff"
+    "sha256": "6c692cb26671f994ede80fcbbe6f1216fd84c8b11d64e7827812d011b388d5bc"
   },
   "brand": {
     "masterbrand": "Monarch Castle Technologies",
@@ -49,7 +49,8 @@
       "prepturk",
       "superlig-forecast",
       "supplychain",
-      "tr-economic-sentiment"
+      "tr-economic-sentiment",
+      "monarch-signal"
     ],
     "SDCofA": [
       "climate-security-index",
@@ -77,7 +78,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/caspian-black-sea-monitor-logo.svg",
         "publicPath": "/assets/products/caspian-black-sea-monitor-logo.svg",
-        "sha256": "2367ba28a061947a59cfb2143452312920231356403e6542b795089ec7424488",
+        "sha256": "5dec67a8893c2de79ff033af3eae8ae48ae8f087aa1d5f96a0b2d8dd9dcad108",
         "alt": "Caspian & Black Sea Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/caspian-black-sea-monitor/",
@@ -97,7 +98,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/climate-security-index-logo.svg",
         "publicPath": "/assets/products/climate-security-index-logo.svg",
-        "sha256": "a64e2cb3491bf34359498a0d25d8f5a6c079337eeda09b8410d6632ff28dd03c",
+        "sha256": "1bbf86869a1f28e4e122957045108185f5ffff6dfbf386475e75cf8114fa31fd",
         "alt": "Climate Security News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/climate-security-index/",
@@ -137,7 +138,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/conflict-early-warning-logo.svg",
         "publicPath": "/assets/products/conflict-early-warning-logo.svg",
-        "sha256": "33ab45cf756101dd7dd167aecaf6b8ce5796f71fb41e9d9c31a698c319530302",
+        "sha256": "0cda13ee795847d62daf197624c7a51bd9db95068ca24fc77135426208471698",
         "alt": "Conflict News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/conflict-early-warning/",
@@ -157,7 +158,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/cyber-exposure-map-logo.svg",
         "publicPath": "/assets/products/cyber-exposure-map-logo.svg",
-        "sha256": "0c8e582e43fa8532d86ca758ba0b52999b7037e2c758820aed5e158dceeebea3",
+        "sha256": "7e2469c3d609552bc0e4a39462585937b1d51801e4002511c3645180abcaa7e6",
         "alt": "Cyber Threat News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/cyber-exposure-map/",
@@ -177,7 +178,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/defense-procurement-logo.svg",
         "publicPath": "/assets/products/defense-procurement-logo.svg",
-        "sha256": "6cc2ee27a89f8d6cae0e636e34e0aee5a10fbe03c2432ffbc15781844d9b5419",
+        "sha256": "391a09cffa7a7a2d91a59e4a6997a1e7846174b7b3dec6e778835fb0567dc21d",
         "alt": "Defense Procurement Intelligence product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/defense-procurement/",
@@ -257,7 +258,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/mena-energy-flow-logo.svg",
         "publicPath": "/assets/products/mena-energy-flow-logo.svg",
-        "sha256": "a9240b2f536f7d009048e132290e15b39383893236ac6ba8c403564e3cb65041",
+        "sha256": "2c50ee36cfde32553ffc14dc1a4d8b2c3de40d7d3eceac79aee160df83059034",
         "alt": "MENA Energy Flow Tracker product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/mena-energy-flow/",
@@ -317,7 +318,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/nuclear-proliferation-watch-logo.svg",
         "publicPath": "/assets/products/nuclear-proliferation-watch-logo.svg",
-        "sha256": "ef190c3d4f5f2949fe4634650243f7a68686f43effbbc8d8e48489de6850e4f5",
+        "sha256": "2a48b7b0b2945b87daf5c9c9bd67e7eb60273fa524527837cdfe4a240926dd7f",
         "alt": "Nuclear Policy News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/nuclear-proliferation-watch/",
@@ -337,7 +338,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/port-congestion-pulse-logo.svg",
         "publicPath": "/assets/products/port-congestion-pulse-logo.svg",
-        "sha256": "d1ebc573fc236cea027b5e4c4868e82fcf22c90c029f0ef280818dde9d8326c5",
+        "sha256": "fd16774ec1694566ae312a4df5e1b87ce55926a099d0449acd9c65d7e7ed7664",
         "alt": "Port Congestion Pulse product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/port-congestion-pulse/",
@@ -377,7 +378,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/sanctions-exposure-index-logo.svg",
         "publicPath": "/assets/products/sanctions-exposure-index-logo.svg",
-        "sha256": "3d83f3d4e0210c0f2a9dbda799d9f79a50b2506820b89e99917e2d4142796c5a",
+        "sha256": "ee0395d03ba7923e7aa08334d4b117a2fc055dd95d84c2488064c1dc3c494ccd",
         "alt": "Sanctions News Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/sanctions-exposure-index/",
@@ -437,7 +438,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/tr-economic-sentiment-logo.svg",
         "publicPath": "/assets/products/tr-economic-sentiment-logo.svg",
-        "sha256": "119946f44f551ffd3a6d171479ff4dbaa9b8f54078ea7d0479ce1d168fafa271",
+        "sha256": "0742821755fc3f0cd7555a167b852498abbe2b4ab4c6eeb0deac6f92b84a4a22",
         "alt": "Türkiye Economic Sentiment Radar product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/tr-economic-sentiment/",
@@ -517,7 +518,7 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/election-logo.svg",
         "publicPath": "/assets/products/election-logo.svg",
-        "sha256": "d74527016624a81bd87bbe5b9800ac8411a3926b5caa254b0bb16e429662c51f",
+        "sha256": "fef62a01fcd1ef325fee6ccb730e10705e314305bcf9921b68ba73326611c02e",
         "alt": "Election Monitor product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/election/",
@@ -537,13 +538,31 @@
         "kind": "approved-image",
         "sourcePath": "assets/products/georisk-logo.svg",
         "publicPath": "/assets/products/georisk-logo.svg",
-        "sha256": "358a54c94abc9e6b7f664fef4b73a0b482ac1b17b8d7f06101def602af3d01e2",
+        "sha256": "e5c0df498447df762e116d02ceac4daf10c76f2b514c79e84ae1624c3aa98be7",
         "alt": "GeoRisk product logo"
       },
       "canonicalUrl": "https://monarchcastle.com/sdcofa/georisk/",
       "owner": "SDCofA",
       "forecastEvidenceStatus": "Country forecasts withheld; last snapshot expired 2026-04-19",
       "endorsementLabel": "SDCofA — endorsed analytical unit of Monarch Castle Technologies"
+    },
+    {
+      "id": "monarch-signal",
+      "name": "Monarch Signal",
+      "family": "financial-intelligence",
+      "lifecycle": "active",
+      "regions": [],
+      "methodologyUrl": "https://github.com/MonarchCastleTech/monarch-signal/blob/main/README.md",
+      "updateFrequency": "hourly",
+      "logo": {
+        "kind": "governed-text",
+        "label": "Monarch Signal",
+        "status": "review-required"
+      },
+      "canonicalUrl": "https://monarchcastle.com/monarch-signal/",
+      "owner": "MonarchCastleTech",
+      "forecastEvidenceStatus": "source-linked-scenarios; uncalibrated; free-ai; beta",
+      "endorsementLabel": "Part of Monarch Castle Technologies"
     }
   ]
 }
