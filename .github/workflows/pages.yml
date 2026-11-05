@@ -32,6 +32,8 @@ jobs:
         run: npm ci
       - name: Sync upstream static sites
         run: npm run sync
+      - name: Refresh free election calendar and polling APIs
+        run: node scripts/sync-election.mjs
       - name: Build site
         run: npm run build
       - name: Run unit tests

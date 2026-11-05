@@ -22,3 +22,13 @@ Generated analytical outputs can inherit restrictions or attribution duties from
 ## Public design assets, 2026.10
 
 IBM Plex Sans and Mono are redistributed under SIL OFL 1.1; see src/assets/fonts/OFL.txt. Font copyright and licence text are preserved. Country geometry comes from Natural Earth 110m via the topology vendored in ESGMap; see src/assets/geo/README.md for source and interpretation boundaries.
+# Election Atlas data
+
+The election calendar snapshot under `static/sdcofa/election/feeds/calendar.json` is sourced from elekt (https://elekt.io/), with official sources, Wikidata (CC0), and Wikipedia (CC BY-SA 4.0). Calendar reuse is attributed to elekt and the linked provenance records; the adaptation is available under CC BY-SA 4.0 where applicable (https://creativecommons.org/licenses/by-sa/4.0/).
+
+The separate derived German polling database `static/sdcofa/election/feeds/germany.json` is provided under ODbL 1.0 (https://opendatacommons.org/licenses/odbl/1-0/). Data: dawum.de (https://dawum.de/API/). It is not covered by the repository's MIT code license.
+
+The US polling snapshot `static/sdcofa/election/feeds/us.json` credits VoteHub (https://votehub.com/polls/api/) and Election Wrld (https://www.electionwrld.com/developers), CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Original pollster links remain in the records. Underlying source terms apply.
+
+Election Atlas reuses the existing Natural Earth public-domain country outlines and local IBM Plex fonts. National flag SVG images are served by FlagCDN (https://flagcdn.com/).
+
