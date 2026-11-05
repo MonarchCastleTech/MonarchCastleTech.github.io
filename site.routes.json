@@ -3,7 +3,8 @@
   "upstreams": {
     "bnti": "https://github.com/SDCofA/border-neighbor-threat-index.git",
     "wti": "https://github.com/SDCofA/world-threat-index.git",
-    "mena": "https://github.com/SDCofA/mena-threat-index.git"
+    "mena": "https://github.com/SDCofA/mena-threat-index.git",
+    "signal": "https://github.com/MonarchCastleTech/monarch-signal.git"
   },
   "sitePages": [
     {
@@ -161,6 +162,16 @@
     {
       "fromLocal": "src/assets/fonts",
       "to": "assets/fonts"
+    },
+    {
+      "fromRepo": "signal",
+      "from": "web",
+      "to": "monarch-signal"
+    },
+    {
+      "fromRepo": "signal",
+      "from": "data",
+      "to": "monarch-signal/data"
     }
   ]
 }
