@@ -1,3 +1,4 @@
+import {initProjectionDesk} from './projections.js?v=20261105d';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=v=>{try{const u=new URL(v);return u.protocol==='https:'?u.href:'#';}catch{return '#';}};
@@ -19,9 +20,9 @@ function flag(c){return c?.iso2?`<img class="flag" src="https://flagcdn.com/${es
 function upcoming(e){if(e.status==='cancelled')return false;if(!e.date)return !e.year||e.year>=today.slice(0,4);if(e.precision==='year')return e.date.slice(0,4)>=today.slice(0,4);if(e.precision==='month')return e.date.slice(0,7)>=today.slice(0,7);return e.date>=today;}
 function order(a,b){const key=e=>e.precision==='day'?e.date:e.precision==='month'?e.date?.slice(0,7)+'-32':e.year?e.year+'-99-99':'9999';return String(key(a)).localeCompare(String(key(b)))||a.name.localeCompare(b.name);}
 async function get(file){const r=await fetch(`feeds/${file}.json?v=${Math.floor(Date.now()/36e5)}`,{cache:'no-cache'});if(!r.ok)throw Error('Feed unavailable');return r.json();}
-function setPanel(id,focus=false){$$('[role=tab]').forEach(b=>{const on=b.dataset.panel===id;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;if(on&&focus)b.focus();});$$('[role=tabpanel]').forEach(p=>p.hidden=p.id!==id+'-panel');if(id==='polls')renderPolls();if(id==='sources')renderSources();}
+function setPanel(id,focus=false){$$('[role=tab]').forEach(b=>{const on=b.dataset.panel===id;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;if(on&&focus)b.focus();});$$('[role=tabpanel]').forEach(p=>p.hidden=p.id!==id+'-panel');if(id==='polls')renderPolls();if(id==='sources')renderSources();$$('nav a[data-view]').forEach(a=>a.classList.toggle('nav-active',a.dataset.view===id));history.replaceState(null,'','#'+id);}
 $$('[data-panel]').forEach(b=>b.addEventListener('click',()=>setPanel(b.dataset.panel)));
-$$('[data-view]').forEach(a=>a.addEventListener('click',()=>setPanel(a.dataset.view)));
+$$('[data-view]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();setPanel(a.dataset.view);$('#explore').scrollIntoView();}));
 $('.desk-tabs').addEventListener('keydown',e=>{const tabs=$$('[role=tab]'),index=tabs.indexOf(document.activeElement);if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){e.preventDefault();const n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(index+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;setPanel(tabs[n].dataset.panel,true);}});
 try{if(localStorage.getItem('mc-election-theme'))document.documentElement.dataset.theme=localStorage.getItem('mc-election-theme');}catch{}
 function themeLabel(){$('#theme').setAttribute('aria-label','Switch to '+(document.documentElement.dataset.theme==='dark'?'light':'dark')+' theme');}
@@ -86,6 +87,8 @@ async function init(){const results=await Promise.allSettled([get('calendar'),ge
   const upcomingRows=calendar.elections.filter(upcoming);$('#country-count').textContent=countries.size;$('#election-count').textContent=upcomingRows.length;$('#soon-count').textContent=upcomingRows.filter(e=>e.precision==='day'&&days(e)>=0&&days(e)<=90).length;
   const bad=status?.sources.filter(s=>s.status!=='ok')||[],old=(Date.now()-Date.parse(calendar.fetchedAt))/36e5>6;$('#refresh-status').innerHTML=`${bad.length||old?'<span class="warning">A feed is delayed. Inspect Sources.</span><br>':''}Calendar retrieved<br>${esc(fmt(calendar.fetchedAt,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}))} UTC<br>Hourly refresh scheduled`;
   $('#region-filter').innerHTML+=[...new Set(calendar.countries.map(c=>c.region))].filter(Boolean).sort().map(r=>`<option>${esc(r)}</option>`).join('');$('#type-filter').innerHTML+=[...new Set(calendar.elections.map(e=>e.kind))].sort().map(t=>`<option value="${esc(t)}">${esc(t.charAt(0).toUpperCase()+t.slice(1))}</option>`).join('');
-  renderDock();const next=upcomingRows.filter(e=>exact(e)&&days(e)>=0).sort(order)[0];selected=next?.country||'NZL';selectCountry(selected);renderCalendar();renderSources();renderMap();
+  renderDock();const next=upcomingRows.filter(e=>exact(e)&&days(e)>=0).sort(order)[0];selected=next?.country||'NZL';selectCountry(selected);renderCalendar();renderSources();renderMap();const requested=location.hash.slice(1);if(['calendar','polls','projections','sources'].includes(requested)){setPanel(requested);requestAnimationFrame(()=>$('#explore').scrollIntoView({behavior:'auto'}));}
 }
 init().catch(()=>{$('#refresh-status').textContent='Data could not be loaded. Please reload.';});
+
+initProjectionDesk(id=>{setPanel(id);$('#explore').scrollIntoView();});
